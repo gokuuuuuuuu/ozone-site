@@ -32146,7 +32146,8 @@
         canvasEl.style.opacity = Math.max(0, 1.0 - tranE);
         canvasEl.style.filter = "";
         uiLayerEl.style.opacity = Math.max(0, 1 - tranE * 2.5);
-        uiLayerEl.style.pointerEvents = "none";
+        if (uiLayerEl.style.pointerEvents !== "none")
+          uiLayerEl.style.pointerEvents = "none";
 
         // ── Content section: rises up in SYNC with globe fading out ──
         // Starts immediately at tranT=0, fully visible at tranT=1
@@ -32156,7 +32157,9 @@
           const translateY = (1 - tranE) * 40;
           ozSections.style.transform = `translateY(${translateY}px)`;
           ozSections.style.opacity = tranE.toFixed(4);
-          ozSections.style.pointerEvents = tranE > 0.25 ? "auto" : "none";
+          const ozPE = tranE > 0.25 ? "auto" : "none";
+          if (ozSections.style.pointerEvents !== ozPE)
+            ozSections.style.pointerEvents = ozPE;
         }
 
         // ── Hero stats ──
@@ -32309,17 +32312,17 @@
         // Phase 3: slow background auto-rotate (always on in background)
         // handled by the idle rotation below — no extra position change needed
 
-        earthGroup.position.lerp(earthTargetPos, 0.055);
+        earthGroup.position.lerp(earthTargetPos, 0.18);
 
         // Camera: smooth scroll from hero → full 3D globe (only phase 0)
         const sp = scrollProgress;
         const ease = sp < 0.5 ? 2 * sp * sp : 1 - Math.pow(-2 * sp + 2, 2) / 2;
         _reuse2.lerpVectors(CAM_HERO_POS, CAM_3D_POS, ease);
         _reuse3.lerpVectors(CAM_HERO_LOOK, CAM_3D_LOOK, ease);
-        camera.position.lerp(_reuse2, 0.07);
+        camera.position.lerp(_reuse2, 0.18);
         if (!window.camLookProxy)
           window.camLookProxy = new THREE.Vector3().copy(CAM_HERO_LOOK);
-        window.camLookProxy.lerp(_reuse3, 0.07);
+        window.camLookProxy.lerp(_reuse3, 0.18);
         camera.lookAt(window.camLookProxy);
 
         // ── Sphere — fully opaque at all times except hero blend ──
@@ -32433,11 +32436,14 @@
             const y = (_reuse1.y * -0.5 + 0.5) * window.innerHeight;
             pt.el.style.transform = `translate(-50%,-50%) translate3d(${x}px,${y}px,0)`;
             pt.el.style.opacity = dotAlpha;
-            pt.el.style.pointerEvents = scrollProgress > 0.7 ? "auto" : "none";
+            const ptPE = scrollProgress > 0.7 ? "auto" : "none";
+            if (pt.el.style.pointerEvents !== ptPE)
+              pt.el.style.pointerEvents = ptPE;
             pt.el.style.display = "block";
           } else {
             pt.el.style.opacity = "0";
-            pt.el.style.pointerEvents = "none";
+            if (pt.el.style.pointerEvents !== "none")
+              pt.el.style.pointerEvents = "none";
             pt.el.style.display = "none";
           }
         });
@@ -32709,7 +32715,7 @@
               </div>
               <div class="flex items-center gap-3">
                 <a
-                  href="https://github.com/ozheng1993/UCF-SST-CitySim-Dataset"
+                  href="https://github.com/ZhilingResearch/Ozone"
                   target="_blank"
                   class="text-white/30 hover:text-white transition-colors"
                   ><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -32746,7 +32752,7 @@
               </div>
               <div class="flex items-center gap-3">
                 <a
-                  href="https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj"
+                  href="https://github.com/ZhilingResearch/Ozone"
                   target="_blank"
                   class="text-white/30 hover:text-white transition-colors"
                   ><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -32783,7 +32789,7 @@
               </div>
               <div class="flex items-center gap-3">
                 <a
-                  href="https://github.com/IPNL-POLYU/UrbanNavDataset"
+                  href="https://github.com/ZhilingResearch/Ozone"
                   target="_blank"
                   class="text-white/30 hover:text-white transition-colors"
                   ><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -32820,7 +32826,7 @@
               </div>
               <div class="flex items-center gap-3">
                 <a
-                  href="https://github.com/ika-rwth-aachen/drone-dataset-tools"
+                  href="https://github.com/ZhilingResearch/Ozone"
                   target="_blank"
                   class="text-white/30 hover:text-white transition-colors"
                   ><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -32857,7 +32863,7 @@
               </div>
               <div class="flex items-center gap-3">
                 <a
-                  href="https://github.com/interaction-dataset/INTERACTION-Dataset"
+                  href="https://github.com/ZhilingResearch/Ozone"
                   target="_blank"
                   class="text-white/30 hover:text-white transition-colors"
                   ><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
