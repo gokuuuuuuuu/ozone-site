@@ -191,7 +191,12 @@
 
     <style>
       /* ── Base ── */
-      html,
+      html {
+        width: 100%;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
       body {
         width: 100%;
         min-height: 100vh;
@@ -262,8 +267,6 @@
         color: white;
         margin: 0;
         padding: 0;
-        overflow-x: hidden;
-        overflow-y: auto;
       }
 
       ::-webkit-scrollbar {
@@ -2767,7 +2770,7 @@
 
       <div
         id="ui-layer"
-        class="fixed inset-0 pointer-events-none overflow-hidden w-full h-full"
+        class="fixed inset-0 pointer-events-none overflow-clip w-full h-full"
         style="z-index: 25"
       >
         <div class="heatmap-legend" id="heatmap-legend">
@@ -32272,6 +32275,15 @@
       });
 
       window.addEventListener("wheel", resetIdleTimer, { passive: true });
+
+      // Ensure wheel events on ui-layer children always propagate to page scroll
+      uiLayerEl.addEventListener(
+        "wheel",
+        (e) => {
+          window.scrollBy(0, e.deltaY);
+        },
+        { passive: true },
+      );
 
       function resetIdleTimer() {
         lastInteractionTime = Date.now();
