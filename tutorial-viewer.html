@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en" class="antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ozone · Tutorial</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@100;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+            },
+            colors: {
+              gray: {
+                400: "#9ca3af",
+                500: "#6b7280",
+                800: "#1f2937",
+                900: "#111827",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #000;
+        color: #fff;
+        font-family: "Inter", sans-serif;
+      }
+      .bg-grid {
+        background-image:
+          linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.02) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.02) 1px,
+            transparent 1px
+          );
+        background-size: 64px 64px;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #000;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #222;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #333;
+      }
+
+      /* Document content styles */
+      #doc-content {
+        color: #d1d5db;
+        line-height: 1.8;
+      }
+      #doc-content h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #fff;
+        margin: 2rem 0 1rem;
+      }
+      #doc-content h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #fff;
+        margin: 1.8rem 0 0.8rem;
+      }
+      #doc-content h3 {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #e5e7eb;
+        margin: 1.5rem 0 0.6rem;
+      }
+      #doc-content h4 {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #e5e7eb;
+        margin: 1.2rem 0 0.5rem;
+      }
+      #doc-content p {
+        margin: 0.8rem 0;
+      }
+      #doc-content ul,
+      #doc-content ol {
+        margin: 0.8rem 0;
+        padding-left: 1.5rem;
+      }
+      #doc-content li {
+        margin: 0.3rem 0;
+      }
+      #doc-content ul li {
+        list-style-type: disc;
+      }
+      #doc-content ol li {
+        list-style-type: decimal;
+      }
+      #doc-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        margin: 1.5rem 0;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      #doc-content table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+      }
+      #doc-content th,
+      #doc-content td {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 0.6rem 1rem;
+        text-align: left;
+      }
+      #doc-content th {
+        background: rgba(255, 255, 255, 0.03);
+        color: #fff;
+        font-weight: 500;
+      }
+      #doc-content a {
+        color: #60a5fa;
+        text-decoration: underline;
+      }
+      #doc-content a:hover {
+        color: #93bbfd;
+      }
+      #doc-content code,
+      #doc-content pre {
+        font-family: "JetBrains Mono", monospace;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 4px;
+        padding: 0.15rem 0.4rem;
+        font-size: 0.9em;
+      }
+      #doc-content pre {
+        padding: 1rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+      }
+      #doc-content blockquote {
+        border-left: 3px solid #3b82f6;
+        padding-left: 1rem;
+        margin: 1rem 0;
+        color: #9ca3af;
+      }
+    </style>
+  </head>
+  <body
+    class="min-h-screen bg-grid selection:bg-blue-500/30 selection:text-white"
+  >
+    <!-- Nav -->
+    <nav
+      class="sticky top-0 z-50 border-b border-white/[0.08] bg-black/80 backdrop-blur-xl"
+    >
+      <div
+        class="max-w-[1400px] mx-auto px-6 h-16 flex items-center justify-between"
+      >
+        <a href="index.html" class="flex items-center gap-2">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13 10V3L4 14H11V21L20 10H13Z"
+              fill="#3B82F6"
+              stroke="#3B82F6"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="text-xl font-semibold tracking-tight text-white"
+            >Ozone</span
+          >
+        </a>
+
+        <div
+          class="hidden md:flex items-center gap-3 text-[11px] font-mono uppercase tracking-widest text-gray-500"
+        >
+          <a href="index.html" class="hover:text-white transition-colors"
+            >Home</a
+          >
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            class="opacity-50"
+          >
+            <path
+              d="M9 18l6-6-6-6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <a href="tutorials.html" class="hover:text-white transition-colors"
+            >Tutorials</a
+          >
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            class="opacity-50"
+          >
+            <path
+              d="M9 18l6-6-6-6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span id="breadcrumb-title" class="text-white">Document</span>
+        </div>
+
+        <a
+          href="index.html#apply"
+          class="flex items-center gap-2 pl-2 pr-4 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.08] transition-all duration-300 group"
+        >
+          <span
+            class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center group-hover:scale-105 transition-transform"
+          >
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              stroke-width="2.5"
+            >
+              <path
+                d="M5 12h14M12 5l7 7-7 7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+          <span class="text-sm font-medium text-white">Get Access</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Main -->
+    <main class="max-w-[900px] mx-auto px-6 pt-12 pb-24">
+      <!-- Back button -->
+      <div class="mb-12">
+        <a
+          href="tutorials.html"
+          class="flex items-center gap-2 px-4 py-2 rounded-full border border-white/[0.08] bg-transparent hover:bg-white/[0.03] transition-colors w-fit text-sm text-gray-300 hover:text-white"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              d="M19 12H5M12 19l-7-7 7-7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          Back to Tutorials
+        </a>
+      </div>
+
+      <!-- Title -->
+      <header class="mb-12">
+        <div
+          class="flex items-center gap-3 text-xs font-mono tracking-[0.2em] text-gray-500 uppercase mb-6"
+        >
+          <span>Learn</span>
+          <span class="w-1 h-1 rounded-full bg-gray-700"></span>
+          <span>Tutorial</span>
+        </div>
+        <h1
+          id="page-title"
+          class="text-3xl sm:text-4xl lg:text-[48px] font-semibold tracking-tight leading-tight text-white"
+        >
+          Loading...
+        </h1>
+      </header>
+
+      <!-- Loading state -->
+      <div id="loading" class="flex flex-col items-center justify-center py-24">
+        <div
+          class="w-8 h-8 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mb-4"
+        ></div>
+        <p class="text-sm text-gray-500 font-mono">Loading document...</p>
+      </div>
+
+      <!-- Error state -->
+      <div id="error" class="hidden py-24 text-center">
+        <p class="text-lg text-red-400 mb-2">Failed to load document</p>
+        <p id="error-msg" class="text-sm text-gray-500"></p>
+      </div>
+
+      <!-- Document content -->
+      <article
+        id="doc-content"
+        class="hidden rounded-[24px] border border-white/[0.05] bg-gradient-to-b from-[#0A0A0C] to-[#050505] p-8 sm:p-12"
+      ></article>
+    </main>
+
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var docFile = params.get("doc");
+        var title = params.get("title") || "Tutorial";
+
+        document.getElementById("page-title").textContent = title;
+        document.getElementById("breadcrumb-title").textContent = title;
+        document.title = "Ozone · " + title;
+
+        if (!docFile) {
+          document.getElementById("loading").classList.add("hidden");
+          document.getElementById("error").classList.remove("hidden");
+          document.getElementById("error-msg").textContent =
+            "No document specified.";
+          return;
+        }
+
+        var docUrl = "public/" + docFile;
+
+        fetch(docUrl)
+          .then(function (res) {
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            return res.arrayBuffer();
+          })
+          .then(function (arrayBuffer) {
+            return mammoth.convertToHtml(
+              { arrayBuffer: arrayBuffer },
+              {
+                convertImage: mammoth.images.imgElement(function (image) {
+                  return image.read("base64").then(function (imageBuffer) {
+                    return {
+                      src:
+                        "data:" + image.contentType + ";base64," + imageBuffer,
+                    };
+                  });
+                }),
+              },
+            );
+          })
+          .then(function (result) {
+            document.getElementById("loading").classList.add("hidden");
+            var content = document.getElementById("doc-content");
+            content.innerHTML = result.value;
+            content.classList.remove("hidden");
+          })
+          .catch(function (err) {
+            document.getElementById("loading").classList.add("hidden");
+            document.getElementById("error").classList.remove("hidden");
+            document.getElementById("error-msg").textContent = err.message;
+          });
+      })();
+    </script>
+  </body>
+</html>

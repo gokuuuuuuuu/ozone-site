@@ -1,0 +1,2426 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Download Incidents · Ozone</title>
+    <style>
+      /* ── _base.css (inlined) ── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #000;
+        color: #fff;
+        min-height: 100vh;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .rp-body {
+        background: #000;
+      }
+      .rp-nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        background: rgba(0, 0, 0, 0.82);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      .rp-nav-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 28px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .rp-logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 18px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: -0.02em;
+      }
+      .rp-logo svg {
+        color: #3b82f6;
+      }
+      .rp-crumb {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.35);
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .rp-crumb a {
+        color: rgba(255, 255, 255, 0.5);
+        transition: color 0.2s;
+      }
+      .rp-crumb a:hover {
+        color: #fff;
+      }
+      .rp-crumb b {
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 600;
+      }
+      .rp-crumb span {
+        opacity: 0.4;
+      }
+      .rp-nav-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px 6px 6px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        font-size: 12.5px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.85);
+        transition:
+          background 0.2s,
+          border-color 0.2s;
+      }
+      .rp-nav-cta:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+      .rp-nav-cta .dot {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: #3b82f6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .rp-main {
+        position: relative;
+        z-index: 1;
+      }
+      .rp-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 24px 0;
+        margin-top: 40px;
+      }
+      .rp-footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.3);
+      }
+      .rp-footer a {
+        color: rgba(255, 255, 255, 0.5);
+        transition: color 0.2s;
+      }
+      .rp-footer a:hover {
+        color: #fff;
+      }
+      @media (max-width: 640px) {
+        .rp-crumb {
+          display: none;
+        }
+        .rp-nav-inner {
+          padding: 0 16px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Leaflet (MIT) for the world-map heatmap -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <style>
+      /* ─────────────────────────────────────────────────────
+         Page shell
+         ───────────────────────────────────────────────────── */
+      .inc-wrap {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 32px 28px 120px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ── Top row: back button + search ── */
+      .inc-toprow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 22px;
+        flex-wrap: wrap;
+      }
+      .inc-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 16px 9px 12px;
+        border-radius: 999px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.05),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 12.5px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        transition:
+          background 0.22s,
+          border-color 0.22s,
+          transform 0.22s,
+          color 0.22s;
+      }
+      .inc-back .ico {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.9);
+        transition:
+          transform 0.22s,
+          background 0.22s;
+      }
+      .inc-back:hover {
+        background: rgba(255, 255, 255, 0.07);
+        border-color: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        transform: translateX(-2px);
+      }
+      .inc-back:hover .ico {
+        background: rgba(255, 255, 255, 0.14);
+        transform: translateX(-1px);
+      }
+
+      .inc-search {
+        position: relative;
+        flex: 1;
+        min-width: 240px;
+        max-width: 420px;
+      }
+      .inc-search input {
+        width: 100%;
+        padding: 11px 16px 11px 42px;
+        background: rgba(255, 255, 255, 0.035);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        color: #fff;
+        font-family: inherit;
+        font-size: 13px;
+        letter-spacing: 0.01em;
+        outline: none;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .inc-search input::placeholder {
+        color: rgba(255, 255, 255, 0.35);
+      }
+      .inc-search input:focus {
+        background: rgba(255, 255, 255, 0.055);
+        border-color: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
+      }
+      .inc-search .sico {
+        position: absolute;
+        top: 50%;
+        left: 14px;
+        transform: translateY(-50%);
+        color: rgba(255, 255, 255, 0.4);
+        pointer-events: none;
+      }
+      .inc-search .kbd {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        padding: 3px 7px;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9.5px;
+        color: rgba(255, 255, 255, 0.45);
+        letter-spacing: 0.04em;
+        pointer-events: none;
+      }
+
+      /* ── Page heading ── */
+      .inc-pagehead {
+        margin-bottom: 28px;
+      }
+      .inc-pagehead .eyebrow {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        color: rgba(255, 255, 255, 0.42);
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      .inc-pagehead h1 {
+        margin: 0;
+        font-size: 34px;
+        font-weight: 700;
+        letter-spacing: -0.018em;
+        color: #fff;
+      }
+      .inc-pagehead h1 em {
+        font-style: normal;
+        color: rgba(255, 255, 255, 0.72);
+      }
+      .inc-pagehead .lead {
+        margin: 14px 0 0;
+        font-size: 13.5px;
+        color: rgba(255, 255, 255, 0.58);
+        max-width: 620px;
+        line-height: 1.72;
+      }
+
+      /* ─────────────────────────────────────────────────────
+         World-map heatmap section
+         ───────────────────────────────────────────────────── */
+      .heatmap-section {
+        position: relative;
+        margin-top: 30px;
+        margin-bottom: 64px;
+        border-radius: 22px;
+        overflow: hidden;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.025),
+          rgba(255, 255, 255, 0.008)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        box-shadow: 0 30px 60px -40px rgba(0, 0, 0, 0.7);
+      }
+
+      .hm-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 22px 24px 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        flex-wrap: wrap;
+      }
+      .hm-head .title-group h3 {
+        margin: 0;
+        font-size: 19px;
+        font-weight: 600;
+        color: #fff;
+        letter-spacing: -0.01em;
+      }
+      .hm-head .title-group .k {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.18em;
+        color: rgba(170, 185, 205, 0.52);
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 8px;
+      }
+      .hm-head .title-group p {
+        margin: 8px 0 0;
+        font-size: 12.5px;
+        line-height: 1.7;
+        color: rgba(200, 210, 225, 0.62);
+        max-width: 540px;
+      }
+
+      /* Toggle pill group */
+      .hm-toggles {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+      }
+      .hm-tog {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 13px;
+        border-radius: 999px;
+        background: transparent;
+        border: none;
+        color: rgba(200, 210, 225, 0.68);
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+      }
+      .hm-tog .sw {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.35);
+        box-shadow: 0 0 8px transparent;
+        transition:
+          box-shadow 0.18s,
+          background 0.18s;
+      }
+      .hm-tog[data-k="all"] .sw {
+        background: #d4d8e0;
+      }
+      .hm-tog[data-k="ca"] .sw {
+        background: #3ec3d6;
+      }
+      .hm-tog[data-k="ads"] .sw {
+        background: #5b92dc;
+      }
+      .hm-tog[data-k="adas"] .sw {
+        background: #dc944a;
+      }
+      .hm-tog.active {
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+      }
+      .hm-tog:hover:not(.active) {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      /* Map container */
+      .hm-map-wrap {
+        position: relative;
+        height: 520px;
+        background: #070a12;
+      }
+      #incMap {
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Override Leaflet defaults for dark theme */
+      .leaflet-container {
+        background: #0a0d16 !important;
+        outline: none;
+        font-family: "Inter", sans-serif;
+      }
+      .leaflet-control-attribution {
+        background: rgba(10, 12, 22, 0.7) !important;
+        color: rgba(200, 210, 225, 0.55) !important;
+        font-size: 10px !important;
+        backdrop-filter: blur(8px);
+      }
+      .leaflet-control-attribution a {
+        color: rgba(167, 139, 250, 0.75) !important;
+      }
+      .leaflet-control-zoom a {
+        background: rgba(20, 24, 36, 0.88) !important;
+        color: rgba(235, 240, 250, 0.88) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      }
+      .leaflet-control-zoom a:hover {
+        background: rgba(30, 36, 52, 0.95) !important;
+        color: #fff !important;
+      }
+      .leaflet-popup-content-wrapper {
+        background: rgba(14, 16, 26, 0.96) !important;
+        color: rgba(235, 240, 250, 0.92) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-radius: 10px !important;
+        box-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.6) !important;
+      }
+      .leaflet-popup-tip {
+        background: rgba(14, 16, 26, 0.96) !important;
+      }
+      .leaflet-popup-content {
+        margin: 10px 14px !important;
+        font-size: 12px !important;
+      }
+      .leaflet-popup-content b {
+        color: #fff;
+      }
+      .leaflet-popup-content .src {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 4px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        color: rgba(200, 210, 225, 0.6);
+        text-transform: uppercase;
+      }
+      .leaflet-popup-content .src .d {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+      }
+
+      /* Map legend overlay */
+      .hm-legend {
+        position: absolute;
+        right: 14px;
+        bottom: 14px;
+        z-index: 400;
+        padding: 9px 13px;
+        border-radius: 8px;
+        background: rgba(10, 12, 22, 0.78);
+        backdrop-filter: blur(12px) saturate(160%);
+        -webkit-backdrop-filter: blur(12px) saturate(160%);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: rgba(220, 230, 245, 0.75);
+        font-size: 11px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .hm-legend .bar {
+        width: 110px;
+        height: 4px;
+        border-radius: 2px;
+        background: linear-gradient(
+          90deg,
+          rgba(90, 130, 160, 0.45),
+          rgba(130, 170, 200, 0.75),
+          rgba(200, 215, 230, 0.95),
+          #ffffff
+        );
+      }
+      .hm-legend .lab {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        color: rgba(200, 210, 225, 0.62);
+        text-transform: uppercase;
+      }
+
+      /* KPI strip below map */
+      .hm-kpis {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: rgba(255, 255, 255, 0.05);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .hm-kpi {
+        padding: 16px 18px;
+        background: rgba(8, 10, 18, 0.7);
+      }
+      .hm-kpi .k {
+        display: block;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        color: rgba(170, 185, 205, 0.55);
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .hm-kpi .v {
+        display: block;
+        font-size: 20px;
+        font-weight: 600;
+        color: #fff;
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: -0.005em;
+      }
+      .hm-kpi .v .small {
+        font-size: 12px;
+        color: rgba(170, 185, 205, 0.6);
+        margin-left: 6px;
+      }
+
+      /* ─────────────────────────────────────────────────────
+         Dataset stream
+         ───────────────────────────────────────────────────── */
+      .inc-stream {
+        display: flex;
+        flex-direction: column;
+        gap: 60px;
+      }
+
+      .inc-dataset {
+        position: relative;
+        padding: 14px 14px 22px;
+        border-radius: 26px;
+        background:
+          radial-gradient(
+            ellipse 640px 300px at 50% 0%,
+            rgba(255, 255, 255, 0.035),
+            transparent 72%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.02),
+            rgba(255, 255, 255, 0.006)
+          );
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 30px 60px -40px rgba(0, 0, 0, 0.7);
+        transition:
+          border-color 0.3s,
+          box-shadow 0.3s;
+      }
+      .inc-dataset:hover {
+        border-color: rgba(255, 255, 255, 0.09);
+        box-shadow: 0 38px 72px -40px rgba(0, 0, 0, 0.85);
+      }
+      .inc-dataset::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 22px;
+        width: 34px;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.22);
+      }
+
+      /* Caption & body */
+      .inc-caption {
+        padding: 22px 24px 6px;
+      }
+      .inc-caption h2 {
+        margin: 0;
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: -0.015em;
+        color: #fff;
+      }
+      .inc-caption .sub {
+        margin-top: 6px;
+        font-size: 12.5px;
+        color: rgba(190, 205, 225, 0.62);
+        letter-spacing: 0.01em;
+      }
+      .inc-caption .tags {
+        margin-top: 14px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        color: rgba(170, 185, 205, 0.55);
+        text-transform: uppercase;
+      }
+      .inc-caption .tags .sep {
+        color: rgba(255, 255, 255, 0.14);
+        margin: 0 8px;
+      }
+
+      .inc-body {
+        padding: 24px 24px 0;
+      }
+      .inc-desc {
+        max-width: 720px;
+        font-size: 13.5px;
+        line-height: 1.78;
+        color: rgba(200, 210, 225, 0.72);
+        margin: 0 0 32px;
+      }
+      .inc-desc b {
+        color: rgba(235, 240, 250, 0.92);
+        font-weight: 600;
+      }
+      .inc-divider {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.08);
+        margin: 0 0 24px;
+      }
+
+      /* Stats grid */
+      .inc-stats {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+        padding: 2px 0 30px;
+      }
+      .inc-stat .k {
+        display: block;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        color: rgba(170, 185, 205, 0.55);
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .inc-stat .v {
+        display: block;
+        font-size: 16.5px;
+        font-weight: 500;
+        color: #fff;
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: 0;
+      }
+
+      /* Sub-corpora (NHTSA) */
+      .inc-subcorpora {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        margin: 2px 0 28px;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      }
+      .subc {
+        padding: 18px 22px;
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .subc:last-child {
+        border-right: none;
+      }
+      .subc .row1 {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .subc h4 {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 500;
+        color: rgba(235, 240, 250, 0.88);
+        letter-spacing: 0.01em;
+      }
+      .subc .span {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10.5px;
+        color: rgba(190, 205, 225, 0.45);
+        letter-spacing: 0.06em;
+      }
+      .subc .num {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 22px;
+        font-weight: 500;
+        color: #fff;
+        letter-spacing: -0.01em;
+        margin: 0 0 10px;
+      }
+      .subc .num em {
+        font-style: normal;
+        font-size: 12px;
+        font-weight: 400;
+        color: rgba(190, 205, 225, 0.52);
+        margin-left: 8px;
+        letter-spacing: 0.02em;
+      }
+      .subc .breakdown {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        font-size: 11.5px;
+        color: rgba(190, 205, 225, 0.62);
+        font-family: "JetBrains Mono", monospace;
+      }
+      .subc .breakdown span b {
+        color: rgba(235, 240, 250, 0.9);
+        font-weight: 500;
+      }
+
+      /* Section label */
+      .inc-seclabel {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        color: rgba(170, 185, 205, 0.55);
+        text-transform: uppercase;
+        padding: 0 0 14px;
+      }
+
+      /* Reporter breakdown — plain tabular list, no bars */
+      .inc-rows {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .inc-row {
+        display: grid;
+        grid-template-columns: 28px 1fr auto;
+        align-items: baseline;
+        gap: 18px;
+        padding: 11px 2px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .inc-row .rk {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: rgba(170, 185, 205, 0.45);
+        letter-spacing: 0.04em;
+      }
+      .inc-row .label {
+        font-size: 13.5px;
+        font-weight: 400;
+        color: rgba(235, 240, 250, 0.85);
+      }
+      .inc-row .n {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12.5px;
+        color: rgba(235, 240, 250, 0.85);
+        white-space: nowrap;
+      }
+      .inc-row .n b {
+        color: #fff;
+        font-weight: 500;
+        margin-right: 8px;
+      }
+      .inc-row .n .pct {
+        color: rgba(170, 185, 205, 0.5);
+        font-weight: 400;
+      }
+
+      /* Top cities — plain inline list, no pills */
+      .inc-citylist {
+        font-size: 13px;
+        line-height: 1.85;
+        color: rgba(200, 210, 225, 0.72);
+        margin: 2px 0 28px;
+        max-width: 760px;
+      }
+      .inc-citylist span {
+        white-space: nowrap;
+      }
+      .inc-citylist span b {
+        color: rgba(235, 240, 250, 0.92);
+        font-weight: 500;
+      }
+      .inc-citylist span .n {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11.5px;
+        color: rgba(170, 185, 205, 0.68);
+        margin-left: 3px;
+      }
+      .inc-citylist .sep {
+        color: rgba(255, 255, 255, 0.14);
+        margin: 0 8px;
+      }
+
+      /* Schema tags — plain inline text separated by thin dividers */
+      .inc-schema {
+        font-size: 12.5px;
+        line-height: 1.95;
+        color: rgba(200, 210, 225, 0.65);
+        margin: 2px 0 28px;
+        max-width: 760px;
+      }
+      .inc-schema .sep {
+        color: rgba(255, 255, 255, 0.12);
+        margin: 0 10px;
+      }
+
+      /* Action bar */
+      .inc-actionbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 22px 24px 6px;
+        margin-top: 18px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .inc-action-left {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .inc-dl {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 11px 18px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.005em;
+        transition:
+          transform 0.18s,
+          background 0.18s,
+          border-color 0.18s,
+          box-shadow 0.18s,
+          color 0.18s;
+        cursor: pointer;
+        border: 1px solid transparent;
+        font-family: inherit;
+      }
+      .inc-dl.primary {
+        background: #f3f5f9;
+        color: #0a0b12;
+        border-color: #f3f5f9;
+      }
+      .inc-dl.primary:hover {
+        transform: translateY(-1px);
+        background: #fff;
+        border-color: #fff;
+        box-shadow: 0 8px 22px -10px rgba(255, 255, 255, 0.35);
+      }
+      .inc-dl.ghost {
+        background: rgba(255, 255, 255, 0.035);
+        border-color: rgba(255, 255, 255, 0.12);
+        color: rgba(235, 240, 250, 0.9);
+      }
+      .inc-dl.ghost:hover {
+        background: rgba(255, 255, 255, 0.07);
+        border-color: rgba(255, 255, 255, 0.22);
+        color: #fff;
+        transform: translateY(-1px);
+      }
+      .inc-dl .ext {
+        opacity: 0.55;
+        margin-left: 2px;
+        transition:
+          transform 0.18s ease,
+          opacity 0.18s;
+      }
+      .inc-dl:hover .ext {
+        opacity: 0.9;
+        transform: translate(1px, -1px);
+      }
+      .inc-dl.primary .ext {
+        color: #0a0b12;
+        opacity: 0.5;
+      }
+      .inc-dl.primary:hover .ext {
+        opacity: 0.75;
+      }
+
+      .inc-sizes {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11.5px;
+        letter-spacing: 0.06em;
+        color: rgba(170, 185, 205, 0.55);
+      }
+      .inc-sizes b {
+        color: rgba(220, 230, 245, 0.85);
+        font-weight: 500;
+      }
+      .inc-sizes .host {
+        color: rgba(220, 230, 245, 0.78);
+      }
+      .inc-sizes .sep {
+        margin: 0 6px;
+        color: rgba(170, 185, 205, 0.35);
+      }
+
+      /* ── Citation & terms modal ── */
+      .cite-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(4, 6, 14, 0.66);
+        backdrop-filter: blur(18px) saturate(160%);
+        -webkit-backdrop-filter: blur(18px) saturate(160%);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 500;
+        padding: 24px;
+      }
+      .cite-modal.active {
+        display: flex;
+        animation: citeFade 0.25s ease;
+      }
+      @keyframes citeFade {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .cite-card {
+        width: 100%;
+        max-width: 680px;
+        max-height: calc(100vh - 48px);
+        overflow-y: auto;
+        background: linear-gradient(
+          180deg,
+          rgba(20, 22, 32, 0.96),
+          rgba(12, 14, 22, 0.96)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 28px 30px 26px;
+        position: relative;
+        box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
+      }
+      .cite-card .close {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(220, 230, 245, 0.7);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          color 0.2s,
+          border-color 0.2s;
+      }
+      .cite-card .close:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+      .cite-card .head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .cite-card .head .d {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(235, 240, 250, 0.55);
+      }
+      .cite-card h3 {
+        margin: 0;
+        font-size: 17px;
+        font-weight: 600;
+        color: #fff;
+      }
+      .cite-card > p {
+        margin: 0 0 18px;
+        font-size: 13px;
+        color: rgba(200, 210, 225, 0.7);
+        line-height: 1.65;
+      }
+      .cite-card > p b {
+        color: #fff;
+      }
+      .cite-block-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: rgba(235, 240, 250, 0.88);
+        margin: 18px 0 10px;
+      }
+      .cite-block-title .num {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        color: rgba(235, 240, 250, 0.85);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        font-weight: 500;
+      }
+      .terms {
+        padding: 14px 16px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.028);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 12.5px;
+        color: rgba(200, 210, 225, 0.75);
+        line-height: 1.72;
+      }
+      .terms ol {
+        margin: 8px 0 0;
+        padding-left: 18px;
+      }
+      .terms ol li {
+        margin-bottom: 6px;
+      }
+      .terms b {
+        color: rgba(235, 240, 250, 0.92);
+      }
+      .bib {
+        position: relative;
+        padding: 14px 16px;
+        border-radius: 10px;
+        background: rgba(10, 12, 20, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11.5px;
+        line-height: 1.65;
+        color: rgba(220, 230, 245, 0.85);
+        white-space: pre-wrap;
+      }
+      .bib .copy {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 10px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(220, 230, 245, 0.75);
+        font-family: inherit;
+        font-size: 10.5px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .bib .copy:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+      }
+      .bib .copy.copied {
+        background: rgba(52, 211, 153, 0.2);
+        color: #6ee7b7;
+        border-color: rgba(52, 211, 153, 0.35);
+      }
+      .link-block {
+        padding: 14px 16px;
+        border-radius: 10px;
+        background: rgba(10, 12, 20, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .link-block .url {
+        display: block;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: rgba(235, 240, 250, 0.9);
+        word-break: break-all;
+        margin-bottom: 10px;
+      }
+      .link-block .actions {
+        display: flex;
+        gap: 6px;
+      }
+      .link-block .act {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 12px;
+        border-radius: 7px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(220, 230, 245, 0.85);
+        font-family: inherit;
+        font-size: 11.5px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          color 0.2s,
+          border-color 0.2s;
+      }
+      .link-block .act:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+      .link-block .act.copied {
+        background: rgba(52, 211, 153, 0.2);
+        color: #6ee7b7;
+        border-color: rgba(52, 211, 153, 0.35);
+      }
+      .link-block .pwd {
+        margin-top: 10px;
+        font-size: 11.5px;
+        color: rgba(190, 205, 225, 0.55);
+      }
+      .link-block .pwd b {
+        font-family: "JetBrains Mono", monospace;
+        color: #fff;
+        margin-left: 4px;
+      }
+      .cite-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+      }
+      .btn-ghost {
+        padding: 9px 18px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: rgba(235, 240, 250, 0.85);
+        font-family: inherit;
+        font-size: 13px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          border-color 0.2s;
+      }
+      .btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.24);
+        color: #fff;
+      }
+      .note-small {
+        margin-top: 8px;
+        font-size: 11.5px;
+        color: rgba(190, 205, 225, 0.45);
+      }
+
+      /* Responsive */
+      @media (max-width: 900px) {
+        .hm-map-wrap {
+          height: 420px;
+        }
+        .hm-kpis {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .inc-stats {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 24px 14px;
+        }
+        .inc-subcorpora {
+          grid-template-columns: 1fr;
+        }
+        .inc-row .label {
+          flex-basis: 140px;
+          font-size: 12.5px;
+        }
+      }
+      @media (max-width: 640px) {
+        .inc-wrap {
+          padding: 24px 18px 80px;
+        }
+        .inc-pagehead h1 {
+          font-size: 27px;
+        }
+        .inc-stream {
+          gap: 42px;
+        }
+        .hm-head {
+          padding: 18px 18px 12px;
+          flex-direction: column;
+        }
+        .hm-map-wrap {
+          height: 360px;
+        }
+        .inc-caption {
+          padding: 18px 18px 4px;
+        }
+        .inc-caption h2 {
+          font-size: 22px;
+        }
+        .inc-body {
+          padding: 20px 18px 0;
+        }
+        .inc-actionbar {
+          padding: 18px 18px 4px;
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .inc-sizes {
+          text-align: right;
+        }
+      }
+      @media (max-width: 520px) {
+        .inc-toprow {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .inc-search {
+          max-width: none;
+        }
+        .inc-row {
+          flex-wrap: wrap;
+        }
+        .inc-row .label {
+          flex-basis: 100%;
+          margin-bottom: 6px;
+        }
+        .inc-row .n {
+          min-width: 90px;
+        }
+      }
+    </style>
+  </head>
+  <body class="rp-body">
+    <header class="rp-nav">
+      <div class="rp-nav-inner">
+        <a class="rp-logo" href="../index.html">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          <span>Ozone</span>
+        </a>
+        <div class="rp-crumb">
+          <a href="../index.html">Home</a><span>›</span> <span>Resources</span
+          ><span>›</span>
+          <b>Download Incidents</b>
+        </div>
+        <a class="rp-nav-cta" href="../index.html#apply">
+          <span class="dot"
+            ><svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#fff"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg
+          ></span>
+          Get Access
+        </a>
+      </div>
+    </header>
+
+    <main class="rp-main">
+      <div class="inc-wrap">
+        <!-- Top row -->
+        <div class="inc-toprow">
+          <a href="../index.html" class="inc-back">
+            <span class="ico">
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M19 12H5" />
+                <polyline points="12 19 5 12 12 5" />
+              </svg>
+            </span>
+            Back
+          </a>
+          <form class="inc-search" role="search" onsubmit="return false;">
+            <span class="sico">
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="M21 21l-4.3-4.3" />
+              </svg>
+            </span>
+            <input
+              id="incSearch"
+              type="search"
+              placeholder="Search datasets, operators, cities…"
+              autocomplete="off"
+            />
+            <span class="kbd">⌘ K</span>
+          </form>
+        </div>
+
+        <!-- Page heading -->
+        <div class="inc-pagehead">
+          <div class="eyebrow">Downloads · Incidents</div>
+          <h1>AV &amp; ADAS incident <em>records.</em></h1>
+          <p class="lead">
+            Two curated incident corpora covering California's state-mandated AV
+            collision reports and NHTSA's federal Standing General Order for ADS
+            and ADAS. Every record is cleaned, geo-located and tagged — ready
+            for comparative safety analysis and SOTIF scenario construction.
+          </p>
+        </div>
+
+        <!-- World-map heatmap -->
+        <section class="heatmap-section" id="heatmapSection">
+          <div class="hm-head">
+            <div class="title-group">
+              <span class="k">Geospatial · All incidents</span>
+              <h3>Where incidents occur</h3>
+              <p>
+                Every geocoded incident from the CA DMV and NHTSA SGO corpora,
+                aggregated to city centroids and rendered as a density heatmap.
+                Toggle the overlays to compare ADS vs ADAS vs California-only
+                reporting.
+              </p>
+            </div>
+
+            <div
+              class="hm-toggles"
+              role="tablist"
+              aria-label="Heatmap dataset selector"
+            >
+              <button class="hm-tog active" data-k="all" type="button">
+                <span class="sw"></span>All
+              </button>
+              <button class="hm-tog" data-k="ca" type="button">
+                <span class="sw"></span>CA&nbsp;DMV
+              </button>
+              <button class="hm-tog" data-k="ads" type="button">
+                <span class="sw"></span>NHTSA&nbsp;ADS
+              </button>
+              <button class="hm-tog" data-k="adas" type="button">
+                <span class="sw"></span>NHTSA&nbsp;ADAS
+              </button>
+            </div>
+          </div>
+
+          <div class="hm-map-wrap">
+            <div id="incMap" aria-label="World incident heatmap"></div>
+            <div class="hm-legend">
+              <span class="lab">Density</span>
+              <span class="bar"></span>
+              <span class="lab">Low → High</span>
+            </div>
+          </div>
+
+          <div class="hm-kpis">
+            <div class="hm-kpi">
+              <span class="k">Total records</span
+              ><span class="v" id="kpiTotal">—</span>
+            </div>
+            <div class="hm-kpi">
+              <span class="k">Unique cities</span
+              ><span class="v" id="kpiCities">—</span>
+            </div>
+            <div class="hm-kpi">
+              <span class="k">Top city</span
+              ><span class="v" id="kpiTop">—</span>
+            </div>
+            <div class="hm-kpi">
+              <span class="k">Coverage</span
+              ><span class="v" id="kpiCov">—</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Dataset stream -->
+        <div class="inc-stream" id="incStream">
+          <!-- ─────────────────────────────────────────────
+               1. California DMV AV Collision Reports
+               ───────────────────────────────────────────── -->
+          <article
+            class="inc-dataset"
+            data-tone="ca"
+            id="ca-dmv"
+            data-name="california dmv autonomous vehicle collision reports waymo cruise zoox gm united states california cvc 38750 ads san francisco"
+          >
+            <div class="inc-caption">
+              <h2>California DMV · AV Collision Reports</h2>
+              <div class="sub">
+                United States · California · 2014 – 2025 · CVC §38750 mandate ·
+                913 records
+              </div>
+              <div class="tags">
+                State regulator<span class="sep">·</span>ADS test fleet<span
+                  class="sep"
+                  >·</span
+                >OL-316 form
+              </div>
+            </div>
+
+            <div class="inc-body">
+              <p class="inc-desc">
+                The
+                <b>primary state-level source of ADS collision reports</b> in
+                the United States. Under California Vehicle Code §38750, every
+                manufacturer holding a DMV Autonomous Vehicle Testing or
+                Deployment Permit must report any collision involving an
+                autonomous test vehicle within 10 days. Ozone aggregates both
+                digitisation phases into <b>913 incident records</b> from
+                October 2014 to December 2025 — the longest continuous
+                state-level AV collision time series currently available. The
+                corpus is dominated by San Francisco (644, 70.5%) and the
+                Mountain View / Silicon Valley belt where commercial AV
+                deployment is most concentrated.
+              </p>
+
+              <div class="inc-divider"></div>
+
+              <div class="inc-stats">
+                <div class="inc-stat">
+                  <span class="k">Records</span><span class="v">913</span>
+                </div>
+                <div class="inc-stat">
+                  <span class="k">ADS engaged</span><span class="v">532</span>
+                </div>
+                <div class="inc-stat">
+                  <span class="k">Conventional</span><span class="v">378</span>
+                </div>
+                <div class="inc-stat">
+                  <span class="k">With injury</span><span class="v">11</span>
+                </div>
+                <div class="inc-stat">
+                  <span class="k">Updated</span><span class="v">Apr 2026</span>
+                </div>
+              </div>
+
+              <div class="inc-seclabel">Top reporting entities</div>
+              <div class="inc-rows">
+                <div class="inc-row">
+                  <span class="rk">01</span><span class="label">Waymo</span
+                  ><span class="n"
+                    ><b>394</b><span class="pct">43.2%</span></span
+                  >
+                </div>
+                <div class="inc-row">
+                  <span class="rk">02</span><span class="label">Zoox</span
+                  ><span class="n"
+                    ><b>146</b><span class="pct">16.0%</span></span
+                  >
+                </div>
+                <div class="inc-row">
+                  <span class="rk">03</span><span class="label">Cruise</span
+                  ><span class="n"
+                    ><b>137</b><span class="pct">15.0%</span></span
+                  >
+                </div>
+                <div class="inc-row">
+                  <span class="rk">04</span><span class="label">GM Cruise</span
+                  ><span class="n"
+                    ><b>101</b><span class="pct">11.1%</span></span
+                  >
+                </div>
+                <div class="inc-row">
+                  <span class="rk">05</span
+                  ><span class="label">Apple · Google Auto</span
+                  ><span class="n"><b>46</b><span class="pct">5.0%</span></span>
+                </div>
+                <div class="inc-row">
+                  <span class="rk">06</span
+                  ><span class="label">Pony.ai · Mercedes · Nuro · others</span
+                  ><span class="n"><b>89</b><span class="pct">9.7%</span></span>
+                </div>
+              </div>
+
+              <div class="inc-seclabel" style="margin-top: 22px">
+                Top cities
+              </div>
+              <p class="inc-citylist">
+                <span><b>San Francisco</b><span class="n">644</span></span
+                ><span class="sep">·</span>
+                <span><b>Mountain View</b><span class="n">71</span></span
+                ><span class="sep">·</span>
+                <span><b>Los Angeles</b><span class="n">46</span></span
+                ><span class="sep">·</span>
+                <span><b>Palo Alto</b><span class="n">34</span></span
+                ><span class="sep">·</span>
+                <span>Sunnyvale<span class="n">13</span></span
+                ><span class="sep">·</span>
+                <span>San Jose<span class="n">13</span></span
+                ><span class="sep">·</span>
+                <span>Santa Clara<span class="n">13</span></span
+                ><span class="sep">·</span>
+                <span>Santa Monica<span class="n">12</span></span>
+              </p>
+
+              <div class="inc-seclabel" style="margin-top: 4px">
+                Schema highlights
+              </div>
+              <p class="inc-schema">
+                Date · Time · GPS<span class="sep">/</span> Vehicle make · model
+                · year<span class="sep">/</span> Drive mode<span class="sep"
+                  >/</span
+                >
+                Weather · surface · lighting<span class="sep">/</span> Pre-crash
+                movement<span class="sep">/</span> Collision type<span
+                  class="sep"
+                  >/</span
+                >
+                CVC violations<span class="sep">/</span>
+                Narrative text
+              </p>
+            </div>
+
+            <div class="inc-actionbar">
+              <div class="inc-action-left">
+                <a
+                  class="inc-dl primary"
+                  href="#"
+                  data-cite-download="https://pan.baidu.com/s/ozone-incidents-ca-dmv"
+                  data-cite-pwd="ozon"
+                  data-cite-label="California DMV AV Collision Reports"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  Download CA DMV dataset
+                  <svg
+                    class="ext"
+                    width="11"
+                    height="11"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 17L17 7" />
+                    <polyline points="7 7 17 7 17 17" />
+                  </svg>
+                </a>
+                <a
+                  class="inc-dl ghost"
+                  href="https://www.dmv.ca.gov/portal/vehicle-industry-services/autonomous-vehicles/autonomous-vehicle-collision-reports/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Original reports published by California DMV"
+                >
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M2 12h20" />
+                    <path
+                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+                    />
+                  </svg>
+                  Official source · CA DMV
+                  <svg
+                    class="ext"
+                    width="11"
+                    height="11"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 17L17 7" />
+                    <polyline points="7 7 17 7 17 17" />
+                  </svg>
+                </a>
+              </div>
+              <div class="inc-sizes">
+                <span class="host">百度网盘</span>
+                <span class="sep">·</span>
+                xlsx + csv <b>~5 MB</b>
+              </div>
+            </div>
+          </article>
+
+          <!-- ─────────────────────────────────────────────
+               2. NHTSA Standing General Order (ADS + ADAS)
+               ───────────────────────────────────────────── -->
+          <article
+            class="inc-dataset"
+            data-tone="us"
+            id="nhtsa-sgo"
+            data-name="nhtsa standing general order sgo 2021-01 ads adas waymo tesla autopilot cruise gm transdev zoox united states federal phoenix austin houston"
+          >
+            <div class="inc-caption">
+              <h2>NHTSA Standing General Order · ADS + ADAS</h2>
+              <div class="sub">
+                United States · Federal · SGO 2021-01 · ADS (Jul 2021–Feb 2026)
+                + ADAS (Aug 2019–Feb 2026) · 7,784 records
+              </div>
+              <div class="tags">
+                Federal<span class="sep">·</span>ADS + ADAS<span class="sep"
+                  >·</span
+                >Monthly submissions
+              </div>
+            </div>
+
+            <div class="inc-body">
+              <p class="inc-desc">
+                The <b>federal-level crash reporting mandate</b> for automated
+                driving systems. SGO 2021-01 requires manufacturers and
+                operators of SAE Level 2 ADAS or Level 3–5 ADS vehicles to
+                report any crash occurring while automation is engaged — or
+                within 30 seconds of disengagement — within 1 day for fatal /
+                hospitalised / airbag / tow-away crashes and within 10 days
+                otherwise. Ozone ingests the monthly public releases and
+                separates the <b>ADS</b> and <b>ADAS</b> sub-corpora for direct
+                AV-vs-ADAS safety rate estimation.
+              </p>
+
+              <div class="inc-divider"></div>
+
+              <div class="inc-subcorpora">
+                <div class="subc ads">
+                  <div class="row1">
+                    <h4>ADS sub-corpus</h4>
+                    <span class="span">Jul 2021 – Feb 2026</span>
+                  </div>
+                  <div class="num">3,012<em>records · 697 engaged</em></div>
+                  <div class="breakdown">
+                    <span>Fatal <b>5</b></span>
+                    <span>Serious <b>25</b></span>
+                    <span>Minor <b>275</b></span>
+                    <span>No-injury <b>2,555</b></span>
+                  </div>
+                </div>
+                <div class="subc adas">
+                  <div class="row1">
+                    <h4>ADAS sub-corpus</h4>
+                    <span class="span">Aug 2019 – Feb 2026</span>
+                  </div>
+                  <div class="num">4,772<em>records · 938 engaged</em></div>
+                  <div class="breakdown">
+                    <span>Fatal <b>134</b></span>
+                    <span>Serious <b>107</b></span>
+                    <span>Minor <b>248</b></span>
+                    <span>With severity <b>1,045</b></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="inc-seclabel">Top reporters · ADS</div>
+              <div class="inc-rows">
+                <div class="inc-row">
+                  <span class="rk">01</span><span class="label">Waymo LLC</span
+                  ><span class="n"
+                    ><b>1,898</b><span class="pct">62.8%</span></span
+                  >
+                </div>
+                <div class="inc-row">
+                  <span class="rk">02</span><span class="label">Cruise LLC</span
+                  ><span class="n"
+                    ><b>207</b><span class="pct">6.9%</span></span
+                  >
+                </div>
+                <div class="inc-row">
+                  <span class="rk">03</span
+                  ><span class="label">General Motors LLC</span
+                  ><span class="n"
+                    ><b>201</b><span class="pct">6.7%</span></span
+                  >
+                </div>
+                <div class="inc-row">
+                  <span class="rk">04</span
+                  ><span class="label">Transdev Alternative Services</span
+                  ><span class="n"
+                    ><b>188</b><span class="pct">6.2%</span></span
+                  >
+                </div>
+                <div class="inc-row">
+                  <span class="rk">05</span><span class="label">Zoox, Inc.</span
+                  ><span class="n"
+                    ><b>151</b><span class="pct">5.0%</span></span
+                  >
+                </div>
+              </div>
+
+              <div class="inc-seclabel" style="margin-top: 22px">
+                Top reporter · ADAS
+              </div>
+              <div class="inc-rows">
+                <div class="inc-row">
+                  <span class="rk">01</span
+                  ><span class="label">Tesla, Inc.</span
+                  ><span class="n"
+                    ><b>4,025</b><span class="pct">80.1%</span></span
+                  >
+                </div>
+              </div>
+
+              <div class="inc-seclabel" style="margin-top: 22px">
+                Top cities (ADS + ADAS)
+              </div>
+              <p class="inc-citylist">
+                <span><b>San Francisco</b>, CA<span class="n">1,408</span></span
+                ><span class="sep">·</span>
+                <span><b>Los Angeles</b>, CA<span class="n">450</span></span
+                ><span class="sep">·</span>
+                <span><b>Phoenix</b>, AZ<span class="n">305</span></span
+                ><span class="sep">·</span>
+                <span><b>Austin</b>, TX<span class="n">271</span></span
+                ><span class="sep">·</span>
+                <span>Tempe, AZ<span class="n">146</span></span
+                ><span class="sep">·</span>
+                <span>Las Vegas, NV<span class="n">96</span></span
+                ><span class="sep">·</span>
+                <span>Houston, TX<span class="n">69</span></span
+                ><span class="sep">·</span>
+                <span>Scottsdale, AZ<span class="n">63</span></span>
+              </p>
+
+              <div class="inc-seclabel" style="margin-top: 4px">
+                Severity coding · schema
+              </div>
+              <p class="inc-schema">
+                Fatal<span class="sep">/</span> Serious injury<span class="sep"
+                  >/</span
+                >
+                Minor injury<span class="sep">/</span> No injury reported<span
+                  class="sep"
+                  >/</span
+                >
+                Airbag deployment<span class="sep">/</span> Tow-away<span
+                  class="sep"
+                  >/</span
+                >
+                GPS · roadway · weather<span class="sep">/</span> Crash partner
+                · contact area<span class="sep">/</span>
+                Automation engaged state
+              </p>
+            </div>
+
+            <div class="inc-actionbar">
+              <div class="inc-action-left">
+                <a
+                  class="inc-dl primary"
+                  href="#"
+                  data-cite-download="https://pan.baidu.com/s/ozone-incidents-nhtsa-sgo"
+                  data-cite-pwd="ozon"
+                  data-cite-label="NHTSA SGO Incident Reports (ADS + ADAS)"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  Download ADS + ADAS
+                  <svg
+                    class="ext"
+                    width="11"
+                    height="11"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 17L17 7" />
+                    <polyline points="7 7 17 7 17 17" />
+                  </svg>
+                </a>
+                <a
+                  class="inc-dl ghost"
+                  href="https://www.nhtsa.gov/laws-regulations/standing-general-order-crash-reporting"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Original SGO releases from NHTSA"
+                >
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M2 12h20" />
+                    <path
+                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+                    />
+                  </svg>
+                  Official source · NHTSA
+                  <svg
+                    class="ext"
+                    width="11"
+                    height="11"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 17L17 7" />
+                    <polyline points="7 7 17 7 17 17" />
+                  </svg>
+                </a>
+              </div>
+              <div class="inc-sizes">
+                <span class="host">百度网盘</span>
+                <span class="sep">·</span>
+                xlsx + csv <b>~20 MB</b>
+              </div>
+            </div>
+          </article>
+        </div>
+        <!-- /.inc-stream -->
+      </div>
+    </main>
+
+    <!-- Citation & terms modal -->
+    <div
+      class="cite-modal"
+      id="citeModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="citeTitle"
+    >
+      <div class="cite-card">
+        <button type="button" class="close" aria-label="Close" data-cite-cancel>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+        <div class="head">
+          <span class="d"></span>
+          <h3 id="citeTitle">Terms &amp; citation</h3>
+        </div>
+        <p>
+          Before downloading <b id="citeWhat">this dataset</b>, please review
+          the terms of use below and include the citation in any publication,
+          report, or derivative work.
+        </p>
+
+        <div class="cite-block-title">
+          <span class="num">1</span>Terms of use · 使用声明
+        </div>
+        <div class="terms">
+          <p>
+            本数据集免费向学术及非学术机构开放，仅限用于<b>非商业用途</b>，包括但不限于学术研究、教学活动或科学出版物。在使用本数据集时，即视为您同意以下条款：
+          </p>
+          <ol>
+            <li>
+              <b>引用要求</b>：凡使用 Ozone
+              数据集的任何成果，均须明确引用该数据集（见下方 BibTeX）。
+            </li>
+            <li>
+              <b>禁止再分发</b
+              >：不得以任何形式分发本数据集或其修改版本。允许分发的衍生成果仅限于对数据集的抽象化表达，例如基于数据训练的模型，或不直接包含任何原始数据、且无法反向恢复数据集或与其在性质上相似内容的附加标注成果。
+            </li>
+            <li>
+              <b>商业用途限制</b
+              >：不得将本数据集或任何衍生成果用于商业目的，包括但不限于对数据进行授权、出售，或以获取商业利益为目的的任何使用行为。
+            </li>
+            <li>
+              <b>权利保留</b
+              >：除本说明中明确授予的权利外，其余一切权利均由数据集提供方保留。
+            </li>
+          </ol>
+        </div>
+
+        <div class="cite-block-title">
+          <span class="num">2</span>Citation · 引用格式
+        </div>
+        <div class="bib" id="citeBib">
+          <button type="button" class="copy" data-bib-copy>
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="9" y="9" width="13" height="13" rx="2" />
+              <path
+                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              />
+            </svg>
+            Copy</button
+          ><span class="bib-text"
+            >@article{zheng2026ozone, title = {Ozone: A Unified Platform for
+            Transportation Research}, author = {Zheng, Ou and Feng, Ruyi and
+            Yang, Yufeng and Ding, Shengxuan and Yue, Lishengsa and Li, Ye and
+            Zheng, Yunhan and Kong, Minwei and Zhuang, Dingyi and Qu, Ao and Li,
+            Zhibin and Wang, Dongjie and Ying, Wangyang}, journal = {arXiv
+            preprint arXiv:2604.10959}, year = {2026}, doi =
+            {10.48550/arXiv.2604.10959}, note = {Accessed YYYY-MM-DD} }</span
+          >
+        </div>
+        <p class="note-small">
+          Replace <b>YYYY-MM-DD</b> with your access date.
+        </p>
+
+        <div class="cite-block-title">
+          <span class="num">3</span>Download link · 下载链接
+        </div>
+        <div class="link-block">
+          <span class="url" id="citeUrl">https://pan.baidu.com/s/</span>
+          <div class="actions">
+            <button type="button" class="act" data-link-copy>
+              <svg
+                width="11"
+                height="11"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="9" y="9" width="13" height="13" rx="2" />
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                />
+              </svg>
+              Copy
+            </button>
+            <a
+              class="act"
+              id="citeOpen"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M7 17L17 7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
+            </a>
+          </div>
+          <div class="pwd">Extract code · 提取码:<b id="citePwd">ozon</b></div>
+        </div>
+
+        <p class="note-small">
+          By copying or opening the link you acknowledge the terms above.
+        </p>
+
+        <div class="cite-actions">
+          <button type="button" class="btn-ghost" data-cite-cancel>
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="rp-footer">
+      <div class="rp-footer-inner">
+        <div>© 2026 Ozone · A Unified Platform for Transportation Research</div>
+        <div><a href="../index.html">← Back to site</a></div>
+      </div>
+    </footer>
+
+    <!-- _base.js inlined above -->
+    <!-- Leaflet + heat plugin (MIT, served from unpkg/jsDelivr) -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <!-- Incident point data — provide fallback if file missing -->
+    <script>
+      if (typeof INC_DATA === "undefined")
+        var INC_DATA = { ca: [], ads: [], adas: [] };
+    </script>
+
+    <script>
+      (function () {
+        // ── Client-side search over dataset cards ─────────
+        const input = document.getElementById("incSearch");
+        const cards = document.querySelectorAll("#incStream .inc-dataset");
+        if (input && cards.length) {
+          input.addEventListener("input", function () {
+            const q = this.value.trim().toLowerCase();
+            cards.forEach(function (el) {
+              const hay = (el.getAttribute("data-name") || "").toLowerCase();
+              el.style.display = !q || hay.includes(q) ? "" : "none";
+            });
+          });
+          document.addEventListener("keydown", function (e) {
+            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+              e.preventDefault();
+              input.focus();
+              input.select();
+            }
+          });
+        }
+
+        // ── Citation modal ─────────
+        const modal = document.getElementById("citeModal");
+        const whatEl = document.getElementById("citeWhat");
+        const urlEl = document.getElementById("citeUrl");
+        const pwdEl = document.getElementById("citePwd");
+        const openBtn = document.getElementById("citeOpen");
+        function openCite(href, label, pwd) {
+          if (!modal) return;
+          if (label) whatEl.textContent = label;
+          urlEl.textContent = href || "";
+          openBtn.setAttribute("href", href || "#");
+          pwdEl.textContent = pwd || "—";
+          const pwdRow = modal.querySelector(".link-block .pwd");
+          if (pwdRow) pwdRow.style.display = pwd ? "" : "none";
+          modal.classList.add("active");
+        }
+        function closeCite() {
+          modal && modal.classList.remove("active");
+        }
+        document.querySelectorAll("[data-cite-download]").forEach(function (a) {
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+            openCite(
+              a.getAttribute("data-cite-download"),
+              a.getAttribute("data-cite-label") || "this dataset",
+              a.getAttribute("data-cite-pwd") || "",
+            );
+          });
+        });
+        if (modal) {
+          modal.addEventListener("click", function (e) {
+            if (e.target === modal) closeCite();
+          });
+          modal.querySelectorAll("[data-cite-cancel]").forEach(function (b) {
+            b.addEventListener("click", closeCite);
+          });
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && modal.classList.contains("active"))
+              closeCite();
+          });
+        }
+
+        // ── Copy helpers ─────────
+        function flashCopied(btn) {
+          const orig = btn.innerHTML;
+          btn.classList.add("copied");
+          btn.innerHTML =
+            '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied';
+          setTimeout(function () {
+            btn.classList.remove("copied");
+            btn.innerHTML = orig;
+          }, 1600);
+        }
+        function doCopy(text, btn) {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function () {
+              flashCopied(btn);
+            });
+          } else {
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+              document.execCommand("copy");
+              flashCopied(btn);
+            } catch (_) {}
+            document.body.removeChild(ta);
+          }
+        }
+        document.addEventListener("click", function (e) {
+          const btn = e.target.closest("[data-bib-copy]");
+          if (!btn) return;
+          const bibText = document.querySelector("#citeBib .bib-text");
+          if (!bibText) return;
+          doCopy(bibText.textContent, btn);
+        });
+        const linkCopy = modal && modal.querySelector("[data-link-copy]");
+        if (linkCopy) {
+          linkCopy.addEventListener("click", function () {
+            const url = urlEl ? urlEl.textContent.trim() : "";
+            const pwd = pwdEl ? pwdEl.textContent.trim() : "";
+            const text = pwd && pwd !== "—" ? url + "  提取码: " + pwd : url;
+            doCopy(text, linkCopy);
+          });
+        }
+
+        // ── Leaflet heatmap ─────────
+        if (typeof L === "undefined" || typeof INC_DATA === "undefined") {
+          console.warn("Leaflet or INC_DATA not loaded");
+          return;
+        }
+
+        const map = L.map("incMap", {
+          zoomControl: true,
+          worldCopyJump: true,
+          minZoom: 2,
+          maxZoom: 11,
+          attributionControl: true,
+          preferCanvas: true,
+        }).setView([38.5, -97.5], 3.5);
+
+        // Dark-theme tile layer (CartoDB Dark Matter)
+        L.tileLayer(
+          "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png",
+          {
+            subdomains: "abcd",
+            attribution:
+              '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/">CARTO</a>',
+            maxZoom: 19,
+          },
+        ).addTo(map);
+        L.tileLayer(
+          "https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png",
+          {
+            subdomains: "abcd",
+            pane: "shadowPane",
+            maxZoom: 19,
+            opacity: 0.55,
+          },
+        ).addTo(map);
+
+        // Build heat data:  [lat, lon, weight]
+        // Weight = log(count+1) for balanced visualization (dominated by SF without log)
+        const logScale = (n) => Math.log(n + 1);
+
+        // Base heat options — radius/blur are rescaled per zoom level below
+        const layers = {
+          ca: L.heatLayer([], {
+            radius: 14,
+            blur: 11,
+            max: 1.0,
+            minOpacity: 0.4,
+            gradient: {
+              0.2: "#0e5a6b",
+              0.45: "#1a8fa4",
+              0.7: "#3ec3d6",
+              0.9: "#9be2ec",
+              1: "#ffffff",
+            },
+          }),
+          ads: L.heatLayer([], {
+            radius: 14,
+            blur: 11,
+            max: 1.0,
+            minOpacity: 0.4,
+            gradient: {
+              0.2: "#1b3a7a",
+              0.45: "#2f63b8",
+              0.7: "#5b92dc",
+              0.9: "#b8cff0",
+              1: "#ffffff",
+            },
+          }),
+          adas: L.heatLayer([], {
+            radius: 13,
+            blur: 10,
+            max: 1.0,
+            minOpacity: 0.35,
+            gradient: {
+              0.2: "#6b3a10",
+              0.45: "#b06820",
+              0.7: "#dc944a",
+              0.9: "#f4d4a4",
+              1: "#ffffff",
+            },
+          }),
+        };
+
+        function build(src, color) {
+          const points = INC_DATA[src] || [];
+          const maxW =
+            points.reduce((m, p) => Math.max(m, logScale(p[3])), 0) || 1;
+          const scaled = points.map((p) => [p[1], p[2], logScale(p[3]) / maxW]);
+          return scaled;
+        }
+        layers.ca.setLatLngs(build("ca"));
+        layers.ads.setLatLngs(build("ads"));
+        layers.adas.setLatLngs(build("adas"));
+
+        // Marker layer for hoverable dots — only show strongest points
+        function cityMarkers(src, color) {
+          const pts = (INC_DATA[src] || []).slice().sort((a, b) => b[3] - a[3]);
+          const top = pts.slice(0, 60); // top 60 cities per layer
+          const layer = L.layerGroup();
+          top.forEach((p) => {
+            const [city, lat, lon, n] = p;
+            const r = Math.min(14, 2 + Math.sqrt(n) * 0.55);
+            const m = L.circleMarker([lat, lon], {
+              radius: r,
+              color: color,
+              weight: 1,
+              opacity: 0.9,
+              fillColor: color,
+              fillOpacity: 0.12,
+            });
+            const srcLabel =
+              src === "ca"
+                ? "CA DMV"
+                : src === "ads"
+                  ? "NHTSA · ADS"
+                  : "NHTSA · ADAS";
+            m.bindPopup(
+              "<b>" +
+                city +
+                "</b><br/>" +
+                n.toLocaleString() +
+                " incident" +
+                (n > 1 ? "s" : "") +
+                '<div class="src"><span class="d" style="background:' +
+                color +
+                '"></span>' +
+                srcLabel +
+                "</div>",
+            );
+            layer.addLayer(m);
+          });
+          return layer;
+        }
+        const markers = {
+          ca: cityMarkers("ca", "#3ec3d6"),
+          ads: cityMarkers("ads", "#5b92dc"),
+          adas: cityMarkers("adas", "#dc944a"),
+        };
+
+        function show(which) {
+          ["ca", "ads", "adas"].forEach((k) => {
+            if (map.hasLayer(layers[k])) map.removeLayer(layers[k]);
+            if (map.hasLayer(markers[k])) map.removeLayer(markers[k]);
+          });
+          const keys = which === "all" ? ["adas", "ads", "ca"] : [which]; // order so CA sits on top
+          keys.forEach((k) => {
+            layers[k].addTo(map);
+            markers[k].addTo(map);
+          });
+        }
+
+        // KPI panel updates
+        const kpiTotal = document.getElementById("kpiTotal");
+        const kpiCities = document.getElementById("kpiCities");
+        const kpiTop = document.getElementById("kpiTop");
+        const kpiCov = document.getElementById("kpiCov");
+
+        function updateKpis(which) {
+          let pts = [];
+          let declared = 0;
+          if (which === "all") {
+            pts = [].concat(INC_DATA.ca, INC_DATA.ads, INC_DATA.adas);
+            declared =
+              INC_DATA.ca_total + INC_DATA.ads_total + INC_DATA.adas_total;
+          } else if (which === "ca") {
+            pts = INC_DATA.ca;
+            declared = INC_DATA.ca_total;
+          } else if (which === "ads") {
+            pts = INC_DATA.ads;
+            declared = INC_DATA.ads_total;
+          } else if (which === "adas") {
+            pts = INC_DATA.adas;
+            declared = INC_DATA.adas_total;
+          }
+
+          const total = pts.reduce((s, p) => s + p[3], 0);
+          // Count unique cities by (lat,lon) rounded
+          const seen = new Set();
+          pts.forEach((p) => seen.add(p[1].toFixed(3) + "," + p[2].toFixed(3)));
+          const topP = pts.slice().sort((a, b) => b[3] - a[3])[0];
+          const cov = declared ? ((total / declared) * 100).toFixed(1) : "100";
+
+          kpiTotal.innerHTML =
+            total.toLocaleString() +
+            ' <span class="small">/ ' +
+            declared.toLocaleString() +
+            "</span>";
+          kpiCities.textContent = seen.size.toLocaleString();
+          kpiTop.innerHTML = topP
+            ? '<span style="font-size:15px">' +
+              topP[0] +
+              '</span> <span class="small">' +
+              topP[3].toLocaleString() +
+              "</span>"
+            : "—";
+          kpiCov.innerHTML = cov + '<span class="small">%</span>';
+        }
+
+        // Toggle wiring
+        const togs = document.querySelectorAll(".hm-tog");
+        togs.forEach((t) => {
+          t.addEventListener("click", function () {
+            togs.forEach((x) => x.classList.remove("active"));
+            t.classList.add("active");
+            const k = t.getAttribute("data-k");
+            show(k);
+            updateKpis(k);
+          });
+        });
+
+        // Zoom-aware radius: keep the heatmap readable across zoom levels,
+        // avoiding the "halo" effect where fixed-pixel points bloom when zoomed out.
+        // Reference: at zoom 3 → r=11, zoom 5 → r=15, zoom 8 → r=21, zoom 11 → r=26
+        function rescaleHeat() {
+          const z = map.getZoom();
+          const r = Math.max(8, Math.min(26, 5 + z * 2));
+          const b = Math.round(r * 0.78);
+          Object.keys(layers).forEach((k) => {
+            layers[k].setOptions({ radius: r, blur: b });
+          });
+        }
+        map.on("zoomend", rescaleHeat);
+        rescaleHeat();
+
+        // Initial render
+        show("all");
+        updateKpis("all");
+
+        // Ensure Leaflet computes size correctly inside the flex layout
+        setTimeout(() => map.invalidateSize(), 120);
+        window.addEventListener("resize", () => map.invalidateSize());
+      })();
+    </script>
+  </body>
+</html>
