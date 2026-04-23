@@ -510,6 +510,423 @@
           padding: 22px 20px 22px;
         }
       }
+
+      /* ── Cite & Download Modal ── */
+      .cite-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 10010;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(9, 9, 11, 0.72);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+      .cite-modal.active {
+        display: flex;
+      }
+      .cite-modal-card {
+        width: 100%;
+        max-width: 680px;
+        background: #111113;
+        border: 1px solid #27272a;
+        border-radius: 16px;
+        padding: 0;
+        box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.95);
+        position: relative;
+        overflow: hidden;
+        animation: citeIn 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        max-height: calc(100vh - 40px);
+      }
+      @keyframes citeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px) scale(0.985);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      .cite-modal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 24px 16px;
+      }
+      .cite-modal-head-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .cite-modal-head .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #f59e0b;
+      }
+      .cite-modal h3 {
+        margin: 0;
+        font-size: 17px;
+        font-weight: 600;
+        letter-spacing: -0.012em;
+        color: #fff;
+      }
+      .cite-modal .close {
+        position: static;
+        width: 30px;
+        height: 30px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        background: transparent;
+        border: 0;
+        color: #a1a1aa;
+        cursor: pointer;
+        padding: 0;
+        transition:
+          background 0.18s,
+          color 0.18s;
+      }
+      .cite-modal .close:hover {
+        background: rgba(39, 39, 42, 0.5);
+        color: #fff;
+      }
+      .cite-modal-body {
+        padding: 0 24px 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        overflow-y: auto;
+      }
+      .cite-modal-body::-webkit-scrollbar {
+        width: 8px;
+      }
+      .cite-modal-body::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .cite-modal-body::-webkit-scrollbar-thumb {
+        background: #27272a;
+        border-radius: 4px;
+      }
+      .cite-modal .lead {
+        font-size: 15px;
+        line-height: 1.6;
+        color: #d4d4d8;
+        margin: 0;
+      }
+      .cite-modal .lead b {
+        font-weight: 600;
+        color: #fff;
+      }
+      .cite-section {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .cite-section-title {
+        margin: 0;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        color: #71717a;
+        text-transform: uppercase;
+      }
+      .cite-modal .micro {
+        margin: 4px 0 0;
+        font-size: 13px;
+        line-height: 1.55;
+        color: #a1a1aa;
+      }
+      .cite-modal .micro b {
+        font-weight: 500;
+        color: #e4e4e7;
+      }
+
+      /* BibTeX block */
+      .bib-block {
+        border: 1px solid #27272a;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .bib-block-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 14px;
+        background: rgba(39, 39, 42, 0.25);
+      }
+      .bib-block-label {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        color: #71717a;
+        text-transform: uppercase;
+      }
+      .bib-copy {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+        background: transparent;
+        border: 1px solid #27272a;
+        color: #d4d4d8;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          border-color 0.18s,
+          color 0.18s;
+        font-family: inherit;
+      }
+      .bib-copy:hover {
+        background: rgba(39, 39, 42, 0.5);
+        color: #fff;
+      }
+      .bib-copy.copied {
+        background: rgba(120, 190, 120, 0.12);
+        border-color: rgba(120, 190, 120, 0.4);
+        color: #a7e3a7;
+      }
+      .bib-text {
+        margin: 0;
+        padding: 16px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12.5px;
+        line-height: 1.7;
+        color: #d4d4d8;
+        white-space: pre-wrap;
+        word-break: break-all;
+        background: #111113;
+      }
+
+      /* Link block */
+      .link-block {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #27272a;
+        border-radius: 12px;
+        overflow: hidden;
+        background: transparent;
+      }
+      .link-block-main {
+        display: flex;
+        flex-direction: column;
+        padding: 14px 14px 14px 16px;
+        background: #111113;
+        gap: 12px;
+      }
+      @media (min-width: 640px) {
+        .link-block-main {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
+      .link-block .url {
+        flex: 1;
+        min-width: 0;
+        font-size: 14px;
+        font-weight: 500;
+        color: #fff;
+        word-break: break-all;
+        user-select: all;
+      }
+      .link-block .actions {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+        align-items: center;
+      }
+      .link-block .act {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 13px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        border: 1px solid #27272a;
+        background: transparent;
+        color: #d4d4d8;
+        text-decoration: none;
+        transition:
+          background 0.18s,
+          border-color 0.18s,
+          color 0.18s;
+      }
+      .link-block .act:hover {
+        background: rgba(39, 39, 42, 0.6);
+        color: #fff;
+      }
+      .link-block .act.copied {
+        background: rgba(120, 190, 120, 0.12);
+        border-color: rgba(120, 190, 120, 0.4);
+        color: #a7e3a7;
+      }
+      .cite-modal .link-block .act.primary {
+        background: #fff;
+        color: #000;
+        border-color: #fff;
+      }
+      .cite-modal .link-block .act.primary:hover {
+        background: #e4e4e7;
+        border-color: #e4e4e7;
+      }
+      .link-block .pwd {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        background: rgba(9, 9, 11, 0.4);
+        border-top: 1px solid #27272a;
+        font-size: 13px;
+      }
+      .link-block .pwd-label {
+        color: #a1a1aa;
+      }
+      .link-block .pwd b {
+        margin-left: 8px;
+        color: #fff;
+        font-weight: 500;
+        font-family: "JetBrains Mono", monospace;
+      }
+      .terms-line {
+        margin: 0;
+        padding: 8px 0 0;
+        font-size: 13.5px;
+        line-height: 1.6;
+        color: #a1a1aa;
+      }
+      .terms-toggle {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 2px;
+        background: none;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        color: #e4e4e7;
+        font: inherit;
+        cursor: pointer;
+        transition: color 0.18s;
+      }
+      .terms-toggle:hover {
+        color: #fff;
+      }
+      .terms-toggle > span {
+        font-weight: 500;
+        border-bottom: 1px dashed #71717a;
+        padding-bottom: 1px;
+        transition: border-color 0.18s;
+      }
+      .terms-toggle:hover > span {
+        border-color: #a1a1aa;
+      }
+
+      /* ── Terms of Use Modal ── */
+      .terms-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 10020;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+      .terms-modal.active {
+        display: flex;
+      }
+      .terms-modal-card {
+        width: 100%;
+        max-width: 560px;
+        max-height: calc(100vh - 40px);
+        background: #111113;
+        border: 1px solid #27272a;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.95);
+        display: flex;
+        flex-direction: column;
+        animation: citeIn 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .terms-modal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 24px 14px;
+      }
+      .terms-modal-head h3 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+      }
+      .terms-modal-head .close {
+        width: 30px;
+        height: 30px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        background: transparent;
+        border: 0;
+        color: #a1a1aa;
+        cursor: pointer;
+        padding: 0;
+        transition:
+          background 0.18s,
+          color 0.18s;
+      }
+      .terms-modal-head .close:hover {
+        background: rgba(39, 39, 42, 0.5);
+        color: #fff;
+      }
+      .terms-modal-body {
+        padding: 0 24px 24px;
+        overflow-y: auto;
+        font-size: 13.5px;
+        line-height: 1.7;
+        color: #d4d4d8;
+      }
+      .terms-modal-body p {
+        margin: 0 0 14px;
+      }
+      .terms-modal-body p b {
+        color: #fff;
+        font-weight: 600;
+      }
+      .terms-modal-body ol {
+        margin: 4px 0 0;
+        padding-left: 22px;
+      }
+      .terms-modal-body ol li {
+        margin-bottom: 12px;
+        padding-left: 4px;
+        color: #d4d4d8;
+      }
+      .terms-modal-body ol li b {
+        color: #fff;
+        font-weight: 600;
+        display: inline;
+        margin-right: 4px;
+      }
     </style>
   </head>
   <body class="rp-body">
@@ -626,7 +1043,12 @@
               </p>
 
               <div class="tr-actions">
-                <button class="tr-btn primary" type="button">
+                <a
+                  class="tr-btn primary"
+                  href="https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj/about_data"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <svg
                     width="14"
                     height="14"
@@ -642,9 +1064,14 @@
                     <line x1="12" y1="15" x2="12" y2="3" />
                   </svg>
                   Download trajectories
-                  <span class="tr-size">3.1 GB</span>
-                </button>
-                <button class="tr-btn ghost" type="button">
+                </a>
+                <a
+                  class="tr-btn ghost"
+                  href="#"
+                  data-cite-download="https://pan.baidu.com/s/ngsim-map"
+                  data-cite-pwd="ozon"
+                  data-cite-label="NGSIM map archive"
+                >
                   <svg
                     width="13"
                     height="13"
@@ -662,8 +1089,7 @@
                     <line x1="16" y1="6" x2="16" y2="22" />
                   </svg>
                   Map
-                  <span class="tr-size">4.5 GB</span>
-                </button>
+                </a>
                 <span class="tr-updated">Updated <b>Apr 2026</b></span>
               </div>
             </div>
@@ -688,26 +1114,385 @@
       </div>
     </footer>
 
-    <!-- _base.js styles inlined above -->
+    <!-- Cite & Download Modal -->
+    <div
+      class="cite-modal"
+      id="cite-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cite-modal-title"
+    >
+      <div class="cite-modal-card">
+        <div class="cite-modal-head">
+          <div class="cite-modal-head-left">
+            <span class="dot"></span>
+            <h3 id="cite-modal-title">Cite &amp; download</h3>
+          </div>
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            data-cite-cancel
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="cite-modal-body">
+          <p class="lead">
+            Please cite <b id="cite-modal-what">this dataset</b> in any
+            publication or derivative work. Copy the citation and the link
+            below.
+          </p>
+          <div class="cite-section">
+            <h4 class="cite-section-title">Citation</h4>
+            <div class="bib-block" id="cite-modal-bib">
+              <div class="bib-block-head">
+                <span class="bib-block-label">BibTeX</span>
+                <button
+                  type="button"
+                  class="bib-copy"
+                  data-bib-target="cite-modal-bib"
+                >
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                    <path
+                      d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                    />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="bib-text">
+@article{zheng2026ozone,
+  title   = {Ozone: A Unified Platform for Transportation Research},
+  author  = {Zheng, Ou and Feng, Ruyi and Yang, Yufeng and
+             Ding, Shengxuan and Yue, Lishengsa and Li, Ye and
+             Zheng, Yunhan and Kong, Minwei and Zhuang, Dingyi and
+             Qu, Ao and Li, Zhibin and Wang, Dongjie and Ying, Wangyang},
+  journal = {arXiv preprint arXiv:2604.10959},
+  year    = {2026},
+  doi     = {10.48550/arXiv.2604.10959},
+  note    = {Accessed YYYY-MM-DD}
+}</pre
+              >
+            </div>
+            <p class="micro">
+              Replace <b>YYYY-MM-DD</b> with your access date.
+            </p>
+          </div>
+          <div class="cite-section">
+            <h4 class="cite-section-title">Download link</h4>
+            <div class="link-block">
+              <div class="link-block-main">
+                <span class="url" id="cite-link-url"></span>
+                <div class="actions">
+                  <button type="button" class="act" data-link-copy>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                      <path
+                        d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                      />
+                    </svg>
+                    Copy
+                  </button>
+                  <a
+                    class="act primary"
+                    id="cite-link-open"
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                      />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                    Open
+                  </a>
+                </div>
+              </div>
+              <div class="pwd">
+                <span class="pwd-label">Password:</span>
+                <b id="cite-link-pwd">—</b>
+              </div>
+            </div>
+          </div>
+          <p class="terms-line">
+            By downloading, you agree to Ozone's
+            <button type="button" class="terms-toggle" data-terms-open>
+              <span>Terms of Use</span>
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M7 7h10v10" />
+                <path d="M7 17 17 7" />
+              </svg>
+            </button>
+            — non-commercial research, no redistribution, cite on use.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terms of Use Modal -->
+    <div
+      class="terms-modal"
+      id="terms-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="terms-modal-title"
+      aria-hidden="true"
+    >
+      <div class="terms-modal-card">
+        <div class="terms-modal-head">
+          <h3 id="terms-modal-title">Terms of Use</h3>
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            data-terms-close
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="terms-modal-body">
+          <p>
+            The Ozone dataset is made freely available for
+            <b>non-commercial use only</b> — including academic research,
+            teaching, and scientific publications. By downloading, you agree to
+            the following terms:
+          </p>
+          <ol>
+            <li>
+              <b>Citation requirement.</b> Any work that uses the Ozone dataset
+              must clearly cite it.
+            </li>
+            <li>
+              <b>No redistribution.</b> You may not redistribute the dataset or
+              any modified version of it.
+            </li>
+            <li>
+              <b>Non-commercial use only.</b> You may not use the dataset for
+              commercial purposes.
+            </li>
+            <li>
+              <b>Reservation of rights.</b> All rights not expressly granted are
+              reserved by the dataset provider.
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
     <script>
       (function () {
+        // ── Search ──
         const input = document.getElementById("trSearch");
         const cards = document.querySelectorAll("#trStream .tr-ds");
-        if (!input || !cards.length) return;
-        input.addEventListener("input", function () {
-          const q = this.value.trim().toLowerCase();
-          cards.forEach(function (el) {
-            const hay = (el.getAttribute("data-name") || "").toLowerCase();
-            el.style.display = !q || hay.includes(q) ? "" : "none";
+        if (input && cards.length) {
+          input.addEventListener("input", function () {
+            const q = this.value.trim().toLowerCase();
+            cards.forEach(function (el) {
+              const hay = (el.getAttribute("data-name") || "").toLowerCase();
+              el.style.display = !q || hay.includes(q) ? "" : "none";
+            });
+          });
+          document.addEventListener("keydown", function (e) {
+            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+              e.preventDefault();
+              input.focus();
+              input.select();
+            }
+          });
+        }
+
+        // ── Cite & Download modal ──
+        var citeModal = document.getElementById("cite-modal");
+        var citeLabel = document.getElementById("cite-modal-what");
+        var citeUrlEl = document.getElementById("cite-link-url");
+        var citePwdEl = document.getElementById("cite-link-pwd");
+        var citeOpenBtn = document.getElementById("cite-link-open");
+
+        function openCite(href, label, pwd) {
+          if (!citeModal) return;
+          if (label && citeLabel) citeLabel.textContent = label;
+          if (citeUrlEl) citeUrlEl.textContent = href || "";
+          if (citeOpenBtn) citeOpenBtn.setAttribute("href", href || "#");
+          if (citePwdEl) citePwdEl.textContent = pwd || "—";
+          var pwdRow = citeModal.querySelector(".pwd");
+          if (pwdRow) pwdRow.style.display = pwd ? "" : "none";
+          citeModal.classList.add("active");
+        }
+        function closeCite() {
+          if (citeModal) citeModal.classList.remove("active");
+        }
+
+        document.querySelectorAll("[data-cite-download]").forEach(function (a) {
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+            openCite(
+              a.getAttribute("data-cite-download"),
+              a.getAttribute("data-cite-label") || "this dataset",
+              a.getAttribute("data-cite-pwd") || "",
+            );
           });
         });
-        document.addEventListener("keydown", function (e) {
-          if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-            e.preventDefault();
-            input.focus();
-            input.select();
+
+        if (citeModal) {
+          citeModal.addEventListener("click", function (e) {
+            if (e.target === citeModal) closeCite();
+          });
+          citeModal
+            .querySelectorAll("[data-cite-cancel]")
+            .forEach(function (btn) {
+              btn.addEventListener("click", closeCite);
+            });
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && citeModal.classList.contains("active"))
+              closeCite();
+          });
+
+          // Copy link
+          var linkCopyBtn = citeModal.querySelector("[data-link-copy]");
+          if (linkCopyBtn) {
+            linkCopyBtn.addEventListener("click", function () {
+              var url = citeUrlEl ? citeUrlEl.textContent.trim() : "";
+              var pwd = citePwdEl ? citePwdEl.textContent.trim() : "";
+              var text = pwd && pwd !== "—" ? url + "  提取码: " + pwd : url;
+              copyAndFlash(text, linkCopyBtn);
+            });
           }
+
+          // Copy BibTeX
+          citeModal
+            .querySelectorAll("[data-bib-target]")
+            .forEach(function (btn) {
+              btn.addEventListener("click", function () {
+                var id = btn.getAttribute("data-bib-target");
+                var block = document.getElementById(id);
+                if (!block) return;
+                var pre = block.querySelector(".bib-text");
+                if (!pre) return;
+                copyAndFlash(pre.textContent, btn);
+              });
+            });
+        }
+
+        function copyAndFlash(text, btn) {
+          var orig = btn.innerHTML;
+          function flash() {
+            btn.classList.add("copied");
+            btn.innerHTML =
+              '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied';
+            setTimeout(function () {
+              btn.classList.remove("copied");
+              btn.innerHTML = orig;
+            }, 1600);
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(flash);
+          } else {
+            var ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+              document.execCommand("copy");
+              flash();
+            } catch (_) {}
+            document.body.removeChild(ta);
+          }
+        }
+
+        // ── Terms of Use modal ──
+        var termsModal = document.getElementById("terms-modal");
+        document.querySelectorAll("[data-terms-open]").forEach(function (btn) {
+          btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (termsModal) {
+              termsModal.classList.add("active");
+              termsModal.setAttribute("aria-hidden", "false");
+            }
+          });
         });
+        if (termsModal) {
+          termsModal.addEventListener("click", function (e) {
+            if (e.target === termsModal) {
+              termsModal.classList.remove("active");
+              termsModal.setAttribute("aria-hidden", "true");
+            }
+          });
+          termsModal
+            .querySelectorAll("[data-terms-close]")
+            .forEach(function (btn) {
+              btn.addEventListener("click", function () {
+                termsModal.classList.remove("active");
+                termsModal.setAttribute("aria-hidden", "true");
+              });
+            });
+        }
       })();
     </script>
   </body>

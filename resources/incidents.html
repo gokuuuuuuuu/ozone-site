@@ -914,6 +914,11 @@
       .inc-dl.primary:hover .ext {
         opacity: 0.75;
       }
+      .inc-dl.disabled {
+        opacity: 0.35;
+        pointer-events: none;
+        cursor: not-allowed;
+      }
 
       .inc-sizes {
         font-family: "JetBrains Mono", monospace;
@@ -1563,13 +1568,7 @@
 
             <div class="inc-actionbar">
               <div class="inc-action-left">
-                <a
-                  class="inc-dl primary"
-                  href="#"
-                  data-cite-download="https://pan.baidu.com/s/ozone-incidents-ca-dmv"
-                  data-cite-pwd="ozon"
-                  data-cite-label="California DMV AV Collision Reports"
-                >
+                <a class="inc-dl primary disabled" aria-disabled="true">
                   <svg
                     width="14"
                     height="14"
@@ -1643,7 +1642,6 @@
                 </a>
               </div>
               <div class="inc-sizes">
-                <span class="host">百度网盘</span>
                 <span class="sep">·</span>
                 xlsx + csv <b>~5 MB</b>
               </div>
@@ -1809,13 +1807,7 @@
 
             <div class="inc-actionbar">
               <div class="inc-action-left">
-                <a
-                  class="inc-dl primary"
-                  href="#"
-                  data-cite-download="https://pan.baidu.com/s/ozone-incidents-nhtsa-sgo"
-                  data-cite-pwd="ozon"
-                  data-cite-label="NHTSA SGO Incident Reports (ADS + ADAS)"
-                >
+                <a class="inc-dl primary disabled" aria-disabled="true">
                   <svg
                     width="14"
                     height="14"
@@ -1889,7 +1881,6 @@
                 </a>
               </div>
               <div class="inc-sizes">
-                <span class="host">百度网盘</span>
                 <span class="sep">·</span>
                 xlsx + csv <b>~20 MB</b>
               </div>
@@ -2073,10 +2064,18 @@
       crossorigin=""
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
-    <!-- Incident point data — provide fallback if file missing -->
+    <!-- Incident point data (generated from CA_DMV_Combined 2.xlsx + NHTSA_ADS_ADAS_合并及城市坐标 2.xlsx) -->
+    <script src="_inc_data.js"></script>
     <script>
       if (typeof INC_DATA === "undefined")
-        var INC_DATA = { ca: [], ads: [], adas: [] };
+        var INC_DATA = {
+          ca: [],
+          ads: [],
+          adas: [],
+          ca_total: 0,
+          ads_total: 0,
+          adas_total: 0,
+        };
     </script>
 
     <script>
