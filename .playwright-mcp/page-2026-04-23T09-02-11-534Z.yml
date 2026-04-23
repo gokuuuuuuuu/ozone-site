@@ -1,0 +1,306 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Ozone" [ref=e4] [cursor=pointer]:
+        - /url: ../
+        - img [ref=e5]
+        - generic [ref=e7]: Ozone
+      - generic [ref=e8]:
+        - link "Home" [ref=e9] [cursor=pointer]:
+          - /url: ../
+        - generic [ref=e10]: ›
+        - generic [ref=e11]: Resources
+        - generic [ref=e12]: ›
+        - generic [ref=e13]: Download Incidents
+      - link "Get Access" [ref=e14] [cursor=pointer]:
+        - /url: ../#apply
+        - img [ref=e16]
+        - text: Get Access
+  - main [ref=e18]:
+    - generic [ref=e20]:
+      - navigation [ref=e21]:
+        - generic [ref=e22]:
+          - generic [ref=e23]: Downloads
+          - list [ref=e24]:
+            - listitem [ref=e25]:
+              - link "Browse All Resources" [ref=e26] [cursor=pointer]:
+                - /url: ../index.html#resources
+                - img [ref=e27]
+                - text: Browse All Resources
+            - listitem [ref=e32]:
+              - link "Download Map" [ref=e33] [cursor=pointer]:
+                - /url: ../index.html#download-map
+                - img [ref=e34]
+                - text: Download Map
+            - listitem [ref=e36]:
+              - link "Download Trajectory" [ref=e37] [cursor=pointer]:
+                - /url: trajectories_v2.html
+                - img [ref=e38]
+                - text: Download Trajectory
+            - listitem [ref=e40]:
+              - link "Download Incidents" [ref=e41] [cursor=pointer]:
+                - /url: incidents.html
+                - img [ref=e42]
+                - text: Download Incidents
+            - listitem [ref=e44]:
+              - link "Download Paper" [ref=e45] [cursor=pointer]:
+                - /url: ../index.html#download-paper
+                - img [ref=e46]
+                - text: Download Paper
+            - listitem [ref=e49]:
+              - link "Download Code" [ref=e50] [cursor=pointer]:
+                - /url: https://github.com/ZhilingResearch/Ozone
+                - img [ref=e51]
+                - text: Download Code
+        - generic [ref=e54]:
+          - generic [ref=e55]: Learn
+          - list [ref=e56]:
+            - listitem [ref=e57]:
+              - link "Tutorials" [ref=e58] [cursor=pointer]:
+                - /url: ../tutorials.html
+                - img [ref=e59]
+                - text: Tutorials
+            - listitem [ref=e62]:
+              - link "Join Community" [ref=e63] [cursor=pointer]:
+                - /url: community.html
+                - img [ref=e64]
+                - text: Join Community
+      - generic [ref=e69]:
+        - generic [ref=e70]:
+          - link "Back" [ref=e71] [cursor=pointer]:
+            - /url: ../
+            - img [ref=e73]
+            - text: Back
+          - search [ref=e75]:
+            - generic:
+              - img
+            - searchbox "Search datasets, operators, cities…" [ref=e76]
+            - generic: ⌘ K
+        - generic [ref=e77]:
+          - generic [ref=e78]: Downloads · Incidents
+          - heading "AV & ADAS incident records." [level=1] [ref=e79]:
+            - text: AV & ADAS incident
+            - emphasis [ref=e80]: records.
+          - paragraph [ref=e81]: Two curated incident corpora covering California's state-mandated AV collision reports and NHTSA's federal Standing General Order for ADS and ADAS. Every record is cleaned, geo-located and tagged — ready for comparative safety analysis and SOTIF scenario construction.
+        - generic [ref=e82]:
+          - generic [ref=e83]:
+            - generic [ref=e84]:
+              - generic [ref=e85]: Geospatial · All incidents
+              - heading "Where incidents occur" [level=3] [ref=e86]
+              - paragraph [ref=e87]: Every geocoded incident from the CA DMV and NHTSA SGO corpora, aggregated to city centroids and rendered as a density heatmap. Toggle the overlays to compare ADS vs ADAS vs California-only reporting.
+            - tablist "Heatmap dataset selector" [ref=e88]:
+              - button "All" [ref=e89] [cursor=pointer]: All
+              - button "CA DMV" [ref=e91] [cursor=pointer]: CA DMV
+              - button "NHTSA ADS" [ref=e93] [cursor=pointer]: NHTSA ADS
+              - button "NHTSA ADAS" [ref=e95] [cursor=pointer]: NHTSA ADAS
+          - generic [ref=e97]:
+            - generic "World incident heatmap" [ref=e98]:
+              - generic:
+                - generic [ref=e103]:
+                  - button "Zoom in" [ref=e104] [cursor=pointer]: +
+                  - button "Zoom out" [ref=e105] [cursor=pointer]: −
+                - generic [ref=e106]:
+                  - link "Leaflet" [ref=e107] [cursor=pointer]:
+                    - /url: https://leafletjs.com
+                    - img [ref=e108]
+                    - text: Leaflet
+                  - text: "| ©"
+                  - link "OpenStreetMap" [ref=e112] [cursor=pointer]:
+                    - /url: https://www.openstreetmap.org/copyright
+                  - text: · ©
+                  - link "CARTO" [ref=e113] [cursor=pointer]:
+                    - /url: https://carto.com/
+            - generic [ref=e114]:
+              - generic [ref=e115]: Density
+              - generic [ref=e117]: Low → High
+          - generic [ref=e118]:
+            - generic [ref=e119]:
+              - generic [ref=e120]: Total records
+              - generic [ref=e121]: 8,696 / 8,958
+            - generic [ref=e122]:
+              - generic [ref=e123]: Unique cities
+              - generic [ref=e124]: "453"
+            - generic [ref=e125]:
+              - generic [ref=e126]: Top city
+              - generic [ref=e127]: San Francisco 1,370
+            - generic [ref=e128]:
+              - generic [ref=e129]: Coverage
+              - generic [ref=e130]: 97.1%
+        - generic [ref=e131]:
+          - article [ref=e132]:
+            - generic [ref=e133]:
+              - heading "California DMV · AV Collision Reports" [level=2] [ref=e134]
+              - generic [ref=e135]: United States · California · 2014 – 2025 · CVC §38750 mandate · 913 records
+              - generic [ref=e136]: State regulator·ADS test fleet·OL-316 form
+            - generic [ref=e137]:
+              - paragraph [ref=e138]: The primary state-level source of ADS collision reports in the United States. Under California Vehicle Code §38750, every manufacturer holding a DMV Autonomous Vehicle Testing or Deployment Permit must report any collision involving an autonomous test vehicle within 10 days. Ozone aggregates both digitisation phases into 913 incident records from October 2014 to December 2025 — the longest continuous state-level AV collision time series currently available. The corpus is dominated by San Francisco (644, 70.5%) and the Mountain View / Silicon Valley belt where commercial AV deployment is most concentrated.
+              - generic [ref=e140]:
+                - generic [ref=e141]:
+                  - generic [ref=e142]: Records
+                  - generic [ref=e143]: "913"
+                - generic [ref=e144]:
+                  - generic [ref=e145]: ADS engaged
+                  - generic [ref=e146]: "532"
+                - generic [ref=e147]:
+                  - generic [ref=e148]: Conventional
+                  - generic [ref=e149]: "378"
+                - generic [ref=e150]:
+                  - generic [ref=e151]: With injury
+                  - generic [ref=e152]: "11"
+                - generic [ref=e153]:
+                  - generic [ref=e154]: Updated
+                  - generic [ref=e155]: Apr 2026
+              - generic [ref=e156]: Top reporting entities
+              - generic [ref=e157]:
+                - generic [ref=e158]:
+                  - generic [ref=e159]: "01"
+                  - generic [ref=e160]: Waymo
+                  - generic [ref=e161]: 39443.2%
+                - generic [ref=e162]:
+                  - generic [ref=e163]: "02"
+                  - generic [ref=e164]: Zoox
+                  - generic [ref=e165]: 14616.0%
+                - generic [ref=e166]:
+                  - generic [ref=e167]: "03"
+                  - generic [ref=e168]: Cruise
+                  - generic [ref=e169]: 13715.0%
+                - generic [ref=e170]:
+                  - generic [ref=e171]: "04"
+                  - generic [ref=e172]: GM Cruise
+                  - generic [ref=e173]: 10111.1%
+                - generic [ref=e174]:
+                  - generic [ref=e175]: "05"
+                  - generic [ref=e176]: Apple · Google Auto
+                  - generic [ref=e177]: 465.0%
+                - generic [ref=e178]:
+                  - generic [ref=e179]: "06"
+                  - generic [ref=e180]: Pony.ai · Mercedes · Nuro · others
+                  - generic [ref=e181]: 899.7%
+              - generic [ref=e182]: Top cities
+              - paragraph [ref=e183]:
+                - generic [ref=e184]: San Francisco644
+                - text: ·
+                - generic [ref=e185]: Mountain View71
+                - text: ·
+                - generic [ref=e186]: Los Angeles46
+                - text: ·
+                - generic [ref=e187]: Palo Alto34
+                - text: ·
+                - generic [ref=e188]: Sunnyvale13
+                - text: ·
+                - generic [ref=e189]: San Jose13
+                - text: ·
+                - generic [ref=e190]: Santa Clara13
+                - text: ·
+                - generic [ref=e191]: Santa Monica12
+              - generic [ref=e192]: Schema highlights
+              - paragraph [ref=e193]: Date · Time · GPS/ Vehicle make · model · year/ Drive mode/ Weather · surface · lighting/ Pre-crash movement/ Collision type/ CVC violations/ Narrative text
+            - generic [ref=e194]:
+              - generic [ref=e195]:
+                - link "Download CA DMV dataset" [ref=e196] [cursor=pointer]:
+                  - /url: "#"
+                  - img [ref=e197]
+                  - text: Download CA DMV dataset
+                  - img [ref=e200]
+                - link "Official source · CA DMV" [ref=e203] [cursor=pointer]:
+                  - /url: https://www.dmv.ca.gov/portal/vehicle-industry-services/autonomous-vehicles/autonomous-vehicle-collision-reports/
+                  - img [ref=e204]
+                  - text: Official source · CA DMV
+                  - img [ref=e207]
+              - generic [ref=e210]: · xlsx + csv ~5 MB
+          - article [ref=e211]:
+            - generic [ref=e212]:
+              - heading "NHTSA Standing General Order · ADS + ADAS" [level=2] [ref=e213]
+              - generic [ref=e214]: United States · Federal · SGO 2021-01 · ADS (Jul 2021–Feb 2026) + ADAS (Aug 2019–Feb 2026) · 7,784 records
+              - generic [ref=e215]: Federal·ADS + ADAS·Monthly submissions
+            - generic [ref=e216]:
+              - paragraph [ref=e217]: The federal-level crash reporting mandate for automated driving systems. SGO 2021-01 requires manufacturers and operators of SAE Level 2 ADAS or Level 3–5 ADS vehicles to report any crash occurring while automation is engaged — or within 30 seconds of disengagement — within 1 day for fatal / hospitalised / airbag / tow-away crashes and within 10 days otherwise. Ozone ingests the monthly public releases and separates the ADS and ADAS sub-corpora for direct AV-vs-ADAS safety rate estimation.
+              - generic [ref=e219]:
+                - generic [ref=e220]:
+                  - generic [ref=e221]:
+                    - heading "ADS sub-corpus" [level=4] [ref=e222]
+                    - generic [ref=e223]: Jul 2021 – Feb 2026
+                  - generic [ref=e224]:
+                    - text: 3,012
+                    - emphasis [ref=e225]: records · 697 engaged
+                  - generic [ref=e226]:
+                    - generic [ref=e227]: Fatal 5
+                    - generic [ref=e228]: Serious 25
+                    - generic [ref=e229]: Minor 275
+                    - generic [ref=e230]: No-injury 2,555
+                - generic [ref=e231]:
+                  - generic [ref=e232]:
+                    - heading "ADAS sub-corpus" [level=4] [ref=e233]
+                    - generic [ref=e234]: Aug 2019 – Feb 2026
+                  - generic [ref=e235]:
+                    - text: 4,772
+                    - emphasis [ref=e236]: records · 938 engaged
+                  - generic [ref=e237]:
+                    - generic [ref=e238]: Fatal 134
+                    - generic [ref=e239]: Serious 107
+                    - generic [ref=e240]: Minor 248
+                    - generic [ref=e241]: With severity 1,045
+              - generic [ref=e242]: Top reporters · ADS
+              - generic [ref=e243]:
+                - generic [ref=e244]:
+                  - generic [ref=e245]: "01"
+                  - generic [ref=e246]: Waymo LLC
+                  - generic [ref=e247]: 1,89862.8%
+                - generic [ref=e248]:
+                  - generic [ref=e249]: "02"
+                  - generic [ref=e250]: Cruise LLC
+                  - generic [ref=e251]: 2076.9%
+                - generic [ref=e252]:
+                  - generic [ref=e253]: "03"
+                  - generic [ref=e254]: General Motors LLC
+                  - generic [ref=e255]: 2016.7%
+                - generic [ref=e256]:
+                  - generic [ref=e257]: "04"
+                  - generic [ref=e258]: Transdev Alternative Services
+                  - generic [ref=e259]: 1886.2%
+                - generic [ref=e260]:
+                  - generic [ref=e261]: "05"
+                  - generic [ref=e262]: Zoox, Inc.
+                  - generic [ref=e263]: 1515.0%
+              - generic [ref=e264]: Top reporter · ADAS
+              - generic [ref=e266]:
+                - generic [ref=e267]: "01"
+                - generic [ref=e268]: Tesla, Inc.
+                - generic [ref=e269]: 4,02580.1%
+              - generic [ref=e270]: Top cities (ADS + ADAS)
+              - paragraph [ref=e271]:
+                - generic [ref=e272]: San Francisco, CA1,408
+                - text: ·
+                - generic [ref=e273]: Los Angeles, CA450
+                - text: ·
+                - generic [ref=e274]: Phoenix, AZ305
+                - text: ·
+                - generic [ref=e275]: Austin, TX271
+                - text: ·
+                - generic [ref=e276]: Tempe, AZ146
+                - text: ·
+                - generic [ref=e277]: Las Vegas, NV96
+                - text: ·
+                - generic [ref=e278]: Houston, TX69
+                - text: ·
+                - generic [ref=e279]: Scottsdale, AZ63
+              - generic [ref=e280]: Severity coding · schema
+              - paragraph [ref=e281]: Fatal/ Serious injury/ Minor injury/ No injury reported/ Airbag deployment/ Tow-away/ GPS · roadway · weather/ Crash partner · contact area/ Automation engaged state
+            - generic [ref=e282]:
+              - generic [ref=e283]:
+                - link "Download ADS + ADAS" [ref=e284] [cursor=pointer]:
+                  - /url: "#"
+                  - img [ref=e285]
+                  - text: Download ADS + ADAS
+                  - img [ref=e288]
+                - link "Official source · NHTSA" [ref=e291] [cursor=pointer]:
+                  - /url: https://www.nhtsa.gov/laws-regulations/standing-general-order-crash-reporting
+                  - img [ref=e292]
+                  - text: Official source · NHTSA
+                  - img [ref=e295]
+              - generic [ref=e298]: · xlsx + csv ~20 MB
+  - contentinfo [ref=e299]:
+    - generic [ref=e300]:
+      - generic [ref=e301]: © 2026 Ozone · A Unified Platform for Transportation Research
+      - link "← Back to site" [ref=e303] [cursor=pointer]:
+        - /url: ../

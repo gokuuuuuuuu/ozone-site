@@ -1441,6 +1441,48 @@
         height: 12px;
       }
 
+      /* ══ PROFILE BUTTON ═══════════════════════════════════════════════════ */
+      .oz-profile-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 14px 4px 4px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          border-color 0.2s;
+      }
+      .oz-profile-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
+        color: #fff;
+      }
+      .oz-profile-avatar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          rgba(59, 130, 246, 0.85),
+          rgba(99, 102, 241, 0.85)
+        );
+        color: #fff;
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .oz-profile-label {
+        letter-spacing: 0.01em;
+      }
+
       /* ══ LOGIN MODAL ════════════════════════════════════════════════════════ */
       #loginModal .oz-modal-box {
         max-width: 840px;
@@ -3848,6 +3890,42 @@
       ></iframe
     ></noscript>
     <!-- End Google Tag Manager (noscript) -->
+    <script>
+      (function () {
+        if (new URLSearchParams(location.search).get("embed") === "1") {
+          document.documentElement.classList.add("embed-mode");
+        }
+      })();
+    </script>
+    <style>
+      .embed-mode nav,
+      .embed-mode #scroll-progress-bar,
+      .embed-mode #vignette,
+      .embed-mode .globe-to-ozone-transition,
+      .embed-mode #globe-hero-section,
+      .embed-mode .ozone-sections,
+      .embed-mode footer {
+        display: none !important;
+      }
+      .embed-mode .dl-view .ng-toprow,
+      .embed-mode .dl-view .ng-back,
+      .embed-mode .dl-view .related-strip,
+      .embed-mode .dl-view .pp-toprow {
+        display: none !important;
+      }
+      .embed-mode .dl-view {
+        position: relative !important;
+        inset: auto !important;
+        height: auto !important;
+        overflow-y: visible !important;
+      }
+      .embed-mode .dl-view .ng-wrap {
+        padding-top: 20px !important;
+      }
+      .embed-mode body {
+        overflow: auto !important;
+      }
+    </style>
     <div id="scroll-progress-bar"></div>
     <div id="vignette"></div>
 
@@ -4073,7 +4151,11 @@
                       />
                     </svg>
                   </a>
-                  <a href="#download-map" class="nav-mega-item">
+                  <a
+                    href="resources/map.html"
+                    class="nav-mega-item"
+                    data-auth-required
+                  >
                     <div class="nav-mega-item-left">
                       <div class="nav-mega-icon-box">
                         <svg
@@ -4112,6 +4194,7 @@
                   <a
                     href="resources/trajectories_v2.html"
                     class="nav-mega-item"
+                    data-auth-required
                   >
                     <div class="nav-mega-item-left">
                       <div class="nav-mega-icon-box">
@@ -4147,7 +4230,11 @@
                       />
                     </svg>
                   </a>
-                  <a href="resources/incidents.html" class="nav-mega-item">
+                  <a
+                    href="resources/incidents.html"
+                    class="nav-mega-item"
+                    data-auth-required
+                  >
                     <div class="nav-mega-item-left">
                       <div class="nav-mega-icon-box">
                         <svg
@@ -4185,7 +4272,11 @@
                       />
                     </svg>
                   </a>
-                  <a href="#download-paper" class="nav-mega-item">
+                  <a
+                    href="resources/paper.html"
+                    class="nav-mega-item"
+                    data-auth-required
+                  >
                     <div class="nav-mega-item-left">
                       <div class="nav-mega-icon-box">
                         <svg
@@ -4227,6 +4318,7 @@
                     href="https://github.com/ZhilingResearch/Ozone"
                     target="_blank"
                     class="nav-mega-item"
+                    data-auth-required
                   >
                     <div class="nav-mega-item-left">
                       <div class="nav-mega-icon-box">
@@ -4276,7 +4368,11 @@
                   Learn
                 </div>
                 <div class="nav-mega-col">
-                  <a href="tutorials.html" class="nav-mega-item">
+                  <a
+                    href="tutorials.html"
+                    class="nav-mega-item"
+                    data-auth-required
+                  >
                     <div class="nav-mega-item-left">
                       <div class="nav-mega-icon-box">
                         <svg
@@ -4309,7 +4405,11 @@
                       />
                     </svg>
                   </a>
-                  <a href="resources/community.html" class="nav-mega-item">
+                  <a
+                    href="resources/community.html"
+                    class="nav-mega-item"
+                    data-auth-required
+                  >
                     <div class="nav-mega-item-left">
                       <div class="nav-mega-icon-box">
                         <svg
@@ -4351,7 +4451,30 @@
         </div>
 
         <div style="display: flex; align-items: center; gap: 10px">
+          <a
+            href="profile.html"
+            class="oz-profile-btn"
+            id="profileBtn"
+            style="display: none; text-decoration: none"
+          >
+            <span class="oz-profile-avatar" id="profileAvatar">U</span>
+            <span class="oz-profile-label">Profile</span>
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="opacity: 0.5"
+            >
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </a>
           <button
+            id="loginBtn"
             onclick="openLoginModal()"
             class="nav-glass-btn text-white rounded-full font-medium text-sm cursor-pointer"
             style="padding: 7px 20px"
@@ -4359,6 +4482,7 @@
             Log In
           </button>
           <button
+            id="applyNavBtn"
             onclick="
               document
                 .getElementById('apply')
@@ -4437,7 +4561,7 @@
         <div class="panel-divider" style="margin-top: 18px"></div>
         <div class="panel-section-title">Downloads</div>
         <div class="panel-dl-row">
-          <a href="#download-map" class="panel-dl-btn" data-dlkind="map">
+          <a href="resources/map.html" class="panel-dl-btn" data-dlkind="map">
             <svg
               width="14"
               height="14"
@@ -4478,7 +4602,7 @@
             <span class="pdl-size">.csv · 118MB</span>
           </a>
           <a
-            href="#download-map"
+            href="resources/map.html"
             class="panel-dl-btn panel-dl-bundle"
             data-dlkind="bundle"
           >
@@ -8440,8 +8564,480 @@
               </p>
             </div>
           </div>
+
+          <h3 class="text-lg font-bold text-white text-center mt-14 mb-8">
+            Data Contributors
+          </h3>
+
+          <div class="flex flex-wrap justify-center gap-x-12 gap-y-10">
+            <div
+              class="team-card card-reveal group cursor-pointer"
+              onclick="openTeamModal(this, event)"
+              data-name="Ziyun Jiao"
+              data-institution="Sichuan University"
+              data-bio="Ziyun Jiao is a master&#39;s student at Sichuan University and holds a bachelor&#39;s degree in computer-related fields. Her research currently focuses on image processing from UAV perspectives, particularly in the context of intelligent transportation and other real-world scenarios."
+              data-photo="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/contributor1.jpg"
+              style="animation-delay: 0s"
+            >
+              <div class="team-avatar-wrap">
+                <img
+                  src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/contributor1.jpg"
+                  alt="Ziyun Jiao"
+                  class="team-avatar"
+                  loading="lazy"
+                />
+                <div class="team-avatar-ring"></div>
+              </div>
+              <h4
+                class="text-[15px] font-semibold text-white mt-4 mb-1 group-hover:text-blue-100 transition-colors whitespace-nowrap"
+              >
+                Ziyun Jiao
+              </h4>
+              <p class="text-[11px] text-white/30 leading-snug text-center">
+                Sichuan University
+              </p>
+            </div>
+            <div
+              class="team-card card-reveal group cursor-pointer"
+              onclick="openTeamModal(this, event)"
+              data-name="Guo Xiang"
+              data-institution="Zhiling Research"
+              data-bio="Guo Xiang is deeply rooted in the field of autonomous driving simulation, specializing in closed-loop testing and scenario discovery within the CARLA environment. Proficient in combining high-performance computing architectures with cutting-edge simulators to provide a highly reliable verification environment for algorithms."
+              data-photo="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/contributor2.jpg"
+              style="animation-delay: 0.06s"
+            >
+              <div class="team-avatar-wrap">
+                <img
+                  src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/contributor2.jpg"
+                  alt="Guo Xiang"
+                  class="team-avatar"
+                  loading="lazy"
+                />
+                <div class="team-avatar-ring"></div>
+              </div>
+              <h4
+                class="text-[15px] font-semibold text-white mt-4 mb-1 group-hover:text-blue-100 transition-colors whitespace-nowrap"
+              >
+                Guo Xiang
+              </h4>
+              <p class="text-[11px] text-white/30 leading-snug text-center">
+                Zhiling Research
+              </p>
+            </div>
+          </div>
+
+          <!-- Join CTA -->
+          <style>
+            @keyframes shimmer {
+              0% {
+                left: -100%;
+              }
+              100% {
+                left: 200%;
+              }
+            }
+            .shimmer-effect {
+              position: relative;
+              overflow: hidden;
+            }
+            .shimmer-effect::after {
+              content: "";
+              position: absolute;
+              top: 0;
+              left: -100%;
+              width: 50%;
+              height: 100%;
+              background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.15),
+                transparent
+              );
+              transform: skewX(-20deg);
+              animation: shimmer 3s infinite;
+            }
+            @keyframes pulse-glow {
+              0%,
+              100% {
+                opacity: 0.4;
+                transform: scale(1);
+              }
+              50% {
+                opacity: 0.7;
+                transform: scale(1.05);
+              }
+            }
+            .animate-pulse-glow {
+              animation: pulse-glow 6s ease-in-out infinite;
+            }
+            @keyframes collab-float {
+              0%,
+              100% {
+                transform: translateY(0px) rotate(0deg);
+              }
+              50% {
+                transform: translateY(-15px) rotate(5deg);
+              }
+            }
+            .animate-collab-float {
+              animation: collab-float 7s ease-in-out infinite;
+            }
+            .animate-collab-float-delayed {
+              animation: collab-float 8s ease-in-out infinite;
+              animation-delay: 2s;
+            }
+            .animate-collab-float-fast {
+              animation: collab-float 5s ease-in-out infinite;
+              animation-delay: 1s;
+            }
+            .glass-panel {
+              background: linear-gradient(
+                145deg,
+                rgba(255, 255, 255, 0.03) 0%,
+                rgba(255, 255, 255, 0.01) 100%
+              );
+              backdrop-filter: blur(24px);
+              -webkit-backdrop-filter: blur(24px);
+              border: 1px solid rgba(255, 255, 255, 0.06);
+              box-shadow:
+                0 40px 80px -20px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 0 40px rgba(59, 130, 246, 0.05);
+            }
+            .liquid-button {
+              background: rgba(37, 99, 235, 0.1);
+              backdrop-filter: blur(12px);
+              -webkit-backdrop-filter: blur(12px);
+              border: 1px solid rgba(59, 130, 246, 0.3);
+              box-shadow:
+                0 0 20px rgba(59, 130, 246, 0.1),
+                inset 0 0 20px rgba(255, 255, 255, 0.05);
+              transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+            .liquid-button:hover {
+              background: rgba(59, 130, 246, 0.25);
+              border-color: rgba(59, 130, 246, 0.8);
+              box-shadow:
+                0 0 40px rgba(59, 130, 246, 0.5),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+              transform: translateY(-4px) scale(1.02);
+            }
+          </style>
+
+          <section
+            class="relative flex items-center justify-center py-14 px-4 sm:px-6 lg:px-8 w-full max-w-[1200px] mx-auto"
+          >
+            <!-- Background effects -->
+            <div
+              class="absolute inset-0 overflow-hidden pointer-events-none flex items-center justify-center"
+            >
+              <div
+                class="absolute w-[500px] h-[400px] bg-[#3B82F6]/12 filter blur-[100px] rounded-[100%] animate-pulse-glow"
+              ></div>
+              <div
+                class="absolute w-[300px] h-[300px] bg-[#3B82F6]/8 filter blur-[80px] rounded-full translate-x-1/4 -translate-y-1/4"
+              ></div>
+            </div>
+
+            <!-- Floating particles -->
+            <div class="absolute inset-0 pointer-events-none">
+              <div
+                class="absolute top-[20%] left-[15%] w-1.5 h-1.5 bg-blue-400 rounded-full shadow-[0_0_12px_#60a5fa] animate-collab-float opacity-70"
+              ></div>
+              <div
+                class="absolute bottom-[25%] left-[20%] w-2 h-2 bg-[#60A5FA] rounded-full shadow-[0_0_15px_#3B82F6] animate-collab-float-delayed opacity-50"
+              ></div>
+              <div
+                class="absolute top-[30%] right-[18%] w-1 h-1 bg-white rounded-full shadow-[0_0_8px_#ffffff] animate-collab-float-fast opacity-60"
+              ></div>
+              <div
+                class="absolute bottom-[35%] right-[25%] w-2.5 h-2.5 bg-[#93C5FD] rounded-full shadow-[0_0_20px_#3B82F6] animate-collab-float opacity-40"
+              ></div>
+            </div>
+
+            <!-- Glass card -->
+            <div
+              class="glass-panel relative w-full max-w-3xl rounded-[2rem] p-8 md:p-12 z-20 flex flex-col items-center text-center group"
+            >
+              <div
+                class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-[#3B82F6]/50 to-transparent"
+              ></div>
+              <div
+                class="absolute -top-32 -left-32 w-64 h-64 bg-blue-500/20 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
+              ></div>
+              <div
+                class="absolute -bottom-32 -right-32 w-64 h-64 bg-[#3B82F6]/20 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
+              ></div>
+
+              <div class="relative z-10 w-full flex flex-col items-center">
+                <h2
+                  class="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-4"
+                >
+                  Interested in <br class="sm:hidden" />
+                  <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] via-[#60A5FA] to-[#93C5FD] drop-shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+                    >Collaborating?</span
+                  >
+                </h2>
+                <p
+                  class="text-sm md:text-base text-gray-400 max-w-xl mx-auto leading-relaxed mb-10 font-light"
+                >
+                  We welcome researchers, engineers, and institutions to
+                  co-build the future of transportation research — whether
+                  through data contributions, joint publications, or platform
+                  development.
+                </p>
+                <button
+                  type="button"
+                  onclick="
+                    document.getElementById('joinModal').classList.add('open');
+                    document.body.style.overflow = 'hidden';
+                  "
+                  class="liquid-button shimmer-effect group relative inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full text-white font-semibold text-sm overflow-hidden"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-[#3B82F6] group-hover:text-white group-hover:scale-110 transition-all duration-300 relative z-10"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                    />
+                  </svg>
+                  <span class="relative z-10 tracking-wide">Join Us</span>
+                </button>
+                <p class="mt-6 text-sm text-gray-600 font-medium">
+                  Join our growing ecosystem today
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       </section>
+
+      <style>
+        /* ── Join Modal ── */
+        .join-modal-box {
+          position: relative;
+          width: 100%;
+          max-width: 540px;
+          background: #111113;
+          border: 1px solid #27272a;
+          border-radius: 16px;
+          padding: 0;
+          box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.95);
+          overflow: hidden;
+          animation: citeIn 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+          z-index: 10;
+        }
+        .join-close {
+          position: absolute;
+          top: 18px;
+          right: 18px;
+          width: 30px;
+          height: 30px;
+          border-radius: 6px;
+          background: transparent;
+          border: 0;
+          color: #a1a1aa;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          transition:
+            background 0.18s,
+            color 0.18s;
+        }
+        .join-close svg {
+          width: 18px;
+          height: 18px;
+        }
+        .join-close:hover {
+          background: rgba(39, 39, 42, 0.5);
+          color: #fff;
+        }
+        .join-head {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 24px 28px 0;
+        }
+        .join-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #818cf8;
+        }
+        .join-head h3 {
+          margin: 0;
+          font-size: 17px;
+          font-weight: 600;
+          color: #fff;
+          letter-spacing: -0.012em;
+        }
+        .join-desc {
+          padding: 10px 28px 0;
+          font-size: 14px;
+          color: #a1a1aa;
+          margin: 0;
+        }
+        .join-fields {
+          padding: 20px 28px 0;
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+        .join-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 14px;
+        }
+        @media (max-width: 540px) {
+          .join-row {
+            grid-template-columns: 1fr;
+          }
+        }
+        .join-field label {
+          display: block;
+          font-size: 11.5px;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.42);
+          margin-bottom: 7px;
+        }
+        .join-field .req {
+          color: #f87171;
+        }
+        .join-field input,
+        .join-field textarea {
+          width: 100%;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.09);
+          border-top-color: rgba(160, 200, 255, 0.18);
+          border-radius: 12px;
+          padding: 13px 16px;
+          color: #eef0ff;
+          font-size: 15px;
+          outline: none;
+          font-family: inherit;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.09),
+            inset 0 0 14px rgba(59, 130, 246, 0.07);
+          transition: all 0.25s ease;
+          resize: vertical;
+        }
+        .join-field input:focus,
+        .join-field textarea:focus {
+          border-color: rgba(100, 160, 255, 0.65);
+          background: rgba(59, 130, 246, 0.09);
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.12),
+            inset 0 0 18px rgba(59, 130, 246, 0.14),
+            0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+        .join-field input::placeholder,
+        .join-field textarea::placeholder {
+          color: rgba(255, 255, 255, 0.2);
+        }
+        .join-footer {
+          padding: 20px 28px 24px;
+          display: flex;
+          justify-content: center;
+        }
+        .join-submit {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 11px 24px;
+          border-radius: 10px;
+          background: #fff;
+          border: 0;
+          color: #000;
+          font-size: 14px;
+          font-weight: 600;
+          font-family: inherit;
+          cursor: pointer;
+          transition:
+            background 0.2s,
+            transform 0.15s;
+        }
+        .join-submit:hover {
+          background: #e4e4e7;
+        }
+        .join-submit:active {
+          transform: scale(0.97);
+        }
+
+        /* ── Toast ── */
+        .join-toast {
+          position: fixed;
+          bottom: 40px;
+          left: 50%;
+          transform: translateX(-50%) translateY(80px);
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 14px 24px;
+          background: #111113;
+          border: 1px solid rgba(74, 222, 128, 0.25);
+          border-radius: 12px;
+          box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
+          font-size: 14px;
+          color: #d4d4d8;
+          z-index: 10020;
+          opacity: 0;
+          pointer-events: none;
+          transition:
+            opacity 0.3s,
+            transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+        }
+        .join-toast.show {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+          pointer-events: auto;
+        }
+      </style>
+
+      <script>
+        function handleJoinOverlayClick(e) {
+          if (
+            e.target === document.getElementById("joinModal") ||
+            e.target.classList.contains("oz-modal-backdrop")
+          ) {
+            closeJoinModal();
+          }
+        }
+        function closeJoinModal() {
+          document.getElementById("joinModal").classList.remove("open");
+          document.body.style.overflow = "";
+        }
+        document.addEventListener("keydown", function (e) {
+          var jm = document.getElementById("joinModal");
+          if (e.key === "Escape" && jm && jm.classList.contains("open")) {
+            closeJoinModal();
+          }
+        });
+        function submitJoinForm(e) {
+          e.preventDefault();
+          var form = document.getElementById("joinForm");
+          // Basic check — all required fields are validated by browser
+          closeJoinModal();
+          form.reset();
+          // Show toast
+          var toast = document.getElementById("joinToast");
+          toast.classList.add("show");
+          setTimeout(function () {
+            toast.classList.remove("show");
+          }, 3500);
+          return false;
+        }
+      </script>
 
       <section
         id="apply"
@@ -8733,55 +9329,123 @@
                       "
                       >Country <span style="color: #f87171">*</span></label
                     >
+                    <!-- Hidden real select for form submission -->
                     <select
                       name="country"
                       required
-                      style="
-                        width: 100%;
-                        background: rgba(255, 255, 255, 0.05);
-                        border: 1px solid rgba(255, 255, 255, 0.09);
-                        border-top-color: rgba(160, 200, 255, 0.18);
-                        border-radius: 12px;
-                        padding: 13px 16px;
-                        color: #eef0ff;
-                        font-size: 15px;
-                        outline: none;
-                        font-family: inherit;
-                        backdrop-filter: blur(10px);
-                        -webkit-backdrop-filter: blur(10px);
-                        box-shadow:
-                          inset 0 1px 0 rgba(255, 255, 255, 0.09),
-                          inset 0 0 14px rgba(59, 130, 246, 0.07);
-                        transition: all 0.25s ease;
-                        appearance: none;
-                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23667799%22 stroke-width=%222%22%3E%3Cpath d=%22M6 9l6 6 6-6%22/%3E%3C/svg%3E&quot;);
-                        background-repeat: no-repeat;
-                        background-position: right 14px center;
-                        cursor: pointer;
-                        padding-right: 36px;
-                      "
+                      style="display: none"
+                      id="countrySelect"
                     >
-                      <option
-                        value=""
-                        disabled
-                        selected
-                        style="background: #0a0a14"
-                      >
-                        Select country
-                      </option>
-                      <option style="background: #0a0a14">China</option>
-                      <option style="background: #0a0a14">United States</option>
-                      <option style="background: #0a0a14">
-                        United Kingdom
-                      </option>
-                      <option style="background: #0a0a14">Germany</option>
-                      <option style="background: #0a0a14">Japan</option>
-                      <option style="background: #0a0a14">South Korea</option>
-                      <option style="background: #0a0a14">Canada</option>
-                      <option style="background: #0a0a14">Australia</option>
-                      <option style="background: #0a0a14">Singapore</option>
-                      <option style="background: #0a0a14">Other</option>
+                      <option value="" disabled selected>Select country</option>
+                      <option value="China">China</option>
+                      <option value="United States">United States</option>
+                      <option value="United Kingdom">United Kingdom</option>
+                      <option value="Germany">Germany</option>
+                      <option value="Japan">Japan</option>
+                      <option value="South Korea">South Korea</option>
+                      <option value="Canada">Canada</option>
+                      <option value="Australia">Australia</option>
+                      <option value="Singapore">Singapore</option>
+                      <option value="Other">Other</option>
                     </select>
+                    <!-- Custom dropdown -->
+                    <div
+                      class="custom-select"
+                      id="countryDropdown"
+                      style="position: relative; width: 100%"
+                    >
+                      <div
+                        class="custom-select-trigger"
+                        id="countryTrigger"
+                        style="
+                          width: 100%;
+                          background: rgba(255, 255, 255, 0.05);
+                          border: 1px solid rgba(255, 255, 255, 0.09);
+                          border-top-color: rgba(160, 200, 255, 0.18);
+                          border-radius: 12px;
+                          padding: 13px 16px;
+                          color: rgba(255, 255, 255, 0.35);
+                          font-size: 15px;
+                          outline: none;
+                          font-family: inherit;
+                          backdrop-filter: blur(10px);
+                          -webkit-backdrop-filter: blur(10px);
+                          box-shadow:
+                            inset 0 1px 0 rgba(255, 255, 255, 0.09),
+                            inset 0 0 14px rgba(59, 130, 246, 0.07);
+                          transition: all 0.25s ease;
+                          cursor: pointer;
+                          display: flex;
+                          align-items: center;
+                          justify-content: space-between;
+                          user-select: none;
+                          box-sizing: border-box;
+                        "
+                      >
+                        <span id="countryLabel">Select country</span>
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="rgba(102,119,153,0.8)"
+                          stroke-width="2"
+                          style="
+                            flex-shrink: 0;
+                            transition: transform 0.25s ease;
+                          "
+                        >
+                          <path d="M6 9l6 6 6-6" />
+                        </svg>
+                      </div>
+                      <div
+                        class="custom-select-options"
+                        id="countryOptions"
+                        style="
+                          display: none;
+                          position: absolute;
+                          top: calc(100% + 6px);
+                          left: 0;
+                          right: 0;
+                          background: rgba(12, 13, 24, 0.95);
+                          border: 1px solid rgba(255, 255, 255, 0.1);
+                          border-radius: 12px;
+                          padding: 6px 0;
+                          z-index: 999;
+                          backdrop-filter: blur(24px);
+                          -webkit-backdrop-filter: blur(24px);
+                          box-shadow:
+                            0 12px 40px rgba(0, 0, 0, 0.5),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.06);
+                          max-height: 220px;
+                          overflow-y: auto;
+                          animation: csDropIn 0.18s ease-out;
+                        "
+                      >
+                        <div class="cs-option" data-value="China">China</div>
+                        <div class="cs-option" data-value="United States">
+                          United States
+                        </div>
+                        <div class="cs-option" data-value="United Kingdom">
+                          United Kingdom
+                        </div>
+                        <div class="cs-option" data-value="Germany">
+                          Germany
+                        </div>
+                        <div class="cs-option" data-value="Japan">Japan</div>
+                        <div class="cs-option" data-value="South Korea">
+                          South Korea
+                        </div>
+                        <div class="cs-option" data-value="Canada">Canada</div>
+                        <div class="cs-option" data-value="Australia">
+                          Australia
+                        </div>
+                        <div class="cs-option" data-value="Singapore">
+                          Singapore
+                        </div>
+                        <div class="cs-option" data-value="Other">Other</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -9277,7 +9941,16 @@
                   >I agree to the
                   <a
                     href="#"
-                    onclick="event.stopPropagation()"
+                    onclick="
+                      event.stopPropagation();
+                      event.preventDefault();
+                      var m = document.getElementById('terms-modal');
+                      if (m) {
+                        m.classList.add('active');
+                        m.setAttribute('aria-hidden', 'false');
+                        document.body.style.overflow = 'hidden';
+                      }
+                    "
                     style="color: #6b9dff; text-decoration: none"
                     >Terms of Use</a
                   >. Data will be used for non-commercial research only, not
@@ -11927,6 +12600,63 @@
           color: #a1a1aa;
         }
 
+        /* ── Custom country select dropdown ── */
+        @keyframes csDropIn {
+          from {
+            opacity: 0;
+            transform: translateY(-6px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .custom-select-trigger:hover {
+          border-color: rgba(100, 160, 255, 0.35) !important;
+          background: rgba(255, 255, 255, 0.07) !important;
+        }
+        .custom-select.open .custom-select-trigger {
+          border-color: rgba(100, 160, 255, 0.65) !important;
+          background: rgba(59, 130, 246, 0.09) !important;
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.12),
+            inset 0 0 18px rgba(59, 130, 246, 0.14),
+            0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+        }
+        .custom-select.open .custom-select-trigger svg {
+          transform: rotate(180deg);
+        }
+        .cs-option {
+          padding: 10px 16px;
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 14px;
+          cursor: pointer;
+          transition:
+            background 0.15s ease,
+            color 0.15s ease;
+          border-radius: 6px;
+          margin: 0 6px;
+        }
+        .cs-option:hover {
+          background: rgba(59, 130, 246, 0.15);
+          color: #eef0ff;
+        }
+        .cs-option.selected {
+          background: rgba(59, 130, 246, 0.2);
+          color: #a0c4ff;
+          font-weight: 500;
+        }
+        .custom-select-options::-webkit-scrollbar {
+          width: 5px;
+        }
+        .custom-select-options::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-select-options::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.12);
+          border-radius: 3px;
+        }
+
         /* ── Terms of Use modal ── */
         .terms-modal {
           position: fixed;
@@ -12320,6 +13050,7 @@
       </script>
     </div>
 
+    <script src="resources/_inc_data.js"></script>
     <script>
       // ─── Data points (unchanged) ───────────────────────────────────────────────
       // ─── Dataset definitions (grouped by dataset) ──────────────────────────────
@@ -36805,475 +37536,29 @@
       }
       initCountryLabels();
       // ═══════════════════════════════════════════════════════════════════
-      // ── ACCIDENT HEATMAP (460 locations, 8549 incidents, with hover) ─
+      // ── ACCIDENT HEATMAP (from INC_DATA — ca + ads + adas merged)    ─
       // ═══════════════════════════════════════════════════════════════════
-      var HEAT_PTS = [
-        { lat: 37.7749, lng: -122.4194, n: 1968, c: "San Francisco, CA" },
-        { lat: 37.1841, lng: -119.4696, n: 549, c: "Winter Gardens, CA" },
-        { lat: 34.0522, lng: -118.2437, n: 472, c: "Los Angeles, CA" },
-        { lat: 33.4484, lng: -112.074, n: 305, c: "Phoenix, AZ" },
-        { lat: 30.2672, lng: -97.7431, n: 271, c: "Austin, TX" },
-        { lat: 28.6305, lng: -82.4497, n: 196, c: "Windermere, FL" },
-        { lat: 31.4757, lng: -99.3312, n: 194, c: "Alice, TX" },
-        { lat: 40.1907, lng: -74.6728, n: 160, c: "Woodbury, NJ" },
-        { lat: 33.4255, lng: -111.94, n: 150, c: "Tempe, AZ" },
-        { lat: 42.9538, lng: -75.5268, n: 143, c: "Yorktown Heights, NY" },
-        { lat: 37.3861, lng: -122.0839, n: 107, c: "Mountain View, CA" },
-        { lat: 40.8781, lng: -77.7996, n: 99, c: "Almedia, PA" },
-        { lat: 36.1699, lng: -115.1398, n: 96, c: "Las Vegas, NV" },
-        { lat: 29.7604, lng: -95.3698, n: 93, c: "Houston, TX" },
-        { lat: 37.5215, lng: -78.8537, n: 87, c: "Aldie, VA" },
-        { lat: 32.6415, lng: -83.4426, n: 86, c: "Adairsville, GA" },
-        { lat: 40.2862, lng: -82.7937, n: 81, c: "Brook Park, OH" },
-        { lat: 35.5557, lng: -79.3877, n: 75, c: "Albemarle, NC" },
-        { lat: 44.3467, lng: -85.4102, n: 71, c: "Alan Park, MI" },
-        { lat: 47.3826, lng: -120.4472, n: 70, c: "Wellington, WA" },
-        { lat: 39.055, lng: -76.7909, n: 70, c: "Woodbridge, MD" },
-        { lat: 33.4942, lng: -111.9261, n: 69, c: "Scottsdale, AZ" },
-        { lat: 33.749, lng: -84.388, n: 68, c: "Atlanta, GA" },
-        { lat: 37.3382, lng: -121.8863, n: 67, c: "San Jose, CA" },
-        { lat: 32.7767, lng: -96.797, n: 64, c: "Dallas, TX" },
-        { lat: 40.0417, lng: -89.1965, n: 64, c: "Bourbonnais, IL" },
-        { lat: 25.7617, lng: -80.1918, n: 60, c: "Miami, FL" },
-        { lat: 42.2596, lng: -71.8083, n: 59, c: "Wilmington, MA" },
-        { lat: 37.4419, lng: -122.143, n: 56, c: "Palo Alto, CA" },
-        { lat: 37.5483, lng: -121.9886, n: 53, c: "Fremont, CA" },
-        { lat: 38.9972, lng: -105.5478, n: 50, c: "Wetmore, CO" },
-        { lat: 34.2744, lng: -111.6602, n: 48, c: "Wittmann, AZ" },
-        { lat: 32.7157, lng: -117.1611, n: 46, c: "San Diego, CA" },
-        { lat: 29.4241, lng: -98.4936, n: 41, c: "San Antonio, TX" },
-        { lat: 32.7794, lng: -86.8287, n: 40, c: "Winfield, AL" },
-        { lat: 33.9169, lng: -80.8964, n: 40, c: "Sumter, SC" },
-        { lat: 34.0195, lng: -118.4912, n: 39, c: "Santa Monica, CA" },
-        { lat: 38.3566, lng: -92.458, n: 39, c: "Ashland, MO" },
-        { lat: 35.7478, lng: -86.6923, n: 38, c: "Chuckey, TN" },
-        { lat: 37.5347, lng: -85.3021, n: 36, c: "Beaver Dam, KY" },
-        { lat: 33.3062, lng: -111.8413, n: 35, c: "Chandler, AZ" },
-        { lat: 46.2807, lng: -94.3053, n: 34, c: "St Paul, MN" },
-        { lat: 28.5383, lng: -81.3792, n: 32, c: "Orlando, FL" },
-        { lat: 39.8942, lng: -86.2816, n: 32, c: "Wolcott, IN" },
-        { lat: 39.321, lng: -111.0937, n: 31, c: "Taylorsville, UT" },
-        { lat: 41.6219, lng: -72.7273, n: 30, c: "Windsor, CT" },
-        { lat: 39.3289, lng: -116.6312, n: 29, c: "Winchester, NV" },
-        { lat: 44.6243, lng: -89.9941, n: 28, c: "Zittau, WI" },
-        { lat: 33.6846, lng: -117.8265, n: 27, c: "Irvine, CA" },
-        { lat: 41.8781, lng: -87.6298, n: 26, c: "Chicago, IL" },
-        { lat: 33.7701, lng: -118.1937, n: 25, c: "Long Beach, CA" },
-        { lat: 37.3541, lng: -121.9552, n: 25, c: "Santa Clara, CA" },
-        { lat: 37.3688, lng: -122.0363, n: 25, c: "Sunnyvale, CA" },
-        { lat: 37.563, lng: -122.3255, n: 24, c: "San Mateo, CA" },
-        { lat: 33.4152, lng: -111.8315, n: 24, c: "Mesa, AZ" },
-        { lat: 34.8938, lng: -92.4426, n: 24, c: "Winslow, AR" },
-        { lat: 31.0689, lng: -91.9968, n: 23, c: "Broussard, LA" },
-        { lat: 43.9336, lng: -120.5583, n: 23, c: "Albany, OR" },
-        { lat: 38.5816, lng: -121.4944, n: 21, c: "Sacramento, CA" },
-        { lat: 47.6062, lng: -122.3321, n: 21, c: "Seattle, WA" },
-        { lat: 34.0211, lng: -118.3965, n: 21, c: "Culver City, CA" },
-        { lat: 35.5889, lng: -97.4943, n: 20, c: "Yukon, OK" },
-        { lat: 33.8753, lng: -117.5664, n: 19, c: "Corona, CA" },
-        { lat: 33.9806, lng: -117.3755, n: 19, c: "Riverside, CA" },
-        { lat: 38.9072, lng: -77.0369, n: 18, c: "North Bethesda, DC" },
-        { lat: 26.3683, lng: -80.1289, n: 17, c: "Boca Raton, FL" },
-        { lat: 33.9617, lng: -118.3531, n: 17, c: "Inglewood, CA" },
-        { lat: 33.8353, lng: -117.9145, n: 16, c: "Anaheim, CA" },
-        { lat: 32.7364, lng: -89.6678, n: 16, c: "Starkville, MS" },
-        { lat: 33.1192, lng: -117.0864, n: 15, c: "Escondido, CA" },
-        { lat: 39.7392, lng: -104.9903, n: 15, c: "Denver, CO" },
-        { lat: 37.9577, lng: -121.2908, n: 14, c: "Stockton, CA" },
-        { lat: 35.2271, lng: -80.8431, n: 14, c: "Charlotte, NC" },
-        { lat: 40.7128, lng: -74.006, n: 14, c: "New York, NY" },
-        { lat: 33.1507, lng: -96.8236, n: 14, c: "Frisco, TX" },
-        { lat: 37.4852, lng: -122.2364, n: 14, c: "Redwood City, CA" },
-        { lat: 34.1083, lng: -117.2898, n: 14, c: "San Bernardino, CA" },
-        { lat: 37.6547, lng: -122.4077, n: 14, c: "South San Francisco, CA" },
-        { lat: 42.0751, lng: -93.496, n: 14, c: "Story City, IA" },
-        { lat: 37.429, lng: -122.2538, n: 13, c: "Woodside, CA" },
-        { lat: 37.5202, lng: -122.2758, n: 13, c: "Belmont, CA" },
-        { lat: 30.3322, lng: -81.6557, n: 13, c: "Jacksonville, FL" },
-        { lat: 38.4937, lng: -98.3804, n: 13, c: "Stilwell, KS" },
-        { lat: 37.7396, lng: -121.4252, n: 12, c: "Tracy, CA" },
-        { lat: 34.09, lng: -118.3617, n: 12, c: "West Hollywood, CA" },
-        { lat: 39.9612, lng: -82.9988, n: 12, c: "Columbus, OH" },
-        { lat: 27.9506, lng: -82.4572, n: 12, c: "Tampa, FL" },
-        { lat: 37.4323, lng: -121.8996, n: 12, c: "Milpitas, CA" },
-        { lat: 38.6409, lng: -80.6227, n: 12, c: "Berkeley Springs, WV" },
-        { lat: 34.4071, lng: -106.1126, n: 12, c: "Thoreau, NM" },
-        { lat: 34.2805, lng: -119.2945, n: 11, c: "Ventura, CA" },
-        { lat: 34.1478, lng: -118.1445, n: 11, c: "Pasadena, CA" },
-        { lat: 37.6879, lng: -122.4702, n: 11, c: "Daly City, CA" },
-        { lat: 34.0736, lng: -118.4004, n: 11, c: "Beverly Hills, CA" },
-        { lat: 42.2808, lng: -83.743, n: 11, c: "Ann Arbor, MI" },
-        { lat: 32.7555, lng: -97.3308, n: 11, c: "Fort Worth, TX" },
-        { lat: 39.7684, lng: -86.1581, n: 11, c: "Indianapolis, IN" },
-        { lat: 41.6762, lng: -71.5562, n: 11, c: "Tiverton, RI" },
-        { lat: 37.5296, lng: -122.0402, n: 10, c: "Newark, CA" },
-        { lat: 33.7879, lng: -117.8531, n: 10, c: "Orange, CA" },
-        { lat: 37.8044, lng: -122.2712, n: 10, c: "Oakland, CA" },
-        { lat: 32.7357, lng: -97.1081, n: 10, c: "Arlington, TX" },
-        { lat: 40.4406, lng: -79.9959, n: 10, c: "Pittsburgh, PA" },
-        { lat: 37.3852, lng: -122.1141, n: 10, c: "Los Altos, CA" },
-        { lat: 38.9896, lng: -75.505, n: 10, c: "Aspen Meadows, DE" },
-        { lat: 39.0997, lng: -94.5786, n: 9, c: "Kansas City, MO" },
-        { lat: 33.0198, lng: -96.6989, n: 9, c: "Plano, TX" },
-        { lat: 36.7378, lng: -119.7871, n: 9, c: "Fresno, CA" },
-        { lat: 34.0122, lng: -117.6889, n: 9, c: "Chino, CA" },
-        { lat: 33.8358, lng: -118.3406, n: 9, c: "Torrance, CA" },
-        { lat: 37.6819, lng: -121.7681, n: 9, c: "Livermore, CA" },
-        { lat: 43.6805, lng: -71.5811, n: 9, c: "Thornton, NH" },
-        { lat: 39.7294, lng: -104.8319, n: 8, c: "Aurora, CO" },
-        { lat: 37.6688, lng: -122.0808, n: 8, c: "Hayward, CA" },
-        { lat: 33.1972, lng: -96.6397, n: 8, c: "McKinney, TX" },
-        { lat: 35.4676, lng: -97.5164, n: 8, c: "Oklahoma City, OK" },
-        { lat: 33.1581, lng: -117.3506, n: 8, c: "Carlsbad, CA" },
-        { lat: 32.9537, lng: -96.8903, n: 8, c: "Carrollton, TX" },
-        { lat: 47.2529, lng: -122.4443, n: 8, c: "Tacoma, WA" },
-        { lat: 38.2494, lng: -122.04, n: 8, c: "Fairfield, CA" },
-        { lat: 39.9526, lng: -75.1652, n: 8, c: "Philadelphia, PA" },
-        { lat: 33.6411, lng: -117.9187, n: 8, c: "Costa Mesa, CA" },
-        { lat: 33.7455, lng: -117.8677, n: 8, c: "Santa Ana, CA" },
-        { lat: 42.3314, lng: -83.0458, n: 8, c: "Detroit, MI" },
-        { lat: 37.453, lng: -122.1817, n: 8, c: "Menlo Park, CA" },
-        { lat: 35.994, lng: -78.8986, n: 7, c: "Durham, NC" },
-        { lat: 40.6782, lng: -73.9442, n: 7, c: "Brooklyn, NY" },
-        { lat: 33.7743, lng: -117.9379, n: 7, c: "Garden Grove, CA" },
-        { lat: 37.9101, lng: -122.0652, n: 7, c: "Walnut Creek, CA" },
-        { lat: 37.7799, lng: -121.978, n: 7, c: "San Ramon, CA" },
-        { lat: 26.1224, lng: -80.1373, n: 7, c: "Fort Lauderdale, FL" },
-        { lat: 44.9778, lng: -93.265, n: 7, c: "Minneapolis, MN" },
-        { lat: 34.0686, lng: -118.0276, n: 7, c: "El Monte, CA" },
-        { lat: 27.3364, lng: -82.5307, n: 7, c: "Sarasota, FL" },
-        { lat: 26.2379, lng: -80.1248, n: 7, c: "Pompano Beach, FL" },
-        { lat: 38.2527, lng: -85.7585, n: 7, c: "Louisville, KY" },
-        { lat: 34.0686, lng: -117.9389, n: 7, c: "West Covina, CA" },
-        { lat: 34.1425, lng: -118.2551, n: 7, c: "Glendale, CA" },
-        { lat: 39.5296, lng: -119.8138, n: 7, c: "Reno, NV" },
-        { lat: 32.2226, lng: -110.9747, n: 7, c: "Tucson, AZ" },
-        { lat: 29.6197, lng: -95.6349, n: 6, c: "Sugar Land, TX" },
-        { lat: 36.0395, lng: -114.9817, n: 6, c: "Henderson, NV" },
-        { lat: 30.5052, lng: -97.8203, n: 6, c: "Cedar Park, TX" },
-        { lat: 34.0975, lng: -117.6484, n: 6, c: "Upland, CA" },
-        { lat: 34.1808, lng: -118.309, n: 6, c: "Burbank, CA" },
-        { lat: 37.2638, lng: -122.0231, n: 6, c: "Saratoga, CA" },
-        { lat: 47.6101, lng: -122.2015, n: 6, c: "Bellevue, WA" },
-        { lat: 33.9526, lng: -84.5499, n: 6, c: "Marietta, GA" },
-        { lat: 34.0551, lng: -117.75, n: 6, c: "Pomona, CA" },
-        { lat: 33.2, lng: -117.2425, n: 6, c: "Vista, CA" },
-        { lat: 39.2904, lng: -76.6122, n: 6, c: "Baltimore, MD" },
-        { lat: 38.627, lng: -90.1994, n: 6, c: "St. Louis, MO" },
-        { lat: 37.8216, lng: -121.9999, n: 6, c: "Danville, CA" },
-        { lat: 37.8591, lng: -122.4853, n: 6, c: "Sausalito, CA" },
-        { lat: 30.0799, lng: -95.4172, n: 6, c: "Spring, TX" },
-        { lat: 44.3509, lng: -114.613, n: 6, c: "Cocolalla, ID" },
-        { lat: 47.0527, lng: -110.2148, n: 6, c: "Big Timber, MT" },
-        { lat: 45.3695, lng: -69.2428, n: 6, c: "Wells, ME" },
-        { lat: 41.787, lng: -87.8087, n: 5, c: "Summit-Argo, IL" },
-        { lat: 34.3917, lng: -118.5426, n: 5, c: "Santa Clarita, CA" },
-        { lat: 37.6624, lng: -121.8747, n: 5, c: "Pleasanton, CA" },
-        { lat: 33.8704, lng: -117.9243, n: 5, c: "Fullerton, CA" },
-        { lat: 34.0922, lng: -117.435, n: 5, c: "Fontana, CA" },
-        { lat: 26.6406, lng: -81.8723, n: 5, c: "Fort Myers, FL" },
-        { lat: 34.0556, lng: -117.1825, n: 5, c: "Redlands, CA" },
-        { lat: 37.5407, lng: -77.436, n: 5, c: "Richmond, VA" },
-        { lat: 38.8462, lng: -77.3064, n: 5, c: "Fairfax, VA" },
-        { lat: 39.084, lng: -77.1528, n: 5, c: "Rockville, MD" },
-        { lat: 37.9358, lng: -122.3477, n: 5, c: "Richmond, CA" },
-        { lat: 40.5187, lng: -74.4121, n: 5, c: "Edison, NJ" },
-        { lat: 38.7509, lng: -77.4753, n: 5, c: "Manassas, VA" },
-        { lat: 34.0754, lng: -84.2941, n: 5, c: "Alpharetta, GA" },
-        { lat: 32.8343, lng: -97.2289, n: 5, c: "North Richland Hills, TX" },
-        { lat: 42.6526, lng: -73.7562, n: 5, c: "Albany, NY" },
-        { lat: 38.9847, lng: -77.0947, n: 5, c: "Bethesda, MD" },
-        { lat: 43.0389, lng: -87.9065, n: 5, c: "Milwaukee, WI" },
-        { lat: 32.814, lng: -96.9489, n: 5, c: "Irving, TX" },
-        { lat: 37.5934, lng: -122.0438, n: 5, c: "Union City, CA" },
-        { lat: 34.1706, lng: -118.8376, n: 5, c: "Thousand Oaks, CA" },
-        { lat: 35.8456, lng: -86.3903, n: 5, c: "Murfreesboro, TN" },
-        { lat: 38.2975, lng: -122.2869, n: 5, c: "Napa, CA" },
-        { lat: 33.9164, lng: -118.3525, n: 5, c: "Hawthorne, CA" },
-        { lat: 41.6528, lng: -83.5379, n: 5, c: "Toledo, OH" },
-        { lat: 28.2919, lng: -81.4078, n: 5, c: "Kissimmee, FL" },
-        { lat: 47.3809, lng: -122.2348, n: 5, c: "Kent, WA" },
-        { lat: 37.6304, lng: -122.4111, n: 5, c: "San Bruno, CA" },
-        { lat: 36.1627, lng: -86.7816, n: 5, c: "Nashville, TN" },
-        { lat: 44.0121, lng: -92.4802, n: 5, c: "Rochester, MN" },
-        { lat: 37.8309, lng: -122.2854, n: 5, c: "Emeryville, CA" },
-        {
-          lat: 42.9957,
-          lng: -107.5512,
-          n: 5,
-          c: "Yellowstone National Park, WY",
-        },
-        { lat: 43.1566, lng: -77.6088, n: 4, c: "Rochester, NY" },
-        { lat: 26.7153, lng: -80.0534, n: 4, c: "West Palm Beach, FL" },
-        { lat: 35.3733, lng: -119.0187, n: 4, c: "Bakersfield, CA" },
-        { lat: 33.0462, lng: -97.0028, n: 4, c: "Lewisville, TX" },
-        { lat: 47.979, lng: -122.2021, n: 4, c: "Everett, WA" },
-        { lat: 38.9907, lng: -77.0261, n: 4, c: "Silver Spring, MD" },
-        { lat: 38.5891, lng: -121.3024, n: 4, c: "Rancho Cordova, CA" },
-        { lat: 38.1041, lng: -122.2566, n: 4, c: "Vallejo, CA" },
-        { lat: 47.4829, lng: -122.2171, n: 4, c: "Renton, WA" },
-        { lat: 37.7022, lng: -121.9358, n: 4, c: "Dublin, CA" },
-        { lat: 33.2148, lng: -97.1331, n: 4, c: "Denton, TX" },
-        { lat: 36.9741, lng: -122.0308, n: 4, c: "Santa Cruz, CA" },
-        { lat: 40.9312, lng: -73.8988, n: 4, c: "Yonkers, NY" },
-        { lat: 33.924, lng: -84.3716, n: 4, c: "Sandy Springs, GA" },
-        { lat: 34.0029, lng: -84.1447, n: 4, c: "Duluth, GA" },
-        { lat: 38.9339, lng: -77.1773, n: 4, c: "McLean, VA" },
-        { lat: 35.2828, lng: -120.6596, n: 4, c: "San Luis Obispo, CA" },
-        { lat: 35.0844, lng: -106.6504, n: 4, c: "Albuquerque, NM" },
-        { lat: 45.5051, lng: -122.675, n: 4, c: "Portland, OR" },
-        { lat: 35.1495, lng: -90.049, n: 4, c: "Memphis, TN" },
-        { lat: 30.5083, lng: -97.6789, n: 4, c: "Round Rock, TX" },
-        { lat: 33.9022, lng: -118.0817, n: 4, c: "Norwalk, CA" },
-        { lat: 33.4353, lng: -112.3576, n: 4, c: "Goodyear, AZ" },
-        { lat: 41.0262, lng: -73.6282, n: 4, c: "Greenwich, CT" },
-        { lat: 32.746, lng: -97.0147, n: 4, c: "Grand Prairie, TX" },
-        { lat: 39.1031, lng: -84.512, n: 4, c: "Cincinnati, OH" },
-        { lat: 38.2324, lng: -122.6367, n: 4, c: "Petaluma, CA" },
-        { lat: 29.6516, lng: -82.3248, n: 4, c: "Gainesville, FL" },
-        { lat: 40.2732, lng: -76.8867, n: 4, c: "Harrisburg, PA" },
-        { lat: 33.3528, lng: -111.789, n: 4, c: "Gilbert, AZ" },
-        { lat: 37.323, lng: -122.0322, n: 4, c: "Cupertino, CA" },
-        { lat: 37.5841, lng: -122.3661, n: 4, c: "Burlingame, CA" },
-        { lat: 30.3119, lng: -95.456, n: 4, c: "Conroe, TX" },
-        { lat: 37.5585, lng: -122.2711, n: 4, c: "Foster City, CA" },
-        { lat: 37.2358, lng: -121.9624, n: 3, c: "Los Gatos, CA" },
-        { lat: 37.7249, lng: -122.1561, n: 3, c: "San Leandro, CA" },
-        { lat: 33.6603, lng: -117.9992, n: 3, c: "Huntington Beach, CA" },
-        { lat: 39.7589, lng: -84.1916, n: 3, c: "Dayton, OH" },
-        { lat: 37.9735, lng: -122.5311, n: 3, c: "San Rafael, CA" },
-        { lat: 34.2257, lng: -77.9447, n: 3, c: "Wilmington, NC" },
-        { lat: 37.507, lng: -122.2605, n: 3, c: "San Carlos, CA" },
-        { lat: 39.7447, lng: -75.5484, n: 3, c: "Wilmington, DE" },
-        { lat: 33.9972, lng: -117.4853, n: 3, c: "Jurupa Valley, CA" },
-        { lat: 29.1872, lng: -82.1401, n: 3, c: "Ocala, FL" },
-        { lat: 35.5951, lng: -82.5515, n: 3, c: "Asheville, NC" },
-        { lat: 42.0884, lng: -87.9806, n: 3, c: "Arlington Heights, IL" },
-        { lat: 35.9606, lng: -83.9207, n: 3, c: "Knoxville, TN" },
-        { lat: 40.5865, lng: -122.3917, n: 3, c: "Redding, CA" },
-        { lat: 47.674, lng: -122.1215, n: 3, c: "Redmond, WA" },
-        { lat: 32.7678, lng: -117.0231, n: 3, c: "La Mesa, CA" },
-        { lat: 31.1171, lng: -97.7278, n: 3, c: "Killeen, TX" },
-        { lat: 33.5539, lng: -117.2139, n: 3, c: "Murrieta, CA" },
-        { lat: 41.3082, lng: -72.9279, n: 3, c: "New Haven, CT" },
-        { lat: 41.7508, lng: -88.1535, n: 3, c: "Naperville, IL" },
-        { lat: 29.9511, lng: -90.0715, n: 3, c: "New Orleans, LA" },
-        { lat: 38.3032, lng: -77.4605, n: 3, c: "Fredericksburg, VA" },
-        { lat: 29.5075, lng: -95.0949, n: 3, c: "League City, TX" },
-        { lat: 37.5985, lng: -122.3869, n: 3, c: "Millbrae, CA" },
-        { lat: 38.4088, lng: -121.3716, n: 3, c: "Elk Grove, CA" },
-        { lat: 29.703, lng: -98.1245, n: 3, c: "New Braunfels, TX" },
-        { lat: 32.9483, lng: -96.7299, n: 3, c: "Richardson, TX" },
-        { lat: 34.2694, lng: -118.7815, n: 3, c: "Simi Valley, CA" },
-        { lat: 42.3601, lng: -71.0589, n: 3, c: "Boston, MA" },
-        { lat: 31.5545, lng: -110.3036, n: 3, c: "Sierra Vista, AZ" },
-        { lat: 41.7606, lng: -88.3201, n: 3, c: "Aurora, IL" },
-        { lat: 36.8529, lng: -75.978, n: 3, c: "Virginia Beach, VA" },
-        { lat: 38.8339, lng: -104.8214, n: 3, c: "Colorado Springs, CO" },
-        { lat: 45.6387, lng: -122.6615, n: 3, c: "Vancouver, WA" },
-        { lat: 44.0582, lng: -121.3153, n: 3, c: "Bend, OR" },
-        { lat: 38.5449, lng: -121.7405, n: 3, c: "Davis, CA" },
-        { lat: 48.7519, lng: -122.4787, n: 3, c: "Bellingham, WA" },
-        { lat: 36.8252, lng: -119.7029, n: 3, c: "Clovis, CA" },
-        { lat: 41.4993, lng: -81.6944, n: 3, c: "Cleveland, OH" },
-        { lat: 35.7915, lng: -78.7811, n: 3, c: "Cary, NC" },
-        { lat: 31.5493, lng: -97.1467, n: 3, c: "Waco, TX" },
-        { lat: 40.8584, lng: -74.1638, n: 3, c: "Clifton, NJ" },
-        { lat: 28.8053, lng: -97.0036, n: 3, c: "Victoria, TX" },
-        { lat: 44.0687, lng: -72.6658, n: 3, c: "Colchester, VT" },
-        { lat: 31.7619, lng: -106.485, n: 3, c: "El Paso, TX" },
-        { lat: 44.2998, lng: -99.4388, n: 3, c: "Hudson, SD" },
-        { lat: 33.9401, lng: -118.1332, n: 3, c: "Downey, CA" },
-        { lat: 41.5378, lng: -99.7951, n: 3, c: "Cozad, NE" },
-        { lat: 42.3636, lng: -87.8448, n: 2, c: "Waukegan, IL" },
-        { lat: 42.2917, lng: -85.5872, n: 2, c: "Kalamazoo, MI" },
-        { lat: 26.0112, lng: -80.1495, n: 2, c: "Hollywood, FL" },
-        { lat: 41.7658, lng: -72.6851, n: 2, c: "Hartford, CT" },
-        { lat: 25.8576, lng: -80.2781, n: 2, c: "Hialeah, FL" },
-        { lat: 36.154, lng: -95.9928, n: 2, c: "Tulsa, OK" },
-        { lat: 35.2226, lng: -97.4395, n: 2, c: "Norman, OK" },
-        { lat: 41.1177, lng: -73.4082, n: 2, c: "Norwalk, CT" },
-        { lat: 37.0871, lng: -76.473, n: 2, c: "Newport News, VA" },
-        { lat: 36.8508, lng: -76.2859, n: 2, c: "Norfolk, VA" },
-        { lat: 34.214, lng: -80.994, n: 2, c: "Blythewood, SC" },
-        { lat: 40.8448, lng: -73.8648, n: 2, c: "Bronx, NY" },
-        { lat: 32.3513, lng: -95.3011, n: 2, c: "Tyler, TX" },
-        { lat: 36.0999, lng: -80.2442, n: 2, c: "Winston-Salem, NC" },
-        { lat: 32.8407, lng: -83.6324, n: 2, c: "Macon, GA" },
-        { lat: 37.7974, lng: -121.2163, n: 2, c: "Manteca, CA" },
-        { lat: 28.0836, lng: -80.6081, n: 2, c: "Melbourne, FL" },
-        { lat: 38.8816, lng: -77.091, n: 2, c: "Arlington, VA" },
-        { lat: 33.9137, lng: -98.4934, n: 2, c: "Wichita Falls, TX" },
-        { lat: 46.6021, lng: -120.5059, n: 2, c: "Yakima, WA" },
-        { lat: 33.4153, lng: -111.5498, n: 2, c: "Apache Junction, AZ" },
-        { lat: 39.8367, lng: -105.0372, n: 2, c: "Westminster, CO" },
-        { lat: 38.8307, lng: -77.1956, n: 2, c: "Annandale, VA" },
-        { lat: 38.0049, lng: -121.8058, n: 2, c: "Antioch, CA" },
-        { lat: 40.0379, lng: -76.3055, n: 2, c: "Lancaster, PA" },
-        { lat: 37.906, lng: -122.5449, n: 2, c: "Mill Valley, CA" },
-        { lat: 32.3669, lng: -86.2999, n: 2, c: "Montgomery, AL" },
-        { lat: 47.4501, lng: -100.4659, n: 2, c: "Washburn, ND" },
-        { lat: 40.8136, lng: -96.7026, n: 2, c: "Lincoln, NE" },
-        { lat: 30.6954, lng: -88.0399, n: 2, c: "Mobile, AL" },
-        { lat: 30.4515, lng: -91.1871, n: 2, c: "Baton Rouge, LA" },
-        { lat: 38.0406, lng: -84.5037, n: 2, c: "Lexington, KY" },
-        { lat: 32.7668, lng: -96.5992, n: 2, c: "Mesquite, TX" },
-        { lat: 33.4356, lng: -112.3496, n: 2, c: "Avondale, AZ" },
-        { lat: 42.3681, lng: -83.3527, n: 2, c: "Livonia, MI" },
-        { lat: 30.0802, lng: -94.1266, n: 2, c: "Beaumont, TX" },
-        { lat: 25.986, lng: -80.234, n: 2, c: "Miramar, FL" },
-        { lat: 39.1151, lng: -77.5636, n: 2, c: "Leesburg, VA" },
-        { lat: 38.7521, lng: -121.288, n: 2, c: "Roseville, CA" },
-        { lat: 33.0369, lng: -117.292, n: 2, c: "Encinitas, CA" },
-        { lat: 33.1959, lng: -117.3795, n: 2, c: "Oceanside, CA" },
-        { lat: 37.9716, lng: -87.5711, n: 2, c: "Evansville, IN" },
-        { lat: 40.7282, lng: -73.7949, n: 2, c: "Queens, NY" },
-        { lat: 40.5853, lng: -105.0844, n: 2, c: "Fort Collins, CO" },
-        { lat: 38.7071, lng: -121.281, n: 2, c: "Citrus Heights, CA" },
-        { lat: 34.1064, lng: -117.5931, n: 2, c: "Rancho Cucamonga, CA" },
-        { lat: 35.7796, lng: -78.6382, n: 2, c: "Raleigh, NC" },
-        { lat: 29.9691, lng: -95.6972, n: 2, c: "Cypress, TX" },
-        { lat: 33.1434, lng: -117.1661, n: 2, c: "San Marcos, CA" },
-        { lat: 32.8384, lng: -116.9739, n: 2, c: "Santee, CA" },
-        { lat: 29.2108, lng: -81.0228, n: 2, c: "Daytona Beach, FL" },
-        { lat: 35.687, lng: -105.9378, n: 2, c: "Santa Fe, NM" },
-        { lat: 42.3223, lng: -83.1763, n: 2, c: "Dearborn, MI" },
-        { lat: 34.4208, lng: -119.6982, n: 2, c: "Santa Barbara, CA" },
-        { lat: 36.6777, lng: -121.6555, n: 2, c: "Salinas, CA" },
-        { lat: 40.7608, lng: -111.891, n: 2, c: "Salt Lake City, UT" },
-        { lat: 40.1937, lng: -85.2691, n: 2, c: "Selma, IN" },
-        { lat: 43.0481, lng: -76.1474, n: 2, c: "Syracuse, NY" },
-        { lat: 37.2872, lng: -121.95, n: 2, c: "Campbell, CA" },
-        { lat: 26.0076, lng: -80.2963, n: 2, c: "Pembroke Pines, FL" },
-        { lat: 32.7765, lng: -79.9311, n: 2, c: "Charleston, SC" },
-        { lat: 34.0633, lng: -117.6509, n: 2, c: "Ontario, CA" },
-        { lat: 31.8457, lng: -102.3676, n: 2, c: "Odessa, TX" },
-        { lat: 27.9789, lng: -80.6586, n: 2, c: "Palm Bay, FL" },
-        { lat: 33.8303, lng: -116.5453, n: 2, c: "Palm Springs, CA" },
-        { lat: 34.5794, lng: -118.1165, n: 2, c: "Palmdale, CA" },
-        { lat: 36.0726, lng: -79.792, n: 2, c: "Greensboro, NC" },
-        { lat: 33.6292, lng: -112.3679, n: 2, c: "Surprise, AZ" },
-        { lat: 30.4518, lng: -84.2807, n: 2, c: "Tallahassee, FL" },
-        { lat: 47.6588, lng: -117.426, n: 2, c: "Spokane, WA" },
-        { lat: 35.0527, lng: -78.8784, n: 2, c: "Fayetteville, NC" },
-        { lat: 40.7675, lng: -73.833, n: 2, c: "Flushing, NY" },
-        { lat: 32.6401, lng: -117.0842, n: 2, c: "Chula Vista, CA" },
-        { lat: 41.0793, lng: -85.1394, n: 2, c: "Fort Wayne, IN" },
-        { lat: 30.6333, lng: -97.678, n: 2, c: "Georgetown, TX" },
-        { lat: 38.028, lng: -121.8847, n: 2, c: "Pittsburg, CA" },
-        { lat: 37.0058, lng: -121.5683, n: 2, c: "Gilroy, CA" },
-        { lat: 39.9348, lng: -75.0241, n: 2, c: "Cherry Hill, NJ" },
-        { lat: 37.209, lng: -93.2923, n: 2, c: "Springfield, MO" },
-        { lat: 44.9537, lng: -93.09, n: 2, c: "St. Paul, MN" },
-        { lat: 33.5387, lng: -112.186, n: 2, c: "Glendale, AZ" },
-        { lat: 42.5803, lng: -83.0302, n: 2, c: "Sterling Heights, MI" },
-        { lat: 20.2927, lng: -156.3737, n: 2, c: "Waimea, HI" },
-        { lat: 41.0814, lng: -81.519, n: 1, c: "Akron, OH" },
-        { lat: 39.8028, lng: -105.0875, n: 1, c: "Arvada, CO" },
-        { lat: 39.0437, lng: -77.4874, n: 1, c: "Ashburn, VA" },
-        { lat: 35.222, lng: -101.8313, n: 1, c: "Amarillo, TX" },
-        { lat: 38.5804, lng: -121.53, n: 1, c: "West Sacramento, CA" },
-        { lat: 43.0731, lng: -89.4012, n: 1, c: "Madison, WI" },
-        { lat: 31.9974, lng: -102.0779, n: 1, c: "Midland, TX" },
-        { lat: 32.5007, lng: -94.7405, n: 1, c: "Longview, TX" },
-        { lat: 29.6185, lng: -95.5377, n: 1, c: "Missouri City, TX" },
-        { lat: 37.6391, lng: -120.9969, n: 1, c: "Modesto, CA" },
-        { lat: 33.9526, lng: -83.9877, n: 1, c: "Lawrenceville, GA" },
-        { lat: 28.0395, lng: -81.9498, n: 1, c: "Lakeland, FL" },
-        { lat: 39.7047, lng: -105.0814, n: 1, c: "Lakewood, CO" },
-        { lat: 37.1305, lng: -121.6544, n: 1, c: "Morgan Hill, CA" },
-        { lat: 29.7858, lng: -95.8244, n: 1, c: "Katy, TX" },
-        { lat: 32.9343, lng: -97.2294, n: 1, c: "Keller, TX" },
-        { lat: 40.7178, lng: -74.0431, n: 1, c: "Jersey City, NJ" },
-        { lat: 41.525, lng: -88.0817, n: 1, c: "Joliet, IL" },
-        { lat: 32.2988, lng: -90.1848, n: 1, c: "Jackson, MS" },
-        { lat: 38.9696, lng: -77.3861, n: 1, c: "Herndon, VA" },
-        { lat: 36.1989, lng: -115.1175, n: 1, c: "North Las Vegas, NV" },
-        { lat: 42.337, lng: -71.2092, n: 1, c: "Newton, MA" },
-        { lat: 33.9412, lng: -84.2127, n: 1, c: "Norcross, GA" },
-        { lat: 33.7206, lng: -116.2156, n: 1, c: "Indio, CA" },
-        { lat: 41.223, lng: -111.9738, n: 1, c: "Ogden, UT" },
-        { lat: 38.1074, lng: -122.5697, n: 1, c: "Novato, CA" },
-        { lat: 45.5229, lng: -122.9898, n: 1, c: "Hillsboro, OR" },
-        { lat: 38.9822, lng: -94.6708, n: 1, c: "Overland Park, KS" },
-        { lat: 34.1975, lng: -119.1771, n: 1, c: "Oxnard, CA" },
-        { lat: 31.3271, lng: -89.2903, n: 1, c: "Hattiesburg, MS" },
-        { lat: 41.2565, lng: -95.9345, n: 1, c: "Omaha, NE" },
-        { lat: 40.2969, lng: -111.6946, n: 1, c: "Orem, UT" },
-        { lat: 40.9168, lng: -74.1718, n: 1, c: "Paterson, NJ" },
-        { lat: 37.4635, lng: -122.4286, n: 1, c: "Half Moon Bay, CA" },
-        { lat: 34.8526, lng: -82.394, n: 1, c: "Greenville, SC" },
-        { lat: 39.1434, lng: -77.2014, n: 1, c: "Gaithersburg, MD" },
-        { lat: 33.5806, lng: -112.2374, n: 1, c: "Peoria, AZ" },
-        { lat: 30.4393, lng: -97.62, n: 1, c: "Pflugerville, TX" },
-        { lat: 33.2487, lng: -111.6343, n: 1, c: "Queen Creek, AZ" },
-        { lat: 41.824, lng: -71.4128, n: 1, c: "Providence, RI" },
-        { lat: 40.2338, lng: -111.6585, n: 1, c: "Provo, UT" },
-        { lat: 37.3771, lng: -122.2319, n: 1, c: "Portola Valley, CA" },
-        { lat: 32.9628, lng: -117.0359, n: 1, c: "Poway, CA" },
-        { lat: 27.293, lng: -80.3503, n: 1, c: "Port St. Lucie, FL" },
-        { lat: 32.8371, lng: -97.0819, n: 1, c: "Euless, TX" },
-        { lat: 38.8823, lng: -77.1711, n: 1, c: "Falls Church, VA" },
-        { lat: 43.0125, lng: -83.6875, n: 1, c: "Flint, MI" },
-        { lat: 42.2711, lng: -89.094, n: 1, c: "Rockford, IL" },
-        { lat: 35.2328, lng: -106.663, n: 1, c: "Rio Rancho, NM" },
-        { lat: 38.9687, lng: -77.3411, n: 1, c: "Reston, VA" },
-        { lat: 32.9029, lng: -96.5636, n: 1, c: "Rowlett, TX" },
-        { lat: 34.0232, lng: -84.3616, n: 1, c: "Roswell, GA" },
-        { lat: 44.9429, lng: -123.0351, n: 1, c: "Salem, OR" },
-        { lat: 47.6163, lng: -122.0356, n: 1, c: "Sammamish, WA" },
-        { lat: 33.7748, lng: -84.2963, n: 1, c: "Decatur, GA" },
-        { lat: 29.8833, lng: -97.9414, n: 1, c: "San Marcos, TX" },
-        { lat: 41.409, lng: -75.6624, n: 1, c: "Scranton, PA" },
-        { lat: 27.8006, lng: -97.3964, n: 1, c: "Corpus Christi, TX" },
-        { lat: 37.9252, lng: -122.5244, n: 1, c: "Corte Madera, CA" },
-        { lat: 37.978, lng: -122.0311, n: 1, c: "Concord, CA" },
-        { lat: 32.5252, lng: -93.7502, n: 1, c: "Shreveport, LA" },
-        { lat: 38.9517, lng: -92.3341, n: 1, c: "Columbia, MO" },
-        { lat: 42.4734, lng: -83.2219, n: 1, c: "Southfield, MI" },
-        { lat: 34.0739, lng: -117.3136, n: 1, c: "Colton, CA" },
-        { lat: 42.3876, lng: -71.0995, n: 1, c: "Somerville, MA" },
-        { lat: 41.6764, lng: -86.252, n: 1, c: "South Bend, IN" },
-        { lat: 27.9659, lng: -82.8001, n: 1, c: "Clearwater, FL" },
-        { lat: 39.7285, lng: -121.8375, n: 1, c: "Chico, CA" },
-        { lat: 33.9898, lng: -117.7326, n: 1, c: "Chino Hills, CA" },
-        { lat: 36.5298, lng: -87.3595, n: 1, c: "Clarksville, TN" },
-        { lat: 32.7448, lng: -116.9989, n: 1, c: "Spring Valley, CA" },
-        { lat: 27.7731, lng: -82.64, n: 1, c: "St. Petersburg, FL" },
-        { lat: 30.1658, lng: -95.5088, n: 1, c: "The Woodlands, TX" },
-        { lat: 39.868, lng: -104.9719, n: 1, c: "Thornton, CO" },
-        { lat: 39.1638, lng: -119.7674, n: 1, c: "Carson City, NV" },
-        { lat: 31.0982, lng: -97.3428, n: 1, c: "Temple, TX" },
-        { lat: 40.2206, lng: -74.7597, n: 1, c: "Trenton, NJ" },
-        { lat: 42.6064, lng: -83.1498, n: 1, c: "Troy, MI" },
-        { lat: 42.8864, lng: -78.8784, n: 1, c: "Buffalo, NY" },
-        { lat: 33.3703, lng: -112.5838, n: 1, c: "Buckeye, AZ" },
-        { lat: 42.3318, lng: -71.1212, n: 1, c: "Brookline, MA" },
-        { lat: 40.6259, lng: -75.3705, n: 1, c: "Bethlehem, PA" },
-        { lat: 33.5186, lng: -86.8104, n: 1, c: "Birmingham, AL" },
-        { lat: 34.5362, lng: -117.2928, n: 1, c: "Victorville, CA" },
-        { lat: 37.4613, lng: -122.1977, n: 1, c: "Atherton, CA" },
-        { lat: 37.8716, lng: -122.2727, n: 1, c: "Berkeley, CA" },
-        { lat: 37.6872, lng: -97.3301, n: 1, c: "Wichita, KS" },
-        { lat: 41.9184, lng: -83.6796, n: 1, c: "Whiteford Twp, MI" },
-        { lat: 42.2626, lng: -71.8023, n: 1, c: "Worcester, MA" },
-        { lat: 33.0581, lng: -112.0476, n: 1, c: "Maricopa, AZ" },
-        { lat: 40.5576, lng: -74.2846, n: 1, c: "Woodbridge, NJ" },
-        { lat: 33.1032, lng: -96.6706, n: 1, c: "Allen, TX" },
-        { lat: 40.6023, lng: -75.4714, n: 1, c: "Allentown, PA" },
-        { lat: 37.8869, lng: -122.2977, n: 1, c: "Albany, CA" },
-        { lat: 38.8048, lng: -77.0469, n: 1, c: "Alexandria, VA" },
-        { lat: 38.0538, lng: -122.2177, n: 1, c: "Crockett, CA " },
-        { lat: 37.7263, lng: -121.7278, n: 1, c: "Altamont, CA" },
-        { lat: 37.7652, lng: -122.2416, n: 1, c: "Alameda, CA" },
-        { lat: 33.9967, lng: -118.1598, n: 1, c: "Commerce, CA" },
-        { lat: 33.985, lng: -118.4695, n: 1, c: "VENICE, CA" },
-        { lat: 33.7459, lng: -117.8261, n: 1, c: "Tustin, CA" },
-        { lat: 33.9425, lng: -118.0589, n: 1, c: "Santa fe springs, CA" },
-        { lat: 33.8883, lng: -118.3089, n: 1, c: "GARDENA, CA" },
-        { lat: 37.6941, lng: -122.0858, n: 1, c: "Castro Valley, CA" },
-        { lat: 33.9802, lng: -118.4517, n: 1, c: "Marina Del Rey, CA" },
-      ];
+      var HEAT_PTS = (function buildHeatPts() {
+        if (typeof INC_DATA === "undefined") return [];
+        var map = {};
+        ["ca", "ads", "adas"].forEach(function (src) {
+          (INC_DATA[src] || []).forEach(function (p) {
+            // p = [city, lat, lon, count]
+            var key = p[1].toFixed(4) + "," + p[2].toFixed(4);
+            if (map[key]) {
+              map[key].n += p[3];
+            } else {
+              map[key] = { lat: p[1], lng: p[2], n: p[3], c: p[0] };
+            }
+          });
+        });
+        var arr = [];
+        for (var k in map) arr.push(map[k]);
+        arr.sort(function (a, b) {
+          return b.n - a.n;
+        });
+        return arr;
+      })();
 
       var _heatEls = []; // for raycasting hover
 
@@ -38262,52 +38547,6 @@
         </div>
 
         <!-- Terms of Use -->
-        <div
-          class="mt-8 pt-6"
-          style="border-top: 1px solid rgba(255, 255, 255, 0.07)"
-        >
-          <h3
-            class="text-sm font-bold text-white/80 mb-4 tracking-wide uppercase"
-          >
-            Terms of Use
-          </h3>
-          <div class="text-xs text-white/40 leading-relaxed space-y-3">
-            <p>
-              This dataset is freely available to academic and non-academic
-              institutions for non-commercial purposes only, including but not
-              limited to academic research, teaching activities, or scientific
-              publications. By using this dataset, you agree to the following
-              terms:
-            </p>
-            <p>
-              <strong class="text-white/60">1) Citation Requirement:</strong>
-              Any work that uses the CitySim dataset must explicitly cite the
-              dataset.
-            </p>
-            <p>
-              <strong class="text-white/60">2) No Redistribution:</strong> The
-              dataset or any modified version of it may not be distributed in
-              any form. Derivative works that may be distributed are limited to
-              abstract representations of the dataset, such as models trained on
-              the data, or supplementary annotations that do not directly
-              contain any original data and cannot be used to reverse-engineer
-              or reconstruct the dataset or content similar in nature.
-            </p>
-            <p>
-              <strong class="text-white/60"
-                >3) Commercial Use Restriction:</strong
-              >
-              The dataset or any derivative works may not be used for commercial
-              purposes, including but not limited to licensing, selling, or any
-              use intended to generate commercial profit.
-            </p>
-            <p>
-              <strong class="text-white/60">4) Rights Reserved:</strong> All
-              rights not expressly granted in this notice are reserved by the
-              dataset provider.
-            </p>
-          </div>
-        </div>
 
         <!-- Modal footer -->
         <div
@@ -38365,6 +38604,130 @@
 
     <!-- PDF.js for rendering PDF pages -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <!-- Join Us Modal (outside .ozone-sections to avoid transform breakage on position:fixed) -->
+    <div
+      id="joinModal"
+      class="oz-modal-overlay"
+      onclick="handleJoinOverlayClick(event)"
+    >
+      <div class="oz-modal-backdrop"></div>
+      <div class="oz-modal-box join-modal-box">
+        <button
+          class="join-close"
+          onclick="closeJoinModal()"
+          aria-label="Close"
+        >
+          <svg
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+        <div class="join-head">
+          <div class="join-dot"></div>
+          <h3>Join the Ozone Team</h3>
+        </div>
+        <p class="join-desc">
+          Fill in the form below and we'll get back to you shortly.
+        </p>
+        <form id="joinForm" onsubmit="return submitJoinForm(event);">
+          <div class="join-fields">
+            <div class="join-row">
+              <div class="join-field">
+                <label>Name <span class="req">*</span></label>
+                <input
+                  type="text"
+                  name="join_name"
+                  placeholder="Your full name"
+                  required
+                />
+              </div>
+              <div class="join-field">
+                <label>Email <span class="req">*</span></label>
+                <input
+                  type="email"
+                  name="join_email"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+            </div>
+            <div class="join-row">
+              <div class="join-field">
+                <label>Institution <span class="req">*</span></label>
+                <input
+                  type="text"
+                  name="join_inst"
+                  placeholder="University or company"
+                  required
+                />
+              </div>
+              <div class="join-field">
+                <label>Role <span class="req">*</span></label>
+                <input
+                  type="text"
+                  name="join_role"
+                  placeholder="e.g. Researcher, Engineer"
+                  required
+                />
+              </div>
+            </div>
+            <div class="join-field" style="width: 100%">
+              <label>Message <span class="req">*</span></label>
+              <textarea
+                name="join_msg"
+                rows="3"
+                placeholder="What type of collaboration are you interested in?"
+                required
+              ></textarea>
+            </div>
+          </div>
+          <div class="join-footer">
+            <button type="submit" class="join-submit">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="joinToast" class="join-toast">
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#4ade80"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+      <span>Submitted successfully — we'll be in touch soon!</span>
+    </div>
 
     <!-- Team Member Detail Modal (outside .ozone-sections to avoid transform breakage on position:fixed) -->
     <div
@@ -38950,7 +39313,7 @@
 
         <div class="rh-grid">
           <!-- Datasets tile -->
-          <a class="rh-tile" href="#download-map">
+          <a class="rh-tile" href="resources/map.html" data-auth-required>
             <span class="rh-tile-status live">Live</span>
             <div class="rh-tile-head">
               <span class="rh-ico">
@@ -39008,7 +39371,7 @@
           </a>
 
           <!-- Paper tile -->
-          <a class="rh-tile" href="#download-paper">
+          <a class="rh-tile" href="resources/paper.html" data-auth-required>
             <span class="rh-tile-status live">Live</span>
             <div class="rh-tile-head">
               <span class="rh-ico">
@@ -39071,6 +39434,7 @@
             href="https://github.com/ZhilingResearch/Ozone"
             target="_blank"
             rel="noopener noreferrer"
+            data-auth-required
           >
             <span class="rh-tile-status">v0.4.2</span>
             <div class="rh-tile-head">
@@ -39125,7 +39489,7 @@
           </a>
 
           <!-- Community tile -->
-          <a class="rh-tile" href="resources/community.html">
+          <a class="rh-tile" href="resources/community.html" data-auth-required>
             <span class="rh-tile-status">2 channels</span>
             <div class="rh-tile-head">
               <span class="rh-ico">
@@ -39306,7 +39670,7 @@
                   >
                     <div class="ng-site-thumb">
                       <img
-                        src="public/freeway.jpeg"
+                        src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/freeway.jpeg"
                         alt="US-101 Freeway aerial"
                         loading="lazy"
                       />
@@ -39322,7 +39686,7 @@
                   <div class="ng-site" data-name="i-80 emeryville berkeley">
                     <div class="ng-site-thumb">
                       <img
-                        src="public/emeryville.jpg"
+                        src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/emeryville.jpg"
                         alt="I-80 Emeryville aerial"
                         loading="lazy"
                       />
@@ -39339,7 +39703,7 @@
                   >
                     <div class="ng-site-thumb">
                       <img
-                        src="public/lankershimBlvd.jpg"
+                        src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/lankershimBlvd.jpg"
                         alt="Lankershim Blvd aerial"
                         loading="lazy"
                       />
@@ -39358,7 +39722,7 @@
                   >
                     <div class="ng-site-thumb">
                       <img
-                        src="public/peachtree.jpeg"
+                        src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/peachtree.jpeg"
                         alt="Peachtree Street aerial"
                         loading="lazy"
                       />
@@ -41188,6 +41552,7 @@
                 if (m) {
                   m.classList.add('active');
                   m.setAttribute('aria-hidden', 'false');
+                  document.body.style.overflow = 'hidden';
                 }
               "
               >Terms of Use</a
@@ -41248,17 +41613,18 @@
       function handleLogin() {
         var btn = document.getElementById("lmSubmitBtn");
         var err = document.getElementById("loginError");
+        var emailValue = document.getElementById("loginEmail").value;
         err.classList.remove("show");
         btn.innerHTML =
           '<svg style="animation:ozSpin 0.8s linear infinite;width:14px;height:14px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> Signing in...';
         btn.style.opacity = "0.7";
         btn.style.pointerEvents = "none";
         setTimeout(function () {
-          btn.innerHTML =
-            'Sign In <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" style="width:14px;height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>';
-          btn.style.opacity = "";
-          btn.style.pointerEvents = "";
-          err.classList.add("show");
+          localStorage.setItem(
+            "ozone_session",
+            JSON.stringify({ name: emailValue, loggedIn: true }),
+          );
+          location.href = "profile.html";
         }, 1400);
       }
 
@@ -41467,9 +41833,13 @@
           var pwdRow = citeModal.querySelector(".pwd");
           if (pwdRow) pwdRow.style.display = pwd ? "" : "none";
           citeModal.classList.add("active");
+          document.body.style.overflow = "hidden";
         }
         function closeCite() {
-          if (citeModal) citeModal.classList.remove("active");
+          if (citeModal) {
+            citeModal.classList.remove("active");
+            document.body.style.overflow = "";
+          }
         }
         document.querySelectorAll("[data-cite-download]").forEach(function (a) {
           a.addEventListener("click", function (e) {
@@ -41540,6 +41910,7 @@
                 if (termsModal) {
                   termsModal.classList.add("active");
                   termsModal.setAttribute("aria-hidden", "false");
+                  document.body.style.overflow = "hidden";
                 }
               });
             });
@@ -41548,6 +41919,7 @@
               if (e.target === termsModal) {
                 termsModal.classList.remove("active");
                 termsModal.setAttribute("aria-hidden", "true");
+                document.body.style.overflow = "";
               }
             });
             termsModal
@@ -41556,6 +41928,7 @@
                 btn.addEventListener("click", function () {
                   termsModal.classList.remove("active");
                   termsModal.setAttribute("aria-hidden", "true");
+                  document.body.style.overflow = "";
                 });
               });
             document.addEventListener(
@@ -41568,11 +41941,59 @@
                   e.stopPropagation();
                   termsModal.classList.remove("active");
                   termsModal.setAttribute("aria-hidden", "true");
+                  document.body.style.overflow = "";
                 }
               },
               true,
             );
           }
+
+          // ── Custom country select dropdown ──
+          (function initCountryDropdown() {
+            var dropdown = document.getElementById("countryDropdown");
+            var trigger = document.getElementById("countryTrigger");
+            var optionsBox = document.getElementById("countryOptions");
+            var label = document.getElementById("countryLabel");
+            var hiddenSelect = document.getElementById("countrySelect");
+            if (!dropdown || !trigger || !optionsBox) return;
+
+            var options = optionsBox.querySelectorAll(".cs-option");
+
+            trigger.addEventListener("click", function (e) {
+              e.stopPropagation();
+              var isOpen = dropdown.classList.contains("open");
+              if (isOpen) {
+                closeDropdown();
+              } else {
+                dropdown.classList.add("open");
+                optionsBox.style.display = "block";
+              }
+            });
+
+            options.forEach(function (opt) {
+              opt.addEventListener("click", function (e) {
+                e.stopPropagation();
+                var val = opt.getAttribute("data-value");
+                label.textContent = val;
+                trigger.style.color = "#eef0ff";
+                hiddenSelect.value = val;
+                options.forEach(function (o) {
+                  o.classList.remove("selected");
+                });
+                opt.classList.add("selected");
+                closeDropdown();
+              });
+            });
+
+            function closeDropdown() {
+              dropdown.classList.remove("open");
+              optionsBox.style.display = "none";
+            }
+
+            document.addEventListener("click", function () {
+              closeDropdown();
+            });
+          })();
         }
       })();
 
@@ -41592,6 +42013,55 @@
           );
         }, 1400);
       }
+    </script>
+    <script>
+      // ── Session-aware navbar toggle ──
+      (function () {
+        var session = localStorage.getItem("ozone_session");
+        var profileBtn = document.getElementById("profileBtn");
+        var loginBtn = document.getElementById("loginBtn");
+        if (session) {
+          try {
+            var data = JSON.parse(session);
+            if (data && data.loggedIn) {
+              var initial =
+                (data.name && data.name.charAt(0).toUpperCase()) || "U";
+              document.getElementById("profileAvatar").textContent = initial;
+              if (profileBtn) profileBtn.style.display = "inline-flex";
+              if (loginBtn) loginBtn.style.display = "none";
+              var applyNavBtn = document.getElementById("applyNavBtn");
+              if (applyNavBtn) applyNavBtn.style.display = "none";
+            }
+          } catch (e) {}
+        }
+      })();
+
+      // ── Auth guard for resource links ──
+      (function () {
+        function isLoggedIn() {
+          try {
+            var s = JSON.parse(localStorage.getItem("ozone_session"));
+            return s && s.loggedIn;
+          } catch (e) {
+            return false;
+          }
+        }
+        if (!isLoggedIn()) {
+          document.addEventListener(
+            "click",
+            function (e) {
+              var link = e.target.closest("[data-auth-required]");
+              if (!link) return;
+              e.preventDefault();
+              e.stopPropagation();
+              var errEl = document.getElementById("loginError");
+              if (errEl) errEl.style.display = "none";
+              openLoginModal();
+            },
+            true,
+          );
+        }
+      })();
     </script>
   </body>
 </html>

@@ -64,11 +64,178 @@
       ::-webkit-scrollbar-thumb:hover {
         background: #333;
       }
+      .ng-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 16px 9px 12px;
+        border-radius: 999px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.05),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 12.5px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        cursor: pointer;
+        font-family: inherit;
+        text-decoration: none;
+        transition:
+          background 0.22s,
+          border-color 0.22s,
+          transform 0.22s,
+          color 0.22s;
+      }
+      .ng-back .ico {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.9);
+        transition:
+          transform 0.22s,
+          background 0.22s;
+      }
+      .ng-back:hover {
+        background: rgba(255, 255, 255, 0.07);
+        border-color: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        transform: translateX(-2px);
+      }
+      .ng-back:hover .ico {
+        background: rgba(255, 255, 255, 0.14);
+        transform: translateX(-1px);
+      }
+      /* ── Resource sidebar ── */
+      .res-sidebar {
+        position: sticky;
+        top: 70px;
+        flex: 0 0 220px;
+        width: 220px;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+        padding: 20px 0 32px;
+        background: rgba(255, 255, 255, 0.03);
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .res-sidebar::-webkit-scrollbar {
+        width: 0;
+        background: transparent;
+      }
+      .res-sidebar-section {
+        padding: 0 16px;
+        margin-bottom: 22px;
+      }
+      .res-sidebar-section:last-child {
+        margin-bottom: 0;
+      }
+      .res-sidebar-title {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.3);
+        margin-bottom: 10px;
+        padding: 0 10px;
+      }
+      .res-sidebar-links {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .res-sidebar-links li {
+        margin: 0;
+      }
+      .res-sidebar-links a {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        border-left: 2px solid transparent;
+        font-family: "Inter", sans-serif;
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.5);
+        transition:
+          color 0.18s,
+          background 0.18s,
+          border-color 0.18s;
+        text-decoration: none;
+      }
+      .res-sidebar-links a:hover {
+        color: rgba(255, 255, 255, 0.85);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .res-sidebar-links a.active {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.06);
+        border-left-color: #3b82f6;
+        font-weight: 500;
+      }
+      .res-sidebar-links a svg {
+        flex-shrink: 0;
+        opacity: 0.55;
+      }
+      .res-sidebar-links a:hover svg,
+      .res-sidebar-links a.active svg {
+        opacity: 0.9;
+      }
+      .res-flex {
+        display: flex;
+        gap: 0;
+        align-items: flex-start;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      .res-content {
+        flex: 1;
+        min-width: 0;
+        padding: 32px 28px 120px;
+      }
+      @media (max-width: 860px) {
+        .res-sidebar {
+          display: none;
+        }
+        .res-flex {
+          display: block;
+        }
+      }
+
+      /* ── embed mode ── */
+      .embed-mode nav,
+      .embed-mode .ng-back,
+      .embed-mode .res-sidebar,
+      .embed-mode footer {
+        display: none !important;
+      }
+      .embed-mode main {
+        padding-top: 20px !important;
+      }
+      .embed-mode ::-webkit-scrollbar {
+        width: 0px;
+        background: transparent;
+      }
     </style>
   </head>
   <body
     class="min-h-screen bg-grid selection:bg-blue-500/30 selection:text-white"
   >
+    <script>
+      (function () {
+        if (new URLSearchParams(location.search).get("embed") === "1") {
+          document.documentElement.classList.add("embed-mode");
+        }
+      })();
+    </script>
     <!-- Nav -->
     <nav
       class="sticky top-0 z-50 border-b border-white/[0.08] bg-black/80 backdrop-blur-xl"
@@ -166,484 +333,657 @@
       </div>
     </nav>
 
-    <!-- Main -->
-    <main class="max-w-[1000px] mx-auto px-6 pt-12 pb-24">
-      <!-- Top row: back + search -->
-      <div
-        class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-16"
-      >
-        <a
-          href="index.html"
-          class="flex items-center gap-2 px-4 py-2 rounded-full border border-white/[0.08] bg-transparent hover:bg-white/[0.03] transition-colors w-fit text-sm text-gray-300 hover:text-white"
+    <!-- Page wrapper: sidebar + main -->
+    <div class="res-flex">
+      <!-- Sidebar -->
+      <aside class="res-sidebar">
+        <div class="res-sidebar-section">
+          <div class="res-sidebar-title">Downloads</div>
+          <ul class="res-sidebar-links">
+            <li>
+              <a href="index.html#resources"
+                ><svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="3" width="7" height="7" />
+                  <rect x="14" y="3" width="7" height="7" />
+                  <rect x="3" y="14" width="7" height="7" />
+                  <rect x="14" y="14" width="7" height="7" /></svg
+                >Browse All Resources</a
+              >
+            </li>
+            <li>
+              <a href="resources/map.html"
+                ><svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polygon
+                    points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"
+                  />
+                  <line x1="8" y1="2" x2="8" y2="18" />
+                  <line x1="16" y1="6" x2="16" y2="22" /></svg
+                >Download Map</a
+              >
+            </li>
+            <li>
+              <a href="resources/trajectories_v2.html"
+                ><svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg
+                >Download Trajectory</a
+              >
+            </li>
+            <li>
+              <a href="resources/incidents.html"
+                ><svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+                  />
+                  <line x1="12" y1="9" x2="12" y2="13" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" /></svg
+                >Download Incidents</a
+              >
+            </li>
+            <li>
+              <a href="resources/paper.html"
+                ><svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
+                  />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" /></svg
+                >Download Paper</a
+              >
+            </li>
+            <li>
+              <a href="https://github.com/ZhilingResearch/Ozone" target="_blank"
+                ><svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" /></svg
+                >Download Code</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="res-sidebar-section">
+          <div class="res-sidebar-title">Learn</div>
+          <ul class="res-sidebar-links">
+            <li>
+              <a class="active" href="tutorials.html"
+                ><svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" />
+                  <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" /></svg
+                >Tutorials</a
+              >
+            </li>
+            <li>
+              <a href="resources/community.html"
+                ><svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                  <path d="M16 3.13a4 4 0 010 7.75" /></svg
+                >Join Community</a
+              >
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <main class="res-content">
+        <!-- Top row: back + search -->
+        <div
+          class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-16"
         >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              d="M19 12H5M12 19l-7-7 7-7"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          Back
-        </a>
-        <form
-          class="relative w-full sm:w-[320px] group"
-          role="search"
-          onsubmit="return false;"
-        >
-          <div
-            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              class="text-gray-500 group-focus-within:text-blue-500 transition-colors"
-            >
-              <path
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          <a href="index.html" class="ng-back">
+            <span class="ico">
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-              />
-            </svg>
-          </div>
-          <input
-            id="tutSearch"
-            type="search"
-            placeholder="Search tutorials, topics, tags..."
-            class="w-full bg-[#0A0A0A] border border-white/[0.08] rounded-xl pl-10 pr-12 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.02] transition-all shadow-[0_0_15px_rgba(0,0,0,0.5)_inset]"
-          />
-          <div
-            class="absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none"
+              >
+                <path d="M19 12H5" />
+                <polyline points="12 19 5 12 12 5" />
+              </svg>
+            </span>
+            Back
+          </a>
+          <form
+            class="relative w-full sm:w-[320px] group"
+            role="search"
+            onsubmit="return false;"
           >
             <div
-              class="hidden sm:flex items-center gap-1 px-1.5 py-0.5 rounded border border-white/[0.08] bg-white/[0.02] text-[10px] font-mono text-gray-500"
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
             >
-              <span>&#8984;</span><span>K</span>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                class="text-gray-500 group-focus-within:text-blue-500 transition-colors"
+              >
+                <path
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </div>
-          </div>
-        </form>
-      </div>
-
-      <!-- Heading -->
-      <header class="mb-16">
-        <div
-          class="flex items-center gap-3 text-xs font-mono tracking-[0.2em] text-gray-500 uppercase mb-6"
-        >
-          <span>Learn</span>
-          <span class="w-1 h-1 rounded-full bg-gray-700"></span>
-          <span>Tutorials</span>
+            <input
+              id="tutSearch"
+              type="search"
+              placeholder="Search tutorials, topics, tags..."
+              class="w-full bg-[#0A0A0A] border border-white/[0.08] rounded-xl pl-10 pr-12 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.02] transition-all shadow-[0_0_15px_rgba(0,0,0,0.5)_inset]"
+            />
+            <div
+              class="absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none"
+            >
+              <div
+                class="hidden sm:flex items-center gap-1 px-1.5 py-0.5 rounded border border-white/[0.08] bg-white/[0.02] text-[10px] font-mono text-gray-500"
+              >
+                <span>&#8984;</span><span>K</span>
+              </div>
+            </div>
+          </form>
         </div>
-        <h1
-          class="text-4xl sm:text-5xl lg:text-[56px] font-semibold tracking-tight leading-tight mb-6 text-white"
-        >
-          Walkthroughs and <span class="text-gray-400">setup guides.</span>
-        </h1>
-        <p class="text-lg text-gray-400 max-w-2xl leading-relaxed">
-          Self-contained lessons on installing and using the CARLA simulator,
-          building digital-twin maps in RoadRunner, and authoring scenarios
-          end-to-end. Each tutorial is versioned against a specific CARLA
-          release and updated when the upstream API changes.
+
+        <!-- Heading -->
+        <header class="mb-16">
+          <div
+            class="flex items-center gap-3 text-xs font-mono tracking-[0.2em] text-gray-500 uppercase mb-6"
+          >
+            <span>Learn</span>
+            <span class="w-1 h-1 rounded-full bg-gray-700"></span>
+            <span>Tutorials</span>
+          </div>
+          <h1
+            class="text-4xl sm:text-5xl lg:text-[56px] font-semibold tracking-tight leading-tight mb-6 text-white"
+          >
+            Walkthroughs and <span class="text-gray-400">setup guides.</span>
+          </h1>
+          <p class="text-lg text-gray-400 max-w-2xl leading-relaxed">
+            Self-contained lessons on installing and using the CARLA simulator,
+            building digital-twin maps in RoadRunner, and authoring scenarios
+            end-to-end. Each tutorial is versioned against a specific CARLA
+            release and updated when the upstream API changes.
+          </p>
+        </header>
+
+        <!-- Tutorial cards -->
+        <div class="space-y-4" id="tutList">
+          <!-- 01 -->
+          <a
+            href="tutorial-viewer.html?doc=CARLA%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%20-%200417_Ze%20-%20yue.docx&title=CARLA%20basics%20and%20installation"
+            target="_blank"
+            data-name="carla introduction installation ubuntu linux python conda miniconda unreal engine debian"
+            class="tut-card group block relative p-6 sm:p-8 md:pr-20 rounded-[24px] border border-white/[0.05] bg-gradient-to-b from-[#0A0A0C] to-[#050505] hover:border-white/[0.12] hover:bg-gradient-to-b hover:from-[#111115] hover:to-[#080808] transition-all duration-500 overflow-hidden"
+          >
+            <div
+              class="absolute top-0 inset-x-8 h-[1px] bg-gradient-to-r from-transparent via-white/[0.05] to-transparent group-hover:via-white/[0.15] transition-colors duration-500"
+            ></div>
+            <div class="flex flex-col sm:flex-row gap-6 sm:gap-10">
+              <div class="w-16 shrink-0 sm:pt-1">
+                <span
+                  class="text-[40px] leading-none font-mono font-extralight text-[#222] group-hover:text-blue-500/40 transition-colors duration-500"
+                  >01</span
+                >
+              </div>
+              <div class="flex-1 min-w-0">
+                <div
+                  class="flex flex-wrap items-start justify-between gap-4 mb-4"
+                >
+                  <div
+                    class="flex items-center gap-2 text-[11px] font-mono text-gray-500 tracking-wider"
+                  >
+                    <span>CHAPTER 01</span>
+                    <span class="text-gray-700">/</span>
+                    <span class="text-gray-400">CARLA</span>
+                    <span class="text-gray-700">/</span>
+                    <span>INSTALLATION</span>
+                  </div>
+                  <span
+                    class="px-2 py-1 rounded-[4px] border border-white/[0.08] bg-white/[0.02] text-[10px] font-mono tracking-widest text-gray-400 uppercase"
+                    >Stable</span
+                  >
+                </div>
+                <h2
+                  class="text-2xl font-medium text-white group-hover:text-blue-400 transition-colors duration-300 mb-3"
+                >
+                  CARLA basics and installation
+                </h2>
+                <p
+                  class="text-[15px] text-gray-400 leading-relaxed max-w-[800px]"
+                >
+                  Simulator architecture, core modules, and an end-to-end
+                  install walkthrough covering Ubuntu 20.04 with Miniconda,
+                  Unreal Engine, and the Python client — plus the pitfalls
+                  encountered along the way.
+                </p>
+                <div
+                  class="flex flex-wrap items-center gap-y-3 gap-x-8 mt-8 pt-6 border-t border-white/[0.05] text-[12px] font-mono text-gray-500"
+                >
+                  <div class="flex items-center gap-2">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                    >
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                      <line x1="16" y1="2" x2="16" y2="6" />
+                      <line x1="8" y1="2" x2="8" y2="6" />
+                      <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    <span
+                      >Updated
+                      <span class="text-gray-300">2026-04-22</span></span
+                    >
+                  </div>
+                  <div
+                    class="hidden sm:block w-1 h-1 rounded-full bg-gray-800"
+                  ></div>
+                  <div class="flex items-center gap-2">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span><span class="text-gray-300">~25 min</span> read</span>
+                  </div>
+                  <div
+                    class="hidden sm:block w-1 h-1 rounded-full bg-gray-800"
+                  ></div>
+                  <div class="flex items-center gap-2">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                    >
+                      <line x1="12" y1="20" x2="12" y2="10" />
+                      <line x1="18" y1="20" x2="18" y2="4" />
+                      <line x1="6" y1="20" x2="6" y2="16" />
+                    </svg>
+                    <span
+                      >Level <span class="text-gray-300">Beginner</span></span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="hidden md:flex absolute right-8 top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-blue-500"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </div>
+          </a>
+
+          <!-- 02 -->
+          <a
+            href="tutorial-viewer.html?doc=%E5%9F%BA%E4%BA%8ERoadrunner%20%E7%9A%84Carla%E5%AD%AA%E7%94%9F%E5%9C%B0%E5%9B%BE%E7%BC%96%E8%BE%91%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B.docx&title=Digital-twin%20map%20editing%20in%20RoadRunner"
+            target="_blank"
+            data-name="roadrunner digital twin map editing opendrive xodr carla sumo netconvert lane marking intersection satellite"
+            class="tut-card group block relative p-6 sm:p-8 md:pr-20 rounded-[24px] border border-white/[0.05] bg-gradient-to-b from-[#0A0A0C] to-[#050505] hover:border-white/[0.12] hover:bg-gradient-to-b hover:from-[#111115] hover:to-[#080808] transition-all duration-500 overflow-hidden"
+          >
+            <div
+              class="absolute top-0 inset-x-8 h-[1px] bg-gradient-to-r from-transparent via-white/[0.05] to-transparent group-hover:via-white/[0.15] transition-colors duration-500"
+            ></div>
+            <div class="flex flex-col sm:flex-row gap-6 sm:gap-10">
+              <div class="w-16 shrink-0 sm:pt-1">
+                <span
+                  class="text-[40px] leading-none font-mono font-extralight text-[#222] group-hover:text-blue-500/40 transition-colors duration-500"
+                  >02</span
+                >
+              </div>
+              <div class="flex-1 min-w-0">
+                <div
+                  class="flex flex-wrap items-start justify-between gap-4 mb-4"
+                >
+                  <div
+                    class="flex items-center gap-2 text-[11px] font-mono text-gray-500 tracking-wider"
+                  >
+                    <span>CHAPTER 02</span>
+                    <span class="text-gray-700">/</span>
+                    <span class="text-gray-400">ROADRUNNER</span>
+                    <span class="text-gray-700">/</span>
+                    <span>TWIN MAPS</span>
+                  </div>
+                  <span
+                    class="px-2 py-1 rounded-[4px] border border-blue-500/30 bg-blue-500/10 text-[10px] font-mono tracking-widest text-blue-400 uppercase"
+                    >New</span
+                  >
+                </div>
+                <h2
+                  class="text-2xl font-medium text-white group-hover:text-blue-400 transition-colors duration-300 mb-3"
+                >
+                  Digital-twin map editing in RoadRunner
+                </h2>
+                <p
+                  class="text-[15px] text-gray-400 leading-relaxed max-w-[800px]"
+                >
+                  Build custom HD maps in MATLAB RoadRunner: import satellite
+                  imagery, draw roads and intersections, author lane markings,
+                  validate connectivity with SUMO, and import the result into
+                  CARLA.
+                </p>
+                <div
+                  class="flex flex-wrap items-center gap-y-3 gap-x-8 mt-8 pt-6 border-t border-white/[0.05] text-[12px] font-mono text-gray-500"
+                >
+                  <div class="flex items-center gap-2">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                    >
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                      <line x1="16" y1="2" x2="16" y2="6" />
+                      <line x1="8" y1="2" x2="8" y2="6" />
+                      <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    <span
+                      >Updated
+                      <span class="text-gray-300">2026-04-22</span></span
+                    >
+                  </div>
+                  <div
+                    class="hidden sm:block w-1 h-1 rounded-full bg-gray-800"
+                  ></div>
+                  <div class="flex items-center gap-2">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span><span class="text-gray-300">~30 min</span> read</span>
+                  </div>
+                  <div
+                    class="hidden sm:block w-1 h-1 rounded-full bg-gray-800"
+                  ></div>
+                  <div class="flex items-center gap-2">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                    >
+                      <line x1="12" y1="20" x2="12" y2="10" />
+                      <line x1="18" y1="20" x2="18" y2="4" />
+                      <line x1="6" y1="20" x2="6" y2="16" />
+                    </svg>
+                    <span
+                      >Level
+                      <span class="text-gray-300">Intermediate</span></span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="hidden md:flex absolute right-8 top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-blue-500"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </div>
+          </a>
+
+          <!-- 03 -->
+          <a
+            href="tutorial-viewer.html?doc=Carla%20%E5%9F%BA%E6%9C%AC%E5%9C%BA%E6%99%AF%E5%88%9B%E5%BB%BA%E6%95%99%E7%A8%8B.docx&title=Authoring%20CARLA%20scenarios%20end-to-end"
+            target="_blank"
+            data-name="carla scenario creation actors vehicles sensors python api map blueprint library spawn traffic manager"
+            class="tut-card group block relative p-6 sm:p-8 md:pr-20 rounded-[24px] border border-white/[0.05] bg-gradient-to-b from-[#0A0A0C] to-[#050505] hover:border-white/[0.12] hover:bg-gradient-to-b hover:from-[#111115] hover:to-[#080808] transition-all duration-500 overflow-hidden"
+          >
+            <div
+              class="absolute top-0 inset-x-8 h-[1px] bg-gradient-to-r from-transparent via-white/[0.05] to-transparent group-hover:via-white/[0.15] transition-colors duration-500"
+            ></div>
+            <div class="flex flex-col sm:flex-row gap-6 sm:gap-10">
+              <div class="w-16 shrink-0 sm:pt-1">
+                <span
+                  class="text-[40px] leading-none font-mono font-extralight text-[#222] group-hover:text-blue-500/40 transition-colors duration-500"
+                  >03</span
+                >
+              </div>
+              <div class="flex-1 min-w-0">
+                <div
+                  class="flex flex-wrap items-start justify-between gap-4 mb-4"
+                >
+                  <div
+                    class="flex items-center gap-2 text-[11px] font-mono text-gray-500 tracking-wider"
+                  >
+                    <span>CHAPTER 03</span>
+                    <span class="text-gray-700">/</span>
+                    <span class="text-gray-400">CARLA</span>
+                    <span class="text-gray-700">/</span>
+                    <span>SCENARIOS</span>
+                  </div>
+                  <span
+                    class="px-2 py-1 rounded-[4px] border border-blue-500/30 bg-blue-500/10 text-[10px] font-mono tracking-widest text-blue-400 uppercase"
+                    >New</span
+                  >
+                </div>
+                <h2
+                  class="text-2xl font-medium text-white group-hover:text-blue-400 transition-colors duration-300 mb-3"
+                >
+                  Authoring CARLA scenarios end-to-end
+                </h2>
+                <p
+                  class="text-[15px] text-gray-400 leading-relaxed max-w-[800px]"
+                >
+                  Load a map, spawn vehicles via the blueprint library, attach
+                  cameras / LiDAR / radar sensors, and script agent behaviour
+                  with the Python API — from a clean CARLA install to a running
+                  scenario.
+                </p>
+                <div
+                  class="flex flex-wrap items-center gap-y-3 gap-x-8 mt-8 pt-6 border-t border-white/[0.05] text-[12px] font-mono text-gray-500"
+                >
+                  <div class="flex items-center gap-2">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                    >
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                      <line x1="16" y1="2" x2="16" y2="6" />
+                      <line x1="8" y1="2" x2="8" y2="6" />
+                      <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    <span
+                      >Updated
+                      <span class="text-gray-300">2026-04-22</span></span
+                    >
+                  </div>
+                  <div
+                    class="hidden sm:block w-1 h-1 rounded-full bg-gray-800"
+                  ></div>
+                  <div class="flex items-center gap-2">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span><span class="text-gray-300">~35 min</span> read</span>
+                  </div>
+                  <div
+                    class="hidden sm:block w-1 h-1 rounded-full bg-gray-800"
+                  ></div>
+                  <div class="flex items-center gap-2">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                    >
+                      <line x1="12" y1="20" x2="12" y2="10" />
+                      <line x1="18" y1="20" x2="18" y2="4" />
+                      <line x1="6" y1="20" x2="6" y2="16" />
+                    </svg>
+                    <span
+                      >Level
+                      <span class="text-gray-300">Intermediate</span></span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="hidden md:flex absolute right-8 top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-blue-500"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </div>
+          </a>
+        </div>
+
+        <p class="mt-10 text-xs font-mono text-gray-600 leading-relaxed">
+          Tutorials are maintained against CARLA 0.9.15 / Unreal Engine 4.26. If
+          an upstream API changes, the version tag bumps on the affected lesson
+          with a change-log entry.
         </p>
-      </header>
-
-      <!-- Tutorial cards -->
-      <div class="space-y-4" id="tutList">
-        <!-- 01 -->
-        <a
-          href="tutorial-viewer.html?doc=CARLA%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%20-%200417_Ze%20-%20yue.docx&title=CARLA%20basics%20and%20installation"
-          target="_blank"
-          data-name="carla introduction installation ubuntu linux python conda miniconda unreal engine debian"
-          class="tut-card group block relative p-6 sm:p-8 md:pr-20 rounded-[24px] border border-white/[0.05] bg-gradient-to-b from-[#0A0A0C] to-[#050505] hover:border-white/[0.12] hover:bg-gradient-to-b hover:from-[#111115] hover:to-[#080808] transition-all duration-500 overflow-hidden"
-        >
-          <div
-            class="absolute top-0 inset-x-8 h-[1px] bg-gradient-to-r from-transparent via-white/[0.05] to-transparent group-hover:via-white/[0.15] transition-colors duration-500"
-          ></div>
-          <div class="flex flex-col sm:flex-row gap-6 sm:gap-10">
-            <div class="w-16 shrink-0 sm:pt-1">
-              <span
-                class="text-[40px] leading-none font-mono font-extralight text-[#222] group-hover:text-blue-500/40 transition-colors duration-500"
-                >01</span
-              >
-            </div>
-            <div class="flex-1 min-w-0">
-              <div
-                class="flex flex-wrap items-start justify-between gap-4 mb-4"
-              >
-                <div
-                  class="flex items-center gap-2 text-[11px] font-mono text-gray-500 tracking-wider"
-                >
-                  <span>CHAPTER 01</span>
-                  <span class="text-gray-700">/</span>
-                  <span class="text-gray-400">CARLA</span>
-                  <span class="text-gray-700">/</span>
-                  <span>INSTALLATION</span>
-                </div>
-                <span
-                  class="px-2 py-1 rounded-[4px] border border-white/[0.08] bg-white/[0.02] text-[10px] font-mono tracking-widest text-gray-400 uppercase"
-                  >Stable</span
-                >
-              </div>
-              <h2
-                class="text-2xl font-medium text-white group-hover:text-blue-400 transition-colors duration-300 mb-3"
-              >
-                CARLA basics and installation
-              </h2>
-              <p
-                class="text-[15px] text-gray-400 leading-relaxed max-w-[800px]"
-              >
-                Simulator architecture, core modules, and an end-to-end install
-                walkthrough covering Ubuntu 20.04 with Miniconda, Unreal Engine,
-                and the Python client — plus the pitfalls encountered along the
-                way.
-              </p>
-              <div
-                class="flex flex-wrap items-center gap-y-3 gap-x-8 mt-8 pt-6 border-t border-white/[0.05] text-[12px] font-mono text-gray-500"
-              >
-                <div class="flex items-center gap-2">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                  >
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" />
-                    <line x1="8" y1="2" x2="8" y2="6" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                  </svg>
-                  <span
-                    >Updated <span class="text-gray-300">2026-04-22</span></span
-                  >
-                </div>
-                <div
-                  class="hidden sm:block w-1 h-1 rounded-full bg-gray-800"
-                ></div>
-                <div class="flex items-center gap-2">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                  <span><span class="text-gray-300">~25 min</span> read</span>
-                </div>
-                <div
-                  class="hidden sm:block w-1 h-1 rounded-full bg-gray-800"
-                ></div>
-                <div class="flex items-center gap-2">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                  >
-                    <line x1="12" y1="20" x2="12" y2="10" />
-                    <line x1="18" y1="20" x2="18" y2="4" />
-                    <line x1="6" y1="20" x2="6" y2="16" />
-                  </svg>
-                  <span>Level <span class="text-gray-300">Beginner</span></span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="hidden md:flex absolute right-8 top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-blue-500"
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </div>
-        </a>
-
-        <!-- 02 -->
-        <a
-          href="tutorial-viewer.html?doc=%E5%9F%BA%E4%BA%8ERoadrunner%20%E7%9A%84Carla%E5%AD%AA%E7%94%9F%E5%9C%B0%E5%9B%BE%E7%BC%96%E8%BE%91%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B.docx&title=Digital-twin%20map%20editing%20in%20RoadRunner"
-          target="_blank"
-          data-name="roadrunner digital twin map editing opendrive xodr carla sumo netconvert lane marking intersection satellite"
-          class="tut-card group block relative p-6 sm:p-8 md:pr-20 rounded-[24px] border border-white/[0.05] bg-gradient-to-b from-[#0A0A0C] to-[#050505] hover:border-white/[0.12] hover:bg-gradient-to-b hover:from-[#111115] hover:to-[#080808] transition-all duration-500 overflow-hidden"
-        >
-          <div
-            class="absolute top-0 inset-x-8 h-[1px] bg-gradient-to-r from-transparent via-white/[0.05] to-transparent group-hover:via-white/[0.15] transition-colors duration-500"
-          ></div>
-          <div class="flex flex-col sm:flex-row gap-6 sm:gap-10">
-            <div class="w-16 shrink-0 sm:pt-1">
-              <span
-                class="text-[40px] leading-none font-mono font-extralight text-[#222] group-hover:text-blue-500/40 transition-colors duration-500"
-                >02</span
-              >
-            </div>
-            <div class="flex-1 min-w-0">
-              <div
-                class="flex flex-wrap items-start justify-between gap-4 mb-4"
-              >
-                <div
-                  class="flex items-center gap-2 text-[11px] font-mono text-gray-500 tracking-wider"
-                >
-                  <span>CHAPTER 02</span>
-                  <span class="text-gray-700">/</span>
-                  <span class="text-gray-400">ROADRUNNER</span>
-                  <span class="text-gray-700">/</span>
-                  <span>TWIN MAPS</span>
-                </div>
-                <span
-                  class="px-2 py-1 rounded-[4px] border border-blue-500/30 bg-blue-500/10 text-[10px] font-mono tracking-widest text-blue-400 uppercase"
-                  >New</span
-                >
-              </div>
-              <h2
-                class="text-2xl font-medium text-white group-hover:text-blue-400 transition-colors duration-300 mb-3"
-              >
-                Digital-twin map editing in RoadRunner
-              </h2>
-              <p
-                class="text-[15px] text-gray-400 leading-relaxed max-w-[800px]"
-              >
-                Build custom HD maps in MATLAB RoadRunner: import satellite
-                imagery, draw roads and intersections, author lane markings,
-                validate connectivity with SUMO, and import the result into
-                CARLA.
-              </p>
-              <div
-                class="flex flex-wrap items-center gap-y-3 gap-x-8 mt-8 pt-6 border-t border-white/[0.05] text-[12px] font-mono text-gray-500"
-              >
-                <div class="flex items-center gap-2">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                  >
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" />
-                    <line x1="8" y1="2" x2="8" y2="6" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                  </svg>
-                  <span
-                    >Updated <span class="text-gray-300">2026-04-22</span></span
-                  >
-                </div>
-                <div
-                  class="hidden sm:block w-1 h-1 rounded-full bg-gray-800"
-                ></div>
-                <div class="flex items-center gap-2">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                  <span><span class="text-gray-300">~30 min</span> read</span>
-                </div>
-                <div
-                  class="hidden sm:block w-1 h-1 rounded-full bg-gray-800"
-                ></div>
-                <div class="flex items-center gap-2">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                  >
-                    <line x1="12" y1="20" x2="12" y2="10" />
-                    <line x1="18" y1="20" x2="18" y2="4" />
-                    <line x1="6" y1="20" x2="6" y2="16" />
-                  </svg>
-                  <span
-                    >Level <span class="text-gray-300">Intermediate</span></span
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="hidden md:flex absolute right-8 top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-blue-500"
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </div>
-        </a>
-
-        <!-- 03 -->
-        <a
-          href="tutorial-viewer.html?doc=Carla%20%E5%9F%BA%E6%9C%AC%E5%9C%BA%E6%99%AF%E5%88%9B%E5%BB%BA%E6%95%99%E7%A8%8B.docx&title=Authoring%20CARLA%20scenarios%20end-to-end"
-          target="_blank"
-          data-name="carla scenario creation actors vehicles sensors python api map blueprint library spawn traffic manager"
-          class="tut-card group block relative p-6 sm:p-8 md:pr-20 rounded-[24px] border border-white/[0.05] bg-gradient-to-b from-[#0A0A0C] to-[#050505] hover:border-white/[0.12] hover:bg-gradient-to-b hover:from-[#111115] hover:to-[#080808] transition-all duration-500 overflow-hidden"
-        >
-          <div
-            class="absolute top-0 inset-x-8 h-[1px] bg-gradient-to-r from-transparent via-white/[0.05] to-transparent group-hover:via-white/[0.15] transition-colors duration-500"
-          ></div>
-          <div class="flex flex-col sm:flex-row gap-6 sm:gap-10">
-            <div class="w-16 shrink-0 sm:pt-1">
-              <span
-                class="text-[40px] leading-none font-mono font-extralight text-[#222] group-hover:text-blue-500/40 transition-colors duration-500"
-                >03</span
-              >
-            </div>
-            <div class="flex-1 min-w-0">
-              <div
-                class="flex flex-wrap items-start justify-between gap-4 mb-4"
-              >
-                <div
-                  class="flex items-center gap-2 text-[11px] font-mono text-gray-500 tracking-wider"
-                >
-                  <span>CHAPTER 03</span>
-                  <span class="text-gray-700">/</span>
-                  <span class="text-gray-400">CARLA</span>
-                  <span class="text-gray-700">/</span>
-                  <span>SCENARIOS</span>
-                </div>
-                <span
-                  class="px-2 py-1 rounded-[4px] border border-blue-500/30 bg-blue-500/10 text-[10px] font-mono tracking-widest text-blue-400 uppercase"
-                  >New</span
-                >
-              </div>
-              <h2
-                class="text-2xl font-medium text-white group-hover:text-blue-400 transition-colors duration-300 mb-3"
-              >
-                Authoring CARLA scenarios end-to-end
-              </h2>
-              <p
-                class="text-[15px] text-gray-400 leading-relaxed max-w-[800px]"
-              >
-                Load a map, spawn vehicles via the blueprint library, attach
-                cameras / LiDAR / radar sensors, and script agent behaviour with
-                the Python API — from a clean CARLA install to a running
-                scenario.
-              </p>
-              <div
-                class="flex flex-wrap items-center gap-y-3 gap-x-8 mt-8 pt-6 border-t border-white/[0.05] text-[12px] font-mono text-gray-500"
-              >
-                <div class="flex items-center gap-2">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                  >
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" />
-                    <line x1="8" y1="2" x2="8" y2="6" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                  </svg>
-                  <span
-                    >Updated <span class="text-gray-300">2026-04-22</span></span
-                  >
-                </div>
-                <div
-                  class="hidden sm:block w-1 h-1 rounded-full bg-gray-800"
-                ></div>
-                <div class="flex items-center gap-2">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                  <span><span class="text-gray-300">~35 min</span> read</span>
-                </div>
-                <div
-                  class="hidden sm:block w-1 h-1 rounded-full bg-gray-800"
-                ></div>
-                <div class="flex items-center gap-2">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                  >
-                    <line x1="12" y1="20" x2="12" y2="10" />
-                    <line x1="18" y1="20" x2="18" y2="4" />
-                    <line x1="6" y1="20" x2="6" y2="16" />
-                  </svg>
-                  <span
-                    >Level <span class="text-gray-300">Intermediate</span></span
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="hidden md:flex absolute right-8 top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-blue-500"
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </div>
-        </a>
-      </div>
-
-      <p class="mt-10 text-xs font-mono text-gray-600 leading-relaxed">
-        Tutorials are maintained against CARLA 0.9.15 / Unreal Engine 4.26. If
-        an upstream API changes, the version tag bumps on the affected lesson
-        with a change-log entry.
-      </p>
-    </main>
+      </main>
+    </div>
+    <!-- /res-flex -->
 
     <script>
       (function () {

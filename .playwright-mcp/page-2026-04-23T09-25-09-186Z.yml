@@ -1,0 +1,125 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Ozone" [ref=e4] [cursor=pointer]:
+        - /url: ../
+        - img [ref=e5]
+        - generic [ref=e7]: Ozone
+      - generic [ref=e8]:
+        - link "Home" [ref=e9] [cursor=pointer]:
+          - /url: ../
+        - generic [ref=e10]: ›
+        - generic [ref=e11]: Resources
+        - generic [ref=e12]: ›
+        - generic [ref=e13]: Community
+      - link "Get Access" [ref=e14] [cursor=pointer]:
+        - /url: ../#apply
+        - img [ref=e16]
+        - text: Get Access
+  - main [ref=e18]:
+    - generic [ref=e20]:
+      - navigation [ref=e21]:
+        - generic [ref=e22]:
+          - generic [ref=e23]: Downloads
+          - list [ref=e24]:
+            - listitem [ref=e25]:
+              - link "Browse All Resources" [ref=e26] [cursor=pointer]:
+                - /url: ../index.html#resources
+                - img [ref=e27]
+                - text: Browse All Resources
+            - listitem [ref=e32]:
+              - link "Download Map" [ref=e33] [cursor=pointer]:
+                - /url: map.html
+                - img [ref=e34]
+                - text: Download Map
+            - listitem [ref=e36]:
+              - link "Download Trajectory" [ref=e37] [cursor=pointer]:
+                - /url: trajectories_v2.html
+                - img [ref=e38]
+                - text: Download Trajectory
+            - listitem [ref=e40]:
+              - link "Download Incidents" [ref=e41] [cursor=pointer]:
+                - /url: incidents.html
+                - img [ref=e42]
+                - text: Download Incidents
+            - listitem [ref=e44]:
+              - link "Download Paper" [ref=e45] [cursor=pointer]:
+                - /url: paper.html
+                - img [ref=e46]
+                - text: Download Paper
+            - listitem [ref=e49]:
+              - link "Download Code" [ref=e50] [cursor=pointer]:
+                - /url: https://github.com/ZhilingResearch/Ozone
+                - img [ref=e51]
+                - text: Download Code
+        - generic [ref=e54]:
+          - generic [ref=e55]: Learn
+          - list [ref=e56]:
+            - listitem [ref=e57]:
+              - link "Tutorials" [ref=e58] [cursor=pointer]:
+                - /url: ../tutorials.html
+                - img [ref=e59]
+                - text: Tutorials
+            - listitem [ref=e62]:
+              - link "Join Community" [ref=e63] [cursor=pointer]:
+                - /url: community.html
+                - img [ref=e64]
+                - text: Join Community
+      - generic [ref=e69]:
+        - link "Back" [ref=e70] [cursor=pointer]:
+          - /url: ../
+          - img [ref=e72]
+          - text: Back
+        - generic [ref=e74]:
+          - generic [ref=e75]:
+            - generic [ref=e76]: Learn
+            - generic [ref=e78]: Community
+          - heading "Build with us, in the open." [level=1] [ref=e79]:
+            - text: Build with us,
+            - text: in the open.
+          - paragraph [ref=e80]: Two places to find us — code and issues live on GitHub; everyday conversation, release notes and release-day Q&A happen in the WeChat group.
+        - generic [ref=e81]:
+          - link "GitHub Code Issues RFC Source code, issue tracker, and long-form discussions. Report bugs, propose changes, or browse the roadmap — every issue is triaged by a core maintainer. Repo ZhilingResearch/Ozone License Zhiling Research Release v0.4.2 Open repository Triaged < 48h" [ref=e82] [cursor=pointer]:
+            - /url: https://github.com/ZhilingResearch/Ozone
+            - generic [ref=e83]:
+              - img [ref=e85]
+              - generic [ref=e87]:
+                - heading "GitHub" [level=3] [ref=e88]
+                - generic [ref=e89]:
+                  - generic [ref=e90]: Code
+                  - generic [ref=e92]: Issues
+                  - generic [ref=e94]: RFC
+            - paragraph [ref=e95]: Source code, issue tracker, and long-form discussions. Report bugs, propose changes, or browse the roadmap — every issue is triaged by a core maintainer.
+            - generic [ref=e96]:
+              - generic [ref=e97]:
+                - generic [ref=e98]: Repo
+                - generic [ref=e99]: ZhilingResearch/Ozone
+              - generic [ref=e100]:
+                - generic [ref=e101]: License
+                - generic [ref=e102]: Zhiling Research
+              - generic [ref=e103]:
+                - generic [ref=e104]: Release
+                - generic [ref=e105]: v0.4.2
+            - generic [ref=e106]:
+              - generic [ref=e107]:
+                - text: Open repository
+                - img [ref=e108]
+              - generic [ref=e111]: Triaged < 48h
+          - generic [ref=e112]:
+            - generic [ref=e113]:
+              - img [ref=e115]
+              - generic [ref=e118]:
+                - heading "WeChat group" [level=3] [ref=e119]
+                - generic [ref=e120]:
+                  - generic [ref=e121]: 中文社区
+                  - generic [ref=e123]: Daily chat
+            - paragraph [ref=e124]: Chinese-language community for everyday discussion, release notes, and real-time Q&A with the maintainers. Researchers, students, and industry folks welcome.
+            - generic [ref=e125]:
+              - generic "WeChat group QR code" [ref=e126]:
+                - img "WeChat group QR code" [ref=e127]
+              - generic [ref=e128]: Scan with WeChat to join
+  - contentinfo [ref=e129]:
+    - generic [ref=e130]:
+      - generic [ref=e131]: © 2026 Ozone · A Unified Platform for Transportation Research
+      - link "← Back to site" [ref=e133] [cursor=pointer]:
+        - /url: ../

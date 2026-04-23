@@ -1,0 +1,104 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Ozone" [ref=e4] [cursor=pointer]:
+        - /url: ../
+        - img [ref=e5]
+        - generic [ref=e7]: Ozone
+      - generic [ref=e8]:
+        - link "Home" [ref=e9] [cursor=pointer]:
+          - /url: ../
+        - generic [ref=e10]: ›
+        - generic [ref=e11]: Resources
+        - generic [ref=e12]: ›
+        - generic [ref=e13]: Download Trajectories
+      - link "Get Access" [ref=e14] [cursor=pointer]:
+        - /url: ../#apply
+        - img [ref=e16]
+        - text: Get Access
+  - main [ref=e18]:
+    - generic [ref=e19]:
+      - navigation [ref=e20]:
+        - generic [ref=e21]:
+          - generic [ref=e22]: Downloads
+          - list [ref=e23]:
+            - listitem [ref=e24]:
+              - link "Browse All Resources" [ref=e25] [cursor=pointer]:
+                - /url: ../index.html#resources
+                - img [ref=e26]
+                - text: Browse All Resources
+            - listitem [ref=e31]:
+              - link "Download Map" [ref=e32] [cursor=pointer]:
+                - /url: map.html
+                - img [ref=e33]
+                - text: Download Map
+            - listitem [ref=e35]:
+              - link "Download Trajectory" [ref=e36] [cursor=pointer]:
+                - /url: trajectories_v2.html
+                - img [ref=e37]
+                - text: Download Trajectory
+            - listitem [ref=e39]:
+              - link "Download Incidents" [ref=e40] [cursor=pointer]:
+                - /url: incidents.html
+                - img [ref=e41]
+                - text: Download Incidents
+            - listitem [ref=e43]:
+              - link "Download Paper" [ref=e44] [cursor=pointer]:
+                - /url: paper.html
+                - img [ref=e45]
+                - text: Download Paper
+            - listitem [ref=e48]:
+              - link "Download Code" [ref=e49] [cursor=pointer]:
+                - /url: https://github.com/ZhilingResearch/Ozone
+                - img [ref=e50]
+                - text: Download Code
+        - generic [ref=e53]:
+          - generic [ref=e54]: Learn
+          - list [ref=e55]:
+            - listitem [ref=e56]:
+              - link "Tutorials" [ref=e57] [cursor=pointer]:
+                - /url: ../tutorials.html
+                - img [ref=e58]
+                - text: Tutorials
+            - listitem [ref=e61]:
+              - link "Join Community" [ref=e62] [cursor=pointer]:
+                - /url: community.html
+                - img [ref=e63]
+                - text: Join Community
+      - generic [ref=e68]:
+        - generic [ref=e69]:
+          - link "Back" [ref=e70] [cursor=pointer]:
+            - /url: ../
+            - img [ref=e72]
+            - text: Back
+          - search [ref=e74]:
+            - generic:
+              - img
+            - searchbox "Search trajectories, datasets, sites…" [ref=e75]
+            - generic: ⌘ K
+        - generic [ref=e76]:
+          - generic [ref=e77]: Downloads · Trajectories
+          - heading "Vehicle trajectories" [level=1] [ref=e78]
+          - paragraph [ref=e79]: High-frequency, lane-level vehicle trajectory records — paired with the matching HD maps. Pick a dataset to download its trajectories; the map is one click away.
+        - article [ref=e81]:
+          - generic [ref=e82]:
+            - generic [ref=e83]:
+              - heading "NGSIM" [level=3] [ref=e84]
+              - generic [ref=e85]: United States · 4 sites
+            - paragraph [ref=e86]: Next Generation Simulation — synchronized 10 Hz vehicle trajectories from overhead cameras at four arterial and freeway sites. Widely used for car-following, lane-change, and microsimulation calibration.
+            - generic [ref=e87]:
+              - link "Download trajectories" [ref=e88] [cursor=pointer]:
+                - /url: https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj/about_data
+                - img [ref=e89]
+                - text: Download trajectories
+              - link "Map" [ref=e92] [cursor=pointer]:
+                - /url: "#"
+                - img [ref=e93]
+                - text: Map
+              - generic [ref=e95]: Updated Apr 2026
+          - img "NGSIM trajectory detection sample" [ref=e97]
+  - contentinfo [ref=e98]:
+    - generic [ref=e99]:
+      - generic [ref=e100]: © 2026 Ozone · A Unified Platform for Transportation Research
+      - link "← Back to site" [ref=e102] [cursor=pointer]:
+        - /url: ../

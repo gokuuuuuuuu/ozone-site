@@ -164,9 +164,6 @@
          Page shell
          ───────────────────────────────────────────────────── */
       .inc-wrap {
-        max-width: 1180px;
-        margin: 0 auto;
-        padding: 32px 28px 120px;
         position: relative;
         z-index: 1;
       }
@@ -942,258 +939,337 @@
       .cite-modal {
         position: fixed;
         inset: 0;
-        background: rgba(4, 6, 14, 0.66);
-        backdrop-filter: blur(18px) saturate(160%);
-        -webkit-backdrop-filter: blur(18px) saturate(160%);
+        z-index: 10010;
         display: none;
         align-items: center;
         justify-content: center;
-        z-index: 500;
-        padding: 24px;
+        padding: 20px;
+        background: rgba(9, 9, 11, 0.72);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
       }
       .cite-modal.active {
         display: flex;
-        animation: citeFade 0.25s ease;
       }
-      @keyframes citeFade {
+      .cite-modal-card {
+        width: 100%;
+        max-width: 680px;
+        background: #111113;
+        border: 1px solid #27272a;
+        border-radius: 16px;
+        padding: 0;
+        box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.95);
+        position: relative;
+        overflow: hidden;
+        animation: citeIn 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        max-height: calc(100vh - 40px);
+      }
+      @keyframes citeIn {
         from {
           opacity: 0;
+          transform: translateY(10px) scale(0.985);
         }
         to {
           opacity: 1;
+          transform: translateY(0) scale(1);
         }
       }
-      .cite-card {
-        width: 100%;
-        max-width: 680px;
-        max-height: calc(100vh - 48px);
-        overflow-y: auto;
-        background: linear-gradient(
-          180deg,
-          rgba(20, 22, 32, 0.96),
-          rgba(12, 14, 22, 0.96)
-        );
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        padding: 28px 30px 26px;
-        position: relative;
-        box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
-      }
-      .cite-card .close {
-        position: absolute;
-        top: 14px;
-        right: 14px;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: rgba(220, 230, 245, 0.7);
-        display: inline-flex;
+      .cite-modal-head {
+        display: flex;
         align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition:
-          background 0.2s,
-          color 0.2s,
-          border-color 0.2s;
+        justify-content: space-between;
+        padding: 22px 24px 16px;
       }
-      .cite-card .close:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-        border-color: rgba(255, 255, 255, 0.2);
-      }
-      .cite-card .head {
+      .cite-modal-head-left {
         display: flex;
         align-items: center;
         gap: 10px;
-        margin-bottom: 14px;
       }
-      .cite-card .head .d {
-        width: 6px;
-        height: 6px;
+      .cite-modal-head .dot {
+        width: 8px;
+        height: 8px;
         border-radius: 50%;
-        background: rgba(235, 240, 250, 0.55);
+        background: #f59e0b;
       }
-      .cite-card h3 {
+      .cite-modal h3 {
         margin: 0;
         font-size: 17px;
         font-weight: 600;
+        letter-spacing: -0.012em;
         color: #fff;
       }
-      .cite-card > p {
-        margin: 0 0 18px;
-        font-size: 13px;
-        color: rgba(200, 210, 225, 0.7);
-        line-height: 1.65;
-      }
-      .cite-card > p b {
-        color: #fff;
-      }
-      .cite-block-title {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 12.5px;
-        font-weight: 600;
-        color: rgba(235, 240, 250, 0.88);
-        margin: 18px 0 10px;
-      }
-      .cite-block-title .num {
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        color: rgba(235, 240, 250, 0.85);
+      .cite-modal .close {
+        position: static;
+        width: 30px;
+        height: 30px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 10px;
-        font-weight: 500;
-      }
-      .terms {
-        padding: 14px 16px;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.028);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        font-size: 12.5px;
-        color: rgba(200, 210, 225, 0.75);
-        line-height: 1.72;
-      }
-      .terms ol {
-        margin: 8px 0 0;
-        padding-left: 18px;
-      }
-      .terms ol li {
-        margin-bottom: 6px;
-      }
-      .terms b {
-        color: rgba(235, 240, 250, 0.92);
-      }
-      .bib {
-        position: relative;
-        padding: 14px 16px;
-        border-radius: 10px;
-        background: rgba(10, 12, 20, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11.5px;
-        line-height: 1.65;
-        color: rgba(220, 230, 245, 0.85);
-        white-space: pre-wrap;
-      }
-      .bib .copy {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        padding: 5px 10px;
         border-radius: 6px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: rgba(220, 230, 245, 0.75);
-        font-family: inherit;
-        font-size: 10.5px;
+        background: transparent;
+        border: 0;
+        color: #a1a1aa;
         cursor: pointer;
+        padding: 0;
         transition:
-          background 0.2s,
-          color 0.2s;
+          background 0.18s,
+          color 0.18s;
       }
-      .bib .copy:hover {
-        background: rgba(255, 255, 255, 0.1);
+      .cite-modal .close:hover {
+        background: rgba(39, 39, 42, 0.5);
         color: #fff;
       }
-      .bib .copy.copied {
-        background: rgba(52, 211, 153, 0.2);
-        color: #6ee7b7;
-        border-color: rgba(52, 211, 153, 0.35);
+      .cite-modal-body {
+        padding: 0 24px 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        overflow-y: auto;
       }
+      .cite-modal-body::-webkit-scrollbar {
+        width: 8px;
+      }
+      .cite-modal-body::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .cite-modal-body::-webkit-scrollbar-thumb {
+        background: #27272a;
+        border-radius: 4px;
+      }
+      .cite-modal .lead {
+        font-size: 15px;
+        line-height: 1.6;
+        color: #d4d4d8;
+        margin: 0;
+      }
+      .cite-modal .lead b {
+        font-weight: 600;
+        color: #fff;
+      }
+      .cite-section {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .cite-section-title {
+        margin: 0;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        color: #71717a;
+        text-transform: uppercase;
+      }
+      .cite-modal .micro {
+        margin: 4px 0 0;
+        font-size: 13px;
+        line-height: 1.55;
+        color: #a1a1aa;
+      }
+      .cite-modal .micro b {
+        font-weight: 500;
+        color: #e4e4e7;
+      }
+
+      /* bib-block */
+      .bib-block {
+        position: relative;
+        background: #09090b;
+        border: 1px solid #27272a;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .bib-block-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 10px 8px 16px;
+        background: rgba(15, 15, 17, 0.6);
+        border-bottom: 1px solid #27272a;
+      }
+      .bib-block-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        color: #737373;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+      .bib-block pre {
+        margin: 0;
+        padding: 14px 18px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        line-height: 1.6;
+        color: #d4d4d8;
+        white-space: pre-wrap;
+        overflow-x: auto;
+      }
+      .bib-block .bib-copy {
+        position: static;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 11px;
+        background: #18181b;
+        border: 1px solid #27272a;
+        border-radius: 7px;
+        color: #d4d4d8;
+        font-family: "Inter", sans-serif;
+        font-size: 11.5px;
+        font-weight: 500;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s,
+          border-color 0.18s;
+      }
+      .bib-block .bib-copy:hover {
+        background: #27272a;
+        border-color: #3f3f46;
+        color: #fff;
+      }
+      .bib-block .bib-copy.copied {
+        background: rgba(120, 190, 120, 0.12);
+        border-color: rgba(120, 190, 120, 0.4);
+        color: #a7e3a7;
+      }
+
+      /* link-block */
       .link-block {
-        padding: 14px 16px;
-        border-radius: 10px;
-        background: rgba(10, 12, 20, 0.55);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #27272a;
+        border-radius: 12px;
+        overflow: hidden;
+        background: transparent;
+      }
+      .link-block-main {
+        display: flex;
+        flex-direction: column;
+        padding: 14px 14px 14px 16px;
+        background: #111113;
+        gap: 12px;
+      }
+      @media (min-width: 640px) {
+        .link-block-main {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
       }
       .link-block .url {
-        display: block;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 12px;
-        color: rgba(235, 240, 250, 0.9);
+        flex: 1;
+        min-width: 0;
+        font-size: 14px;
+        font-weight: 500;
+        color: #fff;
         word-break: break-all;
-        margin-bottom: 10px;
+        user-select: all;
       }
       .link-block .actions {
         display: flex;
-        gap: 6px;
+        gap: 8px;
+        flex-shrink: 0;
+        align-items: center;
       }
       .link-block .act {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        padding: 7px 12px;
-        border-radius: 7px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: rgba(220, 230, 245, 0.85);
-        font-family: inherit;
-        font-size: 11.5px;
+        padding: 7px 13px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 500;
         cursor: pointer;
+        border: 1px solid #27272a;
+        background: transparent;
+        color: #d4d4d8;
+        text-decoration: none;
         transition:
-          background 0.2s,
-          color 0.2s,
-          border-color 0.2s;
+          background 0.18s,
+          border-color 0.18s,
+          color 0.18s;
       }
       .link-block .act:hover {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(39, 39, 42, 0.6);
         color: #fff;
-        border-color: rgba(255, 255, 255, 0.2);
       }
       .link-block .act.copied {
-        background: rgba(52, 211, 153, 0.2);
-        color: #6ee7b7;
-        border-color: rgba(52, 211, 153, 0.35);
+        background: rgba(120, 190, 120, 0.12);
+        border-color: rgba(120, 190, 120, 0.4);
+        color: #a7e3a7;
+      }
+      .cite-modal .link-block .act.primary {
+        background: #fff;
+        color: #000;
+        border-color: #fff;
+      }
+      .cite-modal .link-block .act.primary:hover {
+        background: #e4e4e7;
+        border-color: #e4e4e7;
       }
       .link-block .pwd {
-        margin-top: 10px;
-        font-size: 11.5px;
-        color: rgba(190, 205, 225, 0.55);
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        background: rgba(9, 9, 11, 0.4);
+        border-top: 1px solid #27272a;
+        font-size: 13px;
+      }
+      .link-block .pwd-label {
+        color: #a1a1aa;
       }
       .link-block .pwd b {
+        margin-left: 8px;
+        color: #fff;
+        font-weight: 500;
         font-family: "JetBrains Mono", monospace;
-        color: #fff;
-        margin-left: 4px;
       }
-      .cite-actions {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 20px;
+
+      /* terms line */
+      .terms-line {
+        margin: 0;
+        padding: 8px 0 0;
+        font-size: 13.5px;
+        line-height: 1.6;
+        color: #a1a1aa;
       }
-      .btn-ghost {
-        padding: 9px 18px;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        color: rgba(235, 240, 250, 0.85);
-        font-family: inherit;
-        font-size: 13px;
+      .terms-toggle {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 2px;
+        background: none;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        color: #e4e4e7;
+        font: inherit;
         cursor: pointer;
-        transition:
-          background 0.2s,
-          border-color 0.2s;
+        transition: color 0.18s;
       }
-      .btn-ghost:hover {
-        background: rgba(255, 255, 255, 0.08);
-        border-color: rgba(255, 255, 255, 0.24);
+      .terms-toggle:hover {
         color: #fff;
       }
-      .note-small {
-        margin-top: 8px;
-        font-size: 11.5px;
-        color: rgba(190, 205, 225, 0.45);
+      .terms-toggle > span {
+        font-weight: 500;
+        border-bottom: 1px dashed #71717a;
+        padding-bottom: 1px;
+        transition: border-color 0.18s;
+      }
+      .terms-toggle:hover > span {
+        border-color: #d4d4d8;
+      }
+      .terms-toggle svg {
+        transform: translateY(2px);
+        color: #a1a1aa;
       }
 
       /* Responsive */
@@ -1217,7 +1293,7 @@
         }
       }
       @media (max-width: 640px) {
-        .inc-wrap {
+        .res-content {
           padding: 24px 18px 80px;
         }
         .inc-pagehead h1 {
@@ -1270,9 +1346,134 @@
           min-width: 90px;
         }
       }
+
+      /* ── Resource sidebar ── */
+      .res-flex {
+        display: flex;
+        gap: 0;
+        align-items: flex-start;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      .res-sidebar {
+        position: sticky;
+        top: 70px;
+        flex: 0 0 220px;
+        width: 220px;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+        padding: 20px 0 32px;
+        background: rgba(255, 255, 255, 0.03);
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .res-sidebar::-webkit-scrollbar {
+        width: 0;
+        background: transparent;
+      }
+      .res-sidebar-section {
+        padding: 0 16px;
+        margin-bottom: 22px;
+      }
+      .res-sidebar-section:last-child {
+        margin-bottom: 0;
+      }
+      .res-sidebar-title {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.3);
+        margin-bottom: 10px;
+        padding: 0 10px;
+      }
+      .res-sidebar-links {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .res-sidebar-links li {
+        margin: 0;
+      }
+      .res-sidebar-links a {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        border-left: 2px solid transparent;
+        font-family: "Inter", sans-serif;
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.5);
+        transition:
+          color 0.18s,
+          background 0.18s,
+          border-color 0.18s;
+        text-decoration: none;
+      }
+      .res-sidebar-links a:hover {
+        color: rgba(255, 255, 255, 0.85);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .res-sidebar-links a.active {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.06);
+        border-left-color: #3b82f6;
+        font-weight: 500;
+      }
+      .res-sidebar-links a svg {
+        flex-shrink: 0;
+        opacity: 0.55;
+      }
+      .res-sidebar-links a:hover svg,
+      .res-sidebar-links a.active svg {
+        opacity: 0.9;
+      }
+      .res-content {
+        flex: 1;
+        min-width: 0;
+        padding: 32px 28px 120px;
+      }
+      @media (max-width: 860px) {
+        .res-sidebar {
+          display: none;
+        }
+        .res-flex {
+          display: block;
+        }
+      }
+
+      /* ── embed mode ── */
+      .embed-mode .rp-nav,
+      .embed-mode .rp-footer,
+      .embed-mode .inc-back,
+      .embed-mode .cm-back,
+      .embed-mode .ng-back,
+      .embed-mode .ng-toprow,
+      .embed-mode .res-sidebar {
+        display: none !important;
+      }
+      .embed-mode .rp-body {
+        padding-top: 0 !important;
+      }
+      .embed-mode main {
+        padding-top: 20px !important;
+      }
+      .embed-mode ::-webkit-scrollbar {
+        width: 0px;
+        background: transparent;
+      }
     </style>
   </head>
   <body class="rp-body">
+    <script>
+      (function () {
+        if (new URLSearchParams(location.search).get("embed") === "1") {
+          document.documentElement.classList.add("embed-mode");
+        }
+      })();
+    </script>
     <header class="rp-nav">
       <div class="rp-nav-inner">
         <a class="rp-logo" href="../">
@@ -1306,589 +1507,794 @@
     </header>
 
     <main class="rp-main">
-      <div class="inc-wrap">
-        <!-- Top row -->
-        <div class="inc-toprow">
-          <a href="../" class="inc-back">
-            <span class="ico">
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+      <div class="res-flex">
+        <!-- Sidebar navigation -->
+        <nav class="res-sidebar">
+          <div class="res-sidebar-section">
+            <div class="res-sidebar-title">Downloads</div>
+            <ul class="res-sidebar-links">
+              <li>
+                <a href="../index.html#resources">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                  </svg>
+                  Browse All Resources
+                </a>
+              </li>
+              <li>
+                <a href="map.html">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polygon
+                      points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"
+                    />
+                    <line x1="8" y1="2" x2="8" y2="18" />
+                    <line x1="16" y1="6" x2="16" y2="22" />
+                  </svg>
+                  Download Map
+                </a>
+              </li>
+              <li>
+                <a href="trajectories_v2.html">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                  </svg>
+                  Download Trajectory
+                </a>
+              </li>
+              <li>
+                <a href="incidents.html" class="active">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+                    />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                  </svg>
+                  Download Incidents
+                </a>
+              </li>
+              <li>
+                <a href="paper.html">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
+                    />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                  </svg>
+                  Download Paper
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/ZhilingResearch/Ozone"
+                  target="_blank"
+                >
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="16 18 22 12 16 6" />
+                    <polyline points="8 6 2 12 8 18" />
+                  </svg>
+                  Download Code
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="res-sidebar-section">
+            <div class="res-sidebar-title">Learn</div>
+            <ul class="res-sidebar-links">
+              <li>
+                <a href="../tutorials.html">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" />
+                    <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" />
+                  </svg>
+                  Tutorials
+                </a>
+              </li>
+              <li>
+                <a href="community.html">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                    <path d="M16 3.13a4 4 0 010 7.75" />
+                  </svg>
+                  Join Community
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <!-- Main content area -->
+        <div class="res-content">
+          <!-- Top row -->
+          <div class="inc-toprow">
+            <a href="../" class="inc-back">
+              <span class="ico">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M19 12H5" />
+                  <polyline points="12 19 5 12 12 5" />
+                </svg>
+              </span>
+              Back
+            </a>
+            <form class="inc-search" role="search" onsubmit="return false;">
+              <span class="sico">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="M21 21l-4.3-4.3" />
+                </svg>
+              </span>
+              <input
+                id="incSearch"
+                type="search"
+                placeholder="Search datasets, operators, cities…"
+                autocomplete="off"
+              />
+              <span class="kbd">⌘ K</span>
+            </form>
+          </div>
+
+          <!-- Page heading -->
+          <div class="inc-pagehead">
+            <div class="eyebrow">Downloads · Incidents</div>
+            <h1>AV &amp; ADAS incident <em>records.</em></h1>
+            <p class="lead">
+              Two curated incident corpora covering California's state-mandated
+              AV collision reports and NHTSA's federal Standing General Order
+              for ADS and ADAS. Every record is cleaned, geo-located and tagged
+              — ready for comparative safety analysis and SOTIF scenario
+              construction.
+            </p>
+          </div>
+
+          <!-- World-map heatmap -->
+          <section class="heatmap-section" id="heatmapSection">
+            <div class="hm-head">
+              <div class="title-group">
+                <span class="k">Geospatial · All incidents</span>
+                <h3>Where incidents occur</h3>
+                <p>
+                  Every geocoded incident from the CA DMV and NHTSA SGO corpora,
+                  aggregated to city centroids and rendered as a density
+                  heatmap. Toggle the overlays to compare ADS vs ADAS vs
+                  California-only reporting.
+                </p>
+              </div>
+
+              <div
+                class="hm-toggles"
+                role="tablist"
+                aria-label="Heatmap dataset selector"
               >
-                <path d="M19 12H5" />
-                <polyline points="12 19 5 12 12 5" />
-              </svg>
-            </span>
-            Back
-          </a>
-          <form class="inc-search" role="search" onsubmit="return false;">
-            <span class="sico">
-              <svg
-                width="15"
-                height="15"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="11" cy="11" r="7" />
-                <path d="M21 21l-4.3-4.3" />
-              </svg>
-            </span>
-            <input
-              id="incSearch"
-              type="search"
-              placeholder="Search datasets, operators, cities…"
-              autocomplete="off"
-            />
-            <span class="kbd">⌘ K</span>
-          </form>
-        </div>
-
-        <!-- Page heading -->
-        <div class="inc-pagehead">
-          <div class="eyebrow">Downloads · Incidents</div>
-          <h1>AV &amp; ADAS incident <em>records.</em></h1>
-          <p class="lead">
-            Two curated incident corpora covering California's state-mandated AV
-            collision reports and NHTSA's federal Standing General Order for ADS
-            and ADAS. Every record is cleaned, geo-located and tagged — ready
-            for comparative safety analysis and SOTIF scenario construction.
-          </p>
-        </div>
-
-        <!-- World-map heatmap -->
-        <section class="heatmap-section" id="heatmapSection">
-          <div class="hm-head">
-            <div class="title-group">
-              <span class="k">Geospatial · All incidents</span>
-              <h3>Where incidents occur</h3>
-              <p>
-                Every geocoded incident from the CA DMV and NHTSA SGO corpora,
-                aggregated to city centroids and rendered as a density heatmap.
-                Toggle the overlays to compare ADS vs ADAS vs California-only
-                reporting.
-              </p>
+                <button class="hm-tog active" data-k="all" type="button">
+                  <span class="sw"></span>All
+                </button>
+                <button class="hm-tog" data-k="ca" type="button">
+                  <span class="sw"></span>CA&nbsp;DMV
+                </button>
+                <button class="hm-tog" data-k="ads" type="button">
+                  <span class="sw"></span>NHTSA&nbsp;ADS
+                </button>
+                <button class="hm-tog" data-k="adas" type="button">
+                  <span class="sw"></span>NHTSA&nbsp;ADAS
+                </button>
+              </div>
             </div>
 
-            <div
-              class="hm-toggles"
-              role="tablist"
-              aria-label="Heatmap dataset selector"
-            >
-              <button class="hm-tog active" data-k="all" type="button">
-                <span class="sw"></span>All
-              </button>
-              <button class="hm-tog" data-k="ca" type="button">
-                <span class="sw"></span>CA&nbsp;DMV
-              </button>
-              <button class="hm-tog" data-k="ads" type="button">
-                <span class="sw"></span>NHTSA&nbsp;ADS
-              </button>
-              <button class="hm-tog" data-k="adas" type="button">
-                <span class="sw"></span>NHTSA&nbsp;ADAS
-              </button>
+            <div class="hm-map-wrap">
+              <div id="incMap" aria-label="World incident heatmap"></div>
+              <div class="hm-legend">
+                <span class="lab">Density</span>
+                <span class="bar"></span>
+                <span class="lab">Low → High</span>
+              </div>
             </div>
-          </div>
 
-          <div class="hm-map-wrap">
-            <div id="incMap" aria-label="World incident heatmap"></div>
-            <div class="hm-legend">
-              <span class="lab">Density</span>
-              <span class="bar"></span>
-              <span class="lab">Low → High</span>
+            <div class="hm-kpis">
+              <div class="hm-kpi">
+                <span class="k">Total records</span
+                ><span class="v" id="kpiTotal">—</span>
+              </div>
+              <div class="hm-kpi">
+                <span class="k">Unique cities</span
+                ><span class="v" id="kpiCities">—</span>
+              </div>
+              <div class="hm-kpi">
+                <span class="k">Top city</span
+                ><span class="v" id="kpiTop">—</span>
+              </div>
+              <div class="hm-kpi">
+                <span class="k">Coverage</span
+                ><span class="v" id="kpiCov">—</span>
+              </div>
             </div>
-          </div>
+          </section>
 
-          <div class="hm-kpis">
-            <div class="hm-kpi">
-              <span class="k">Total records</span
-              ><span class="v" id="kpiTotal">—</span>
-            </div>
-            <div class="hm-kpi">
-              <span class="k">Unique cities</span
-              ><span class="v" id="kpiCities">—</span>
-            </div>
-            <div class="hm-kpi">
-              <span class="k">Top city</span
-              ><span class="v" id="kpiTop">—</span>
-            </div>
-            <div class="hm-kpi">
-              <span class="k">Coverage</span
-              ><span class="v" id="kpiCov">—</span>
-            </div>
-          </div>
-        </section>
-
-        <!-- Dataset stream -->
-        <div class="inc-stream" id="incStream">
-          <!-- ─────────────────────────────────────────────
+          <!-- Dataset stream -->
+          <div class="inc-stream" id="incStream">
+            <!-- ─────────────────────────────────────────────
                1. California DMV AV Collision Reports
                ───────────────────────────────────────────── -->
-          <article
-            class="inc-dataset"
-            data-tone="ca"
-            id="ca-dmv"
-            data-name="california dmv autonomous vehicle collision reports waymo cruise zoox gm united states california cvc 38750 ads san francisco"
-          >
-            <div class="inc-caption">
-              <h2>California DMV · AV Collision Reports</h2>
-              <div class="sub">
-                United States · California · 2014 – 2025 · CVC §38750 mandate ·
-                913 records
-              </div>
-              <div class="tags">
-                State regulator<span class="sep">·</span>ADS test fleet<span
-                  class="sep"
-                  >·</span
-                >OL-316 form
-              </div>
-            </div>
-
-            <div class="inc-body">
-              <p class="inc-desc">
-                The
-                <b>primary state-level source of ADS collision reports</b> in
-                the United States. Under California Vehicle Code §38750, every
-                manufacturer holding a DMV Autonomous Vehicle Testing or
-                Deployment Permit must report any collision involving an
-                autonomous test vehicle within 10 days. Ozone aggregates both
-                digitisation phases into <b>913 incident records</b> from
-                October 2014 to December 2025 — the longest continuous
-                state-level AV collision time series currently available. The
-                corpus is dominated by San Francisco (644, 70.5%) and the
-                Mountain View / Silicon Valley belt where commercial AV
-                deployment is most concentrated.
-              </p>
-
-              <div class="inc-divider"></div>
-
-              <div class="inc-stats">
-                <div class="inc-stat">
-                  <span class="k">Records</span><span class="v">913</span>
+            <article
+              class="inc-dataset"
+              data-tone="ca"
+              id="ca-dmv"
+              data-name="california dmv autonomous vehicle collision reports waymo cruise zoox gm united states california cvc 38750 ads san francisco"
+            >
+              <div class="inc-caption">
+                <h2>California DMV · AV Collision Reports</h2>
+                <div class="sub">
+                  United States · California · 2014 – 2025 · CVC §38750 mandate
+                  · 913 records
                 </div>
-                <div class="inc-stat">
-                  <span class="k">ADS engaged</span><span class="v">532</span>
-                </div>
-                <div class="inc-stat">
-                  <span class="k">Conventional</span><span class="v">378</span>
-                </div>
-                <div class="inc-stat">
-                  <span class="k">With injury</span><span class="v">11</span>
-                </div>
-                <div class="inc-stat">
-                  <span class="k">Updated</span><span class="v">Apr 2026</span>
+                <div class="tags">
+                  State regulator<span class="sep">·</span>ADS test fleet<span
+                    class="sep"
+                    >·</span
+                  >OL-316 form
                 </div>
               </div>
 
-              <div class="inc-seclabel">Top reporting entities</div>
-              <div class="inc-rows">
-                <div class="inc-row">
-                  <span class="rk">01</span><span class="label">Waymo</span
-                  ><span class="n"
-                    ><b>394</b><span class="pct">43.2%</span></span
+              <div class="inc-body">
+                <p class="inc-desc">
+                  The
+                  <b>primary state-level source of ADS collision reports</b>
+                  in the United States. Under California Vehicle Code §38750,
+                  every manufacturer holding a DMV Autonomous Vehicle Testing or
+                  Deployment Permit must report any collision involving an
+                  autonomous test vehicle within 10 days. Ozone aggregates both
+                  digitisation phases into
+                  <b>913 incident records</b> from October 2014 to December 2025
+                  — the longest continuous state-level AV collision time series
+                  currently available. The corpus is dominated by San Francisco
+                  (644, 70.5%) and the Mountain View / Silicon Valley belt where
+                  commercial AV deployment is most concentrated.
+                </p>
+
+                <div class="inc-divider"></div>
+
+                <div class="inc-stats">
+                  <div class="inc-stat">
+                    <span class="k">Records</span><span class="v">913</span>
+                  </div>
+                  <div class="inc-stat">
+                    <span class="k">ADS engaged</span><span class="v">532</span>
+                  </div>
+                  <div class="inc-stat">
+                    <span class="k">Conventional</span
+                    ><span class="v">378</span>
+                  </div>
+                  <div class="inc-stat">
+                    <span class="k">With injury</span><span class="v">11</span>
+                  </div>
+                  <div class="inc-stat">
+                    <span class="k">Updated</span
+                    ><span class="v">Apr 2026</span>
+                  </div>
+                </div>
+
+                <div class="inc-seclabel">Top reporting entities</div>
+                <div class="inc-rows">
+                  <div class="inc-row">
+                    <span class="rk">01</span><span class="label">Waymo</span
+                    ><span class="n"
+                      ><b>394</b><span class="pct">43.2%</span></span
+                    >
+                  </div>
+                  <div class="inc-row">
+                    <span class="rk">02</span><span class="label">Zoox</span
+                    ><span class="n"
+                      ><b>146</b><span class="pct">16.0%</span></span
+                    >
+                  </div>
+                  <div class="inc-row">
+                    <span class="rk">03</span><span class="label">Cruise</span
+                    ><span class="n"
+                      ><b>137</b><span class="pct">15.0%</span></span
+                    >
+                  </div>
+                  <div class="inc-row">
+                    <span class="rk">04</span
+                    ><span class="label">GM Cruise</span
+                    ><span class="n"
+                      ><b>101</b><span class="pct">11.1%</span></span
+                    >
+                  </div>
+                  <div class="inc-row">
+                    <span class="rk">05</span
+                    ><span class="label">Apple · Google Auto</span
+                    ><span class="n"
+                      ><b>46</b><span class="pct">5.0%</span></span
+                    >
+                  </div>
+                  <div class="inc-row">
+                    <span class="rk">06</span
+                    ><span class="label"
+                      >Pony.ai · Mercedes · Nuro · others</span
+                    ><span class="n"
+                      ><b>89</b><span class="pct">9.7%</span></span
+                    >
+                  </div>
+                </div>
+
+                <div class="inc-seclabel" style="margin-top: 22px">
+                  Top cities
+                </div>
+                <p class="inc-citylist">
+                  <span><b>San Francisco</b><span class="n">644</span></span
+                  ><span class="sep">·</span>
+                  <span><b>Mountain View</b><span class="n">71</span></span
+                  ><span class="sep">·</span>
+                  <span><b>Los Angeles</b><span class="n">46</span></span
+                  ><span class="sep">·</span>
+                  <span><b>Palo Alto</b><span class="n">34</span></span
+                  ><span class="sep">·</span>
+                  <span>Sunnyvale<span class="n">13</span></span
+                  ><span class="sep">·</span>
+                  <span>San Jose<span class="n">13</span></span
+                  ><span class="sep">·</span>
+                  <span>Santa Clara<span class="n">13</span></span
+                  ><span class="sep">·</span>
+                  <span>Santa Monica<span class="n">12</span></span>
+                </p>
+
+                <div class="inc-seclabel" style="margin-top: 4px">
+                  Schema highlights
+                </div>
+                <p class="inc-schema">
+                  Date · Time · GPS<span class="sep">/</span> Vehicle make ·
+                  model · year<span class="sep">/</span> Drive mode<span
+                    class="sep"
+                    >/</span
                   >
-                </div>
-                <div class="inc-row">
-                  <span class="rk">02</span><span class="label">Zoox</span
-                  ><span class="n"
-                    ><b>146</b><span class="pct">16.0%</span></span
+                  Weather · surface · lighting<span class="sep">/</span>
+                  Pre-crash movement<span class="sep">/</span> Collision
+                  type<span class="sep">/</span> CVC violations<span class="sep"
+                    >/</span
                   >
-                </div>
-                <div class="inc-row">
-                  <span class="rk">03</span><span class="label">Cruise</span
-                  ><span class="n"
-                    ><b>137</b><span class="pct">15.0%</span></span
-                  >
-                </div>
-                <div class="inc-row">
-                  <span class="rk">04</span><span class="label">GM Cruise</span
-                  ><span class="n"
-                    ><b>101</b><span class="pct">11.1%</span></span
-                  >
-                </div>
-                <div class="inc-row">
-                  <span class="rk">05</span
-                  ><span class="label">Apple · Google Auto</span
-                  ><span class="n"><b>46</b><span class="pct">5.0%</span></span>
-                </div>
-                <div class="inc-row">
-                  <span class="rk">06</span
-                  ><span class="label">Pony.ai · Mercedes · Nuro · others</span
-                  ><span class="n"><b>89</b><span class="pct">9.7%</span></span>
-                </div>
+                  Narrative text
+                </p>
               </div>
 
-              <div class="inc-seclabel" style="margin-top: 22px">
-                Top cities
+              <div class="inc-actionbar">
+                <div class="inc-action-left">
+                  <a
+                    class="inc-dl primary"
+                    href="#"
+                    data-cite-download="https://pan.baidu.com/s/ca-dmv-incidents"
+                    data-cite-label="CA DMV AV Collision Reports"
+                    data-cite-pwd="ozon"
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="7 10 12 15 17 10" />
+                      <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    Download CA DMV dataset
+                    <svg
+                      class="ext"
+                      width="11"
+                      height="11"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M7 17L17 7" />
+                      <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                  </a>
+                  <a
+                    class="inc-dl ghost"
+                    href="https://www.dmv.ca.gov/portal/vehicle-industry-services/autonomous-vehicles/autonomous-vehicle-collision-reports/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Original reports published by California DMV"
+                  >
+                    <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M2 12h20" />
+                      <path
+                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+                      />
+                    </svg>
+                    Official source · CA DMV
+                    <svg
+                      class="ext"
+                      width="11"
+                      height="11"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M7 17L17 7" />
+                      <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                  </a>
+                </div>
+                <div class="inc-sizes">
+                  <span class="sep">·</span>
+                  xlsx + csv <b>~5 MB</b>
+                </div>
               </div>
-              <p class="inc-citylist">
-                <span><b>San Francisco</b><span class="n">644</span></span
-                ><span class="sep">·</span>
-                <span><b>Mountain View</b><span class="n">71</span></span
-                ><span class="sep">·</span>
-                <span><b>Los Angeles</b><span class="n">46</span></span
-                ><span class="sep">·</span>
-                <span><b>Palo Alto</b><span class="n">34</span></span
-                ><span class="sep">·</span>
-                <span>Sunnyvale<span class="n">13</span></span
-                ><span class="sep">·</span>
-                <span>San Jose<span class="n">13</span></span
-                ><span class="sep">·</span>
-                <span>Santa Clara<span class="n">13</span></span
-                ><span class="sep">·</span>
-                <span>Santa Monica<span class="n">12</span></span>
-              </p>
+            </article>
 
-              <div class="inc-seclabel" style="margin-top: 4px">
-                Schema highlights
-              </div>
-              <p class="inc-schema">
-                Date · Time · GPS<span class="sep">/</span> Vehicle make · model
-                · year<span class="sep">/</span> Drive mode<span class="sep"
-                  >/</span
-                >
-                Weather · surface · lighting<span class="sep">/</span> Pre-crash
-                movement<span class="sep">/</span> Collision type<span
-                  class="sep"
-                  >/</span
-                >
-                CVC violations<span class="sep">/</span>
-                Narrative text
-              </p>
-            </div>
-
-            <div class="inc-actionbar">
-              <div class="inc-action-left">
-                <a class="inc-dl primary disabled" aria-disabled="true">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                  </svg>
-                  Download CA DMV dataset
-                  <svg
-                    class="ext"
-                    width="11"
-                    height="11"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M7 17L17 7" />
-                    <polyline points="7 7 17 7 17 17" />
-                  </svg>
-                </a>
-                <a
-                  class="inc-dl ghost"
-                  href="https://www.dmv.ca.gov/portal/vehicle-industry-services/autonomous-vehicles/autonomous-vehicle-collision-reports/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Original reports published by California DMV"
-                >
-                  <svg
-                    width="13"
-                    height="13"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M2 12h20" />
-                    <path
-                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
-                    />
-                  </svg>
-                  Official source · CA DMV
-                  <svg
-                    class="ext"
-                    width="11"
-                    height="11"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M7 17L17 7" />
-                    <polyline points="7 7 17 7 17 17" />
-                  </svg>
-                </a>
-              </div>
-              <div class="inc-sizes">
-                <span class="sep">·</span>
-                xlsx + csv <b>~5 MB</b>
-              </div>
-            </div>
-          </article>
-
-          <!-- ─────────────────────────────────────────────
+            <!-- ─────────────────────────────────────────────
                2. NHTSA Standing General Order (ADS + ADAS)
                ───────────────────────────────────────────── -->
-          <article
-            class="inc-dataset"
-            data-tone="us"
-            id="nhtsa-sgo"
-            data-name="nhtsa standing general order sgo 2021-01 ads adas waymo tesla autopilot cruise gm transdev zoox united states federal phoenix austin houston"
-          >
-            <div class="inc-caption">
-              <h2>NHTSA Standing General Order · ADS + ADAS</h2>
-              <div class="sub">
-                United States · Federal · SGO 2021-01 · ADS (Jul 2021–Feb 2026)
-                + ADAS (Aug 2019–Feb 2026) · 7,784 records
+            <article
+              class="inc-dataset"
+              data-tone="us"
+              id="nhtsa-sgo"
+              data-name="nhtsa standing general order sgo 2021-01 ads adas waymo tesla autopilot cruise gm transdev zoox united states federal phoenix austin houston"
+            >
+              <div class="inc-caption">
+                <h2>NHTSA Standing General Order · ADS + ADAS</h2>
+                <div class="sub">
+                  United States · Federal · SGO 2021-01 · ADS (Jul 2021–Feb
+                  2026) + ADAS (Aug 2019–Feb 2026) · 7,784 records
+                </div>
+                <div class="tags">
+                  Federal<span class="sep">·</span>ADS + ADAS<span class="sep"
+                    >·</span
+                  >Monthly submissions
+                </div>
               </div>
-              <div class="tags">
-                Federal<span class="sep">·</span>ADS + ADAS<span class="sep"
-                  >·</span
-                >Monthly submissions
-              </div>
-            </div>
 
-            <div class="inc-body">
-              <p class="inc-desc">
-                The <b>federal-level crash reporting mandate</b> for automated
-                driving systems. SGO 2021-01 requires manufacturers and
-                operators of SAE Level 2 ADAS or Level 3–5 ADS vehicles to
-                report any crash occurring while automation is engaged — or
-                within 30 seconds of disengagement — within 1 day for fatal /
-                hospitalised / airbag / tow-away crashes and within 10 days
-                otherwise. Ozone ingests the monthly public releases and
-                separates the <b>ADS</b> and <b>ADAS</b> sub-corpora for direct
-                AV-vs-ADAS safety rate estimation.
-              </p>
+              <div class="inc-body">
+                <p class="inc-desc">
+                  The <b>federal-level crash reporting mandate</b> for automated
+                  driving systems. SGO 2021-01 requires manufacturers and
+                  operators of SAE Level 2 ADAS or Level 3–5 ADS vehicles to
+                  report any crash occurring while automation is engaged — or
+                  within 30 seconds of disengagement — within 1 day for fatal /
+                  hospitalised / airbag / tow-away crashes and within 10 days
+                  otherwise. Ozone ingests the monthly public releases and
+                  separates the <b>ADS</b> and <b>ADAS</b> sub-corpora for
+                  direct AV-vs-ADAS safety rate estimation.
+                </p>
 
-              <div class="inc-divider"></div>
+                <div class="inc-divider"></div>
 
-              <div class="inc-subcorpora">
-                <div class="subc ads">
-                  <div class="row1">
-                    <h4>ADS sub-corpus</h4>
-                    <span class="span">Jul 2021 – Feb 2026</span>
+                <div class="inc-subcorpora">
+                  <div class="subc ads">
+                    <div class="row1">
+                      <h4>ADS sub-corpus</h4>
+                      <span class="span">Jul 2021 – Feb 2026</span>
+                    </div>
+                    <div class="num">3,012<em>records · 697 engaged</em></div>
+                    <div class="breakdown">
+                      <span>Fatal <b>5</b></span>
+                      <span>Serious <b>25</b></span>
+                      <span>Minor <b>275</b></span>
+                      <span>No-injury <b>2,555</b></span>
+                    </div>
                   </div>
-                  <div class="num">3,012<em>records · 697 engaged</em></div>
-                  <div class="breakdown">
-                    <span>Fatal <b>5</b></span>
-                    <span>Serious <b>25</b></span>
-                    <span>Minor <b>275</b></span>
-                    <span>No-injury <b>2,555</b></span>
+                  <div class="subc adas">
+                    <div class="row1">
+                      <h4>ADAS sub-corpus</h4>
+                      <span class="span">Aug 2019 – Feb 2026</span>
+                    </div>
+                    <div class="num">4,772<em>records · 938 engaged</em></div>
+                    <div class="breakdown">
+                      <span>Fatal <b>134</b></span>
+                      <span>Serious <b>107</b></span>
+                      <span>Minor <b>248</b></span>
+                      <span>With severity <b>1,045</b></span>
+                    </div>
                   </div>
                 </div>
-                <div class="subc adas">
-                  <div class="row1">
-                    <h4>ADAS sub-corpus</h4>
-                    <span class="span">Aug 2019 – Feb 2026</span>
+
+                <div class="inc-seclabel">Top reporters · ADS</div>
+                <div class="inc-rows">
+                  <div class="inc-row">
+                    <span class="rk">01</span
+                    ><span class="label">Waymo LLC</span
+                    ><span class="n"
+                      ><b>1,898</b><span class="pct">62.8%</span></span
+                    >
                   </div>
-                  <div class="num">4,772<em>records · 938 engaged</em></div>
-                  <div class="breakdown">
-                    <span>Fatal <b>134</b></span>
-                    <span>Serious <b>107</b></span>
-                    <span>Minor <b>248</b></span>
-                    <span>With severity <b>1,045</b></span>
+                  <div class="inc-row">
+                    <span class="rk">02</span
+                    ><span class="label">Cruise LLC</span
+                    ><span class="n"
+                      ><b>207</b><span class="pct">6.9%</span></span
+                    >
+                  </div>
+                  <div class="inc-row">
+                    <span class="rk">03</span
+                    ><span class="label">General Motors LLC</span
+                    ><span class="n"
+                      ><b>201</b><span class="pct">6.7%</span></span
+                    >
+                  </div>
+                  <div class="inc-row">
+                    <span class="rk">04</span
+                    ><span class="label">Transdev Alternative Services</span
+                    ><span class="n"
+                      ><b>188</b><span class="pct">6.2%</span></span
+                    >
+                  </div>
+                  <div class="inc-row">
+                    <span class="rk">05</span
+                    ><span class="label">Zoox, Inc.</span
+                    ><span class="n"
+                      ><b>151</b><span class="pct">5.0%</span></span
+                    >
                   </div>
                 </div>
+
+                <div class="inc-seclabel" style="margin-top: 22px">
+                  Top reporter · ADAS
+                </div>
+                <div class="inc-rows">
+                  <div class="inc-row">
+                    <span class="rk">01</span
+                    ><span class="label">Tesla, Inc.</span
+                    ><span class="n"
+                      ><b>4,025</b><span class="pct">80.1%</span></span
+                    >
+                  </div>
+                </div>
+
+                <div class="inc-seclabel" style="margin-top: 22px">
+                  Top cities (ADS + ADAS)
+                </div>
+                <p class="inc-citylist">
+                  <span
+                    ><b>San Francisco</b>, CA<span class="n">1,408</span></span
+                  ><span class="sep">·</span>
+                  <span><b>Los Angeles</b>, CA<span class="n">450</span></span
+                  ><span class="sep">·</span>
+                  <span><b>Phoenix</b>, AZ<span class="n">305</span></span
+                  ><span class="sep">·</span>
+                  <span><b>Austin</b>, TX<span class="n">271</span></span
+                  ><span class="sep">·</span>
+                  <span>Tempe, AZ<span class="n">146</span></span
+                  ><span class="sep">·</span>
+                  <span>Las Vegas, NV<span class="n">96</span></span
+                  ><span class="sep">·</span>
+                  <span>Houston, TX<span class="n">69</span></span
+                  ><span class="sep">·</span>
+                  <span>Scottsdale, AZ<span class="n">63</span></span>
+                </p>
+
+                <div class="inc-seclabel" style="margin-top: 4px">
+                  Severity coding · schema
+                </div>
+                <p class="inc-schema">
+                  Fatal<span class="sep">/</span> Serious injury<span
+                    class="sep"
+                    >/</span
+                  >
+                  Minor injury<span class="sep">/</span> No injury reported<span
+                    class="sep"
+                    >/</span
+                  >
+                  Airbag deployment<span class="sep">/</span> Tow-away<span
+                    class="sep"
+                    >/</span
+                  >
+                  GPS · roadway · weather<span class="sep">/</span> Crash
+                  partner · contact area<span class="sep">/</span>
+                  Automation engaged state
+                </p>
               </div>
 
-              <div class="inc-seclabel">Top reporters · ADS</div>
-              <div class="inc-rows">
-                <div class="inc-row">
-                  <span class="rk">01</span><span class="label">Waymo LLC</span
-                  ><span class="n"
-                    ><b>1,898</b><span class="pct">62.8%</span></span
+              <div class="inc-actionbar">
+                <div class="inc-action-left">
+                  <a
+                    class="inc-dl primary"
+                    href="#"
+                    data-cite-download="https://pan.baidu.com/s/nhtsa-sgo-ads-adas"
+                    data-cite-label="NHTSA SGO ADS + ADAS"
+                    data-cite-pwd="ozon"
                   >
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="7 10 12 15 17 10" />
+                      <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    Download ADS + ADAS
+                    <svg
+                      class="ext"
+                      width="11"
+                      height="11"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M7 17L17 7" />
+                      <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                  </a>
+                  <a
+                    class="inc-dl ghost"
+                    href="https://www.nhtsa.gov/laws-regulations/standing-general-order-crash-reporting"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Original SGO releases from NHTSA"
+                  >
+                    <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M2 12h20" />
+                      <path
+                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+                      />
+                    </svg>
+                    Official source · NHTSA
+                    <svg
+                      class="ext"
+                      width="11"
+                      height="11"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M7 17L17 7" />
+                      <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                  </a>
                 </div>
-                <div class="inc-row">
-                  <span class="rk">02</span><span class="label">Cruise LLC</span
-                  ><span class="n"
-                    ><b>207</b><span class="pct">6.9%</span></span
-                  >
-                </div>
-                <div class="inc-row">
-                  <span class="rk">03</span
-                  ><span class="label">General Motors LLC</span
-                  ><span class="n"
-                    ><b>201</b><span class="pct">6.7%</span></span
-                  >
-                </div>
-                <div class="inc-row">
-                  <span class="rk">04</span
-                  ><span class="label">Transdev Alternative Services</span
-                  ><span class="n"
-                    ><b>188</b><span class="pct">6.2%</span></span
-                  >
-                </div>
-                <div class="inc-row">
-                  <span class="rk">05</span><span class="label">Zoox, Inc.</span
-                  ><span class="n"
-                    ><b>151</b><span class="pct">5.0%</span></span
-                  >
+                <div class="inc-sizes">
+                  <span class="sep">·</span>
+                  xlsx + csv <b>~20 MB</b>
                 </div>
               </div>
-
-              <div class="inc-seclabel" style="margin-top: 22px">
-                Top reporter · ADAS
-              </div>
-              <div class="inc-rows">
-                <div class="inc-row">
-                  <span class="rk">01</span
-                  ><span class="label">Tesla, Inc.</span
-                  ><span class="n"
-                    ><b>4,025</b><span class="pct">80.1%</span></span
-                  >
-                </div>
-              </div>
-
-              <div class="inc-seclabel" style="margin-top: 22px">
-                Top cities (ADS + ADAS)
-              </div>
-              <p class="inc-citylist">
-                <span><b>San Francisco</b>, CA<span class="n">1,408</span></span
-                ><span class="sep">·</span>
-                <span><b>Los Angeles</b>, CA<span class="n">450</span></span
-                ><span class="sep">·</span>
-                <span><b>Phoenix</b>, AZ<span class="n">305</span></span
-                ><span class="sep">·</span>
-                <span><b>Austin</b>, TX<span class="n">271</span></span
-                ><span class="sep">·</span>
-                <span>Tempe, AZ<span class="n">146</span></span
-                ><span class="sep">·</span>
-                <span>Las Vegas, NV<span class="n">96</span></span
-                ><span class="sep">·</span>
-                <span>Houston, TX<span class="n">69</span></span
-                ><span class="sep">·</span>
-                <span>Scottsdale, AZ<span class="n">63</span></span>
-              </p>
-
-              <div class="inc-seclabel" style="margin-top: 4px">
-                Severity coding · schema
-              </div>
-              <p class="inc-schema">
-                Fatal<span class="sep">/</span> Serious injury<span class="sep"
-                  >/</span
-                >
-                Minor injury<span class="sep">/</span> No injury reported<span
-                  class="sep"
-                  >/</span
-                >
-                Airbag deployment<span class="sep">/</span> Tow-away<span
-                  class="sep"
-                  >/</span
-                >
-                GPS · roadway · weather<span class="sep">/</span> Crash partner
-                · contact area<span class="sep">/</span>
-                Automation engaged state
-              </p>
-            </div>
-
-            <div class="inc-actionbar">
-              <div class="inc-action-left">
-                <a class="inc-dl primary disabled" aria-disabled="true">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                  </svg>
-                  Download ADS + ADAS
-                  <svg
-                    class="ext"
-                    width="11"
-                    height="11"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M7 17L17 7" />
-                    <polyline points="7 7 17 7 17 17" />
-                  </svg>
-                </a>
-                <a
-                  class="inc-dl ghost"
-                  href="https://www.nhtsa.gov/laws-regulations/standing-general-order-crash-reporting"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Original SGO releases from NHTSA"
-                >
-                  <svg
-                    width="13"
-                    height="13"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.7"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M2 12h20" />
-                    <path
-                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
-                    />
-                  </svg>
-                  Official source · NHTSA
-                  <svg
-                    class="ext"
-                    width="11"
-                    height="11"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M7 17L17 7" />
-                    <polyline points="7 7 17 7 17 17" />
-                  </svg>
-                </a>
-              </div>
-              <div class="inc-sizes">
-                <span class="sep">·</span>
-                xlsx + csv <b>~20 MB</b>
-              </div>
-            </div>
-          </article>
+            </article>
+          </div>
+          <!-- /.inc-stream -->
         </div>
-        <!-- /.inc-stream -->
+        <!-- /.res-content -->
       </div>
+      <!-- /.res-flex -->
     </main>
 
     <!-- Citation & terms modal -->
@@ -1899,67 +2305,21 @@
       aria-modal="true"
       aria-labelledby="citeTitle"
     >
-      <div class="cite-card">
-        <button type="button" class="close" aria-label="Close" data-cite-cancel>
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+      <div class="cite-modal-card">
+        <div class="cite-modal-head">
+          <div class="cite-modal-head-left">
+            <span class="dot"></span>
+            <h3 id="citeTitle">Cite &amp; download</h3>
+          </div>
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            data-cite-cancel
           >
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
-        <div class="head">
-          <span class="d"></span>
-          <h3 id="citeTitle">Terms &amp; citation</h3>
-        </div>
-        <p>
-          Before downloading <b id="citeWhat">this dataset</b>, please review
-          the terms of use below and include the citation in any publication,
-          report, or derivative work.
-        </p>
-
-        <div class="cite-block-title">
-          <span class="num">1</span>Terms of use · 使用声明
-        </div>
-        <div class="terms">
-          <p>
-            本数据集免费向学术及非学术机构开放，仅限用于<b>非商业用途</b>，包括但不限于学术研究、教学活动或科学出版物。在使用本数据集时，即视为您同意以下条款：
-          </p>
-          <ol>
-            <li>
-              <b>引用要求</b>：凡使用 Ozone
-              数据集的任何成果，均须明确引用该数据集（见下方 BibTeX）。
-            </li>
-            <li>
-              <b>禁止再分发</b
-              >：不得以任何形式分发本数据集或其修改版本。允许分发的衍生成果仅限于对数据集的抽象化表达，例如基于数据训练的模型，或不直接包含任何原始数据、且无法反向恢复数据集或与其在性质上相似内容的附加标注成果。
-            </li>
-            <li>
-              <b>商业用途限制</b
-              >：不得将本数据集或任何衍生成果用于商业目的，包括但不限于对数据进行授权、出售，或以获取商业利益为目的的任何使用行为。
-            </li>
-            <li>
-              <b>权利保留</b
-              >：除本说明中明确授予的权利外，其余一切权利均由数据集提供方保留。
-            </li>
-          </ol>
-        </div>
-
-        <div class="cite-block-title">
-          <span class="num">2</span>Citation · 引用格式
-        </div>
-        <div class="bib" id="citeBib">
-          <button type="button" class="copy" data-bib-copy>
             <svg
-              width="11"
-              height="11"
+              width="18"
+              height="18"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -1967,84 +2327,118 @@
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <rect x="9" y="9" width="13" height="13" rx="2" />
-              <path
-                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-              />
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
             </svg>
-            Copy</button
-          ><span class="bib-text"
-            >@article{zheng2026ozone, title = {Ozone: A Unified Platform for
-            Transportation Research}, author = {Zheng, Ou and Feng, Ruyi and
-            Yang, Yufeng and Ding, Shengxuan and Yue, Lishengsa and Li, Ye and
-            Zheng, Yunhan and Kong, Minwei and Zhuang, Dingyi and Qu, Ao and Li,
-            Zhibin and Wang, Dongjie and Ying, Wangyang}, journal = {arXiv
-            preprint arXiv:2604.10959}, year = {2026}, doi =
-            {10.48550/arXiv.2604.10959}, note = {Accessed YYYY-MM-DD} }</span
-          >
-        </div>
-        <p class="note-small">
-          Replace <b>YYYY-MM-DD</b> with your access date.
-        </p>
-
-        <div class="cite-block-title">
-          <span class="num">3</span>Download link · 下载链接
-        </div>
-        <div class="link-block">
-          <span class="url" id="citeUrl">https://pan.baidu.com/s/</span>
-          <div class="actions">
-            <button type="button" class="act" data-link-copy>
-              <svg
-                width="11"
-                height="11"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="9" y="9" width="13" height="13" rx="2" />
-                <path
-                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                />
-              </svg>
-              Copy
-            </button>
-            <a
-              class="act"
-              id="citeOpen"
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Open
-              <svg
-                width="10"
-                height="10"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M7 17L17 7" />
-                <polyline points="7 7 17 7 17 17" />
-              </svg>
-            </a>
-          </div>
-          <div class="pwd">Extract code · 提取码:<b id="citePwd">ozon</b></div>
-        </div>
-
-        <p class="note-small">
-          By copying or opening the link you acknowledge the terms above.
-        </p>
-
-        <div class="cite-actions">
-          <button type="button" class="btn-ghost" data-cite-cancel>
-            Close
           </button>
+        </div>
+        <div class="cite-modal-body">
+          <p class="lead">
+            Please cite <b id="citeWhat">this dataset</b> in any publication or
+            derivative work. Copy the citation and the link below.
+          </p>
+          <div class="cite-section">
+            <h4 class="cite-section-title">Citation</h4>
+            <div class="bib-block" id="citeBib">
+              <div class="bib-block-head">
+                <span class="bib-block-label">BibTeX</span>
+                <button type="button" class="bib-copy" data-bib-copy>
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                    <path
+                      d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                    />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="bib-text">
+@article{zheng2026ozone,
+  title   = {Ozone: A Unified Platform for Transportation Research},
+  author  = {Zheng, Ou and Feng, Ruyi and Yang, Yufeng and
+             Ding, Shengxuan and Yue, Lishengsa and Li, Ye and
+             Zheng, Yunhan and Kong, Minwei and Zhuang, Dingyi and
+             Qu, Ao and Li, Zhibin and Wang, Dongjie and Ying, Wangyang},
+  journal = {arXiv preprint arXiv:2604.10959},
+  year    = {2026},
+  doi     = {10.48550/arXiv.2604.10959},
+  note    = {Accessed YYYY-MM-DD}
+}</pre
+              >
+            </div>
+            <p class="micro">
+              Replace <b>YYYY-MM-DD</b> with your access date.
+            </p>
+          </div>
+          <div class="cite-section">
+            <h4 class="cite-section-title">Download link</h4>
+            <div class="link-block">
+              <div class="link-block-main">
+                <span class="url" id="citeUrl">https://pan.baidu.com/s/</span>
+                <div class="actions">
+                  <button type="button" class="act" data-link-copy>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                      <path
+                        d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                      />
+                    </svg>
+                    Copy
+                  </button>
+                  <a
+                    class="act primary"
+                    id="citeOpen"
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Open
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M7 7h10v10" />
+                      <path d="M7 17 17 7" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <div class="pwd">
+                <span class="pwd-label">Extract code</span
+                ><b id="citePwd">ozon</b>
+              </div>
+            </div>
+          </div>
+          <p class="terms-line">
+            By downloading, you agree to Ozone's
+            <span class="terms-toggle" style="cursor: default">
+              <span>Terms of Use</span>
+            </span>
+            — non-commercial research, no redistribution, cite on use.
+          </p>
         </div>
       </div>
     </div>
@@ -2115,9 +2509,13 @@
           const pwdRow = modal.querySelector(".link-block .pwd");
           if (pwdRow) pwdRow.style.display = pwd ? "" : "none";
           modal.classList.add("active");
+          document.body.style.overflow = "hidden";
         }
         function closeCite() {
-          modal && modal.classList.remove("active");
+          if (modal) {
+            modal.classList.remove("active");
+            document.body.style.overflow = "";
+          }
         }
         document.querySelectorAll("[data-cite-download]").forEach(function (a) {
           a.addEventListener("click", function (e) {
@@ -2147,7 +2545,7 @@
           const orig = btn.innerHTML;
           btn.classList.add("copied");
           btn.innerHTML =
-            '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied';
+            '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied';
           setTimeout(function () {
             btn.classList.remove("copied");
             btn.innerHTML = orig;

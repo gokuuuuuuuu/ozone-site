@@ -1,0 +1,2362 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile — Ozone</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #000;
+        --bg-soft: #05060b;
+        --surface: rgba(255, 255, 255, 0.04);
+        --surface-hover: rgba(255, 255, 255, 0.07);
+        --border: rgba(255, 255, 255, 0.08);
+        --border-strong: rgba(255, 255, 255, 0.18);
+        --text: #fff;
+        --text-muted: rgba(255, 255, 255, 0.55);
+        --text-faint: rgba(255, 255, 255, 0.32);
+        --primary: #3b82f6;
+        --primary-hover: #60a5fa;
+        --danger: #f87171;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 50% at 20% -10%,
+            rgba(59, 130, 246, 0.08),
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 70% 60% at 100% 10%,
+            rgba(167, 139, 250, 0.05),
+            transparent 60%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+      a {
+        color: inherit;
+      }
+      button {
+        font-family: inherit;
+      }
+
+      /* ── Top nav ── */
+      .oz-top-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(20px) saturate(150%);
+        -webkit-backdrop-filter: blur(20px) saturate(150%);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+        letter-spacing: -0.01em;
+        transition: opacity 0.2s;
+      }
+      .nav-brand:hover {
+        opacity: 0.8;
+      }
+      .nav-brand-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3b82f6, #a78bfa);
+      }
+      .nav-left {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .nav-left .nav-brand + .nav-back-btn {
+        margin-left: 2px;
+      }
+      .nav-back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 14px 7px 11px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 12.5px;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          color 0.2s,
+          transform 0.15s;
+      }
+      .nav-back-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.22);
+        color: #fff;
+        transform: translateX(-1px);
+      }
+      .nav-back-btn svg {
+        width: 13px;
+        height: 13px;
+        transition: transform 0.2s;
+      }
+      .nav-back-btn:hover svg {
+        transform: translateX(-2px);
+      }
+
+      .nav-user {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 4px 14px 4px 4px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.82);
+      }
+      .nav-user-avatar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          rgba(59, 130, 246, 0.85),
+          rgba(99, 102, 241, 0.85)
+        );
+        color: #fff;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      /* ── Main layout ── */
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 80px 32px 80px;
+      }
+      section + section {
+        margin-top: 56px;
+      }
+
+      /* ── Tab bar ── */
+      .prof-tabs {
+        display: flex;
+        gap: 4px;
+        padding: 4px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        width: fit-content;
+        margin: 0 auto 40px;
+      }
+      .prof-tab {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 22px;
+        border-radius: 9px;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.5);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        transition:
+          color 0.2s,
+          background 0.2s;
+      }
+      .prof-tab:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .prof-tab.active {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      }
+      .prof-tab svg {
+        width: 16px;
+        height: 16px;
+        opacity: 0.7;
+      }
+      .prof-tab.active svg {
+        opacity: 1;
+      }
+      .prof-panel {
+        display: none;
+      }
+      .prof-panel.active {
+        display: block;
+      }
+
+      /* ── Resource center: sidebar + content ── */
+      .rc-layout {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        gap: 32px;
+        min-height: 500px;
+      }
+      @media (max-width: 768px) {
+        .rc-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+      .rc-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        position: sticky;
+        top: 80px;
+        align-self: start;
+      }
+      .rc-nav-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 10px;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        font-family: inherit;
+        text-align: left;
+        transition:
+          color 0.2s,
+          background 0.2s;
+      }
+      .rc-nav-item:hover {
+        color: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .rc-nav-item.active {
+        color: #fff;
+        background: rgba(59, 130, 246, 0.12);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+      }
+      .rc-nav-item svg {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+      .rc-section-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.25);
+        font-weight: 500;
+        padding: 16px 14px 6px;
+      }
+      .rc-section-label:first-child {
+        padding-top: 0;
+      }
+      .rc-nav-parent {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 10px;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        font-family: inherit;
+        text-align: left;
+        width: 100%;
+        transition:
+          color 0.2s,
+          background 0.2s;
+      }
+      .rc-nav-parent:hover {
+        color: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .rc-nav-parent svg.rc-nav-icon {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+      .rc-nav-parent .rc-chevron {
+        margin-left: auto;
+        width: 14px;
+        height: 14px;
+        opacity: 0.4;
+        transition: transform 0.25s ease;
+      }
+      .rc-nav-parent.expanded .rc-chevron {
+        transform: rotate(90deg);
+      }
+      .rc-nav-parent.expanded {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .rc-sub-menu {
+        display: none;
+        flex-direction: column;
+        gap: 2px;
+        padding-left: 22px;
+        margin-top: 2px;
+      }
+      .rc-sub-menu.open {
+        display: flex;
+      }
+      .rc-sub-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 12.5px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.45);
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        font-family: inherit;
+        text-align: left;
+        transition:
+          color 0.2s,
+          background 0.2s;
+      }
+      .rc-sub-item:hover {
+        color: rgba(255, 255, 255, 0.75);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      a.rc-sub-item {
+        text-decoration: none;
+      }
+      .rc-sub-item.active {
+        color: #fff;
+        background: rgba(59, 130, 246, 0.12);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+      }
+      .rc-sub-item::before {
+        content: "";
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0.5;
+        flex-shrink: 0;
+      }
+      .rc-nav-item .rc-badge {
+        margin-left: auto;
+        font-size: 10px;
+        padding: 2px 7px;
+        border-radius: 999px;
+        background: rgba(52, 211, 153, 0.12);
+        color: #6ee7b7;
+        border: 1px solid rgba(52, 211, 153, 0.25);
+        font-family: "JetBrains Mono", monospace;
+      }
+      .rc-content {
+        min-width: 0;
+      }
+      .rc-page {
+        display: none;
+      }
+      .rc-page.active {
+        display: block;
+      }
+      .rc-page-title {
+        font-size: 22px;
+        font-weight: 600;
+        color: #fff;
+        margin: 0 0 6px;
+        letter-spacing: -0.01em;
+      }
+      .rc-page-sub {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.35);
+        margin: 0 0 24px;
+      }
+      .rc-embed-frame {
+        width: 100%;
+        border-radius: 16px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        min-height: 400px;
+      }
+      .rc-embed-frame iframe {
+        width: 100%;
+        height: calc(100vh - 200px);
+        min-height: 600px;
+        border: none;
+      }
+      .rc-link-out {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 16px;
+        padding: 10px 18px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.82);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        text-decoration: none;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .rc-link-out:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
+        color: #fff;
+      }
+      .rc-link-out svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      h2.section-h {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        margin: 0 0 4px;
+      }
+      .section-sub {
+        font-size: 13px;
+        color: var(--text-faint);
+        margin: 0 0 24px;
+      }
+
+      /* ── Account header card ── */
+      .acc-card {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        padding: 28px 32px;
+        border-radius: 20px;
+        background: linear-gradient(
+          180deg,
+          rgba(20, 20, 22, 0.7) 0%,
+          rgba(10, 10, 12, 0.82) 100%
+        );
+        border: 1px solid rgba(64, 64, 64, 0.4);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        overflow: hidden;
+      }
+      .acc-card::before {
+        content: "";
+        position: absolute;
+        left: -20px;
+        top: -20px;
+        width: 220px;
+        height: 220px;
+        background: radial-gradient(
+          closest-side,
+          rgba(59, 130, 246, 0.18),
+          transparent 70%
+        );
+        pointer-events: none;
+        filter: blur(8px);
+      }
+      .acc-avatar {
+        flex-shrink: 0;
+        position: relative;
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4a8cff 0%, #7b6cff 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.01em;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.28),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+          0 0 0 4px rgba(255, 255, 255, 0.03),
+          0 8px 24px rgba(59, 130, 246, 0.3);
+      }
+      .acc-avatar::after {
+        content: "";
+        position: absolute;
+        inset: -6px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        pointer-events: none;
+      }
+      .acc-body {
+        flex: 1;
+        min-width: 0;
+        position: relative;
+        z-index: 1;
+      }
+      .acc-name {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.015em;
+        margin: 0 0 6px;
+        color: #fff;
+      }
+      .acc-meta {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .acc-meta .sep {
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: #404040;
+        display: inline-block;
+      }
+      .acc-badges {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .role-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 11px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+      }
+      .role-badge::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0.85;
+      }
+      .role-badge.phd {
+        background: rgba(167, 139, 250, 0.12);
+        color: #c4b5fd;
+        border: 1px solid rgba(167, 139, 250, 0.3);
+      }
+      .role-badge.faculty {
+        background: rgba(59, 130, 246, 0.12);
+        color: #93c5fd;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+      }
+      .role-badge.industry {
+        background: rgba(251, 146, 60, 0.12);
+        color: #fdba74;
+        border: 1px solid rgba(251, 146, 60, 0.3);
+      }
+      .approved-chip {
+        flex-shrink: 0;
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 13px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        background: rgba(52, 211, 153, 0.08);
+        color: #6ee7b7;
+        border: 1px solid rgba(52, 211, 153, 0.28);
+        white-space: nowrap;
+      }
+      .approved-chip svg {
+        width: 12px;
+        height: 12px;
+      }
+      .approved-chip-date {
+        opacity: 0.75;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10.5px;
+      }
+
+      /* ── Resource tiles (ported from main site .rh-tile) ── */
+      .rh-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+      }
+      @media (max-width: 860px) {
+        .rh-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .rh-tile {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: 28px 30px 26px;
+        border-radius: 20px;
+        background: linear-gradient(
+          180deg,
+          rgba(20, 20, 22, 0.7) 0%,
+          rgba(10, 10, 12, 0.82) 100%
+        );
+        border: 1px solid rgba(64, 64, 64, 0.4);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        transition:
+          border-color 0.3s,
+          transform 0.3s,
+          box-shadow 0.3s;
+        overflow: hidden;
+        cursor: pointer;
+        color: inherit;
+        text-decoration: none;
+      }
+      .rh-tile::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.03),
+          transparent 55%
+        );
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s;
+      }
+      .rh-tile:hover {
+        border-color: rgba(120, 120, 128, 0.55);
+        transform: translateY(-3px);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.06),
+          0 30px 60px -30px rgba(0, 0, 0, 0.85);
+      }
+      .rh-tile:hover::before {
+        opacity: 1;
+      }
+
+      .rh-tile-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 18px;
+        position: relative;
+        z-index: 1;
+      }
+      .rh-ico {
+        width: 48px;
+        height: 48px;
+        flex-shrink: 0;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(235, 240, 250, 0.92);
+        transition:
+          transform 0.3s ease,
+          border-color 0.3s,
+          box-shadow 0.3s;
+      }
+      .rh-tile:hover .rh-ico {
+        transform: scale(1.05);
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 24px rgba(255, 255, 255, 0.06);
+      }
+      .rh-tile-type {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.22em;
+        color: #737373;
+        text-transform: uppercase;
+        font-weight: 500;
+        margin-bottom: 4px;
+      }
+      .rh-tile h3 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: #fff;
+      }
+      .rh-tile-desc {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #a3a3a3;
+        position: relative;
+        z-index: 1;
+        flex-grow: 1;
+      }
+      .rh-tile-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 22px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(64, 64, 64, 0.4);
+        position: relative;
+        z-index: 1;
+      }
+      .rh-tile-meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: #737373;
+        flex-wrap: wrap;
+      }
+      .rh-tile-meta b {
+        color: #d4d4d4;
+        font-weight: 500;
+      }
+      .rh-tile-meta .sep {
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: #404040;
+        display: inline-block;
+      }
+      .rh-tile-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12.5px;
+        font-weight: 500;
+        color: #d4d4d4;
+        transition:
+          color 0.2s,
+          gap 0.2s;
+        white-space: nowrap;
+      }
+      .rh-tile:hover .rh-tile-cta {
+        color: #fff;
+        gap: 9px;
+      }
+      .rh-tile-cta svg {
+        opacity: 0.7;
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+      }
+      .rh-tile:hover .rh-tile-cta svg {
+        opacity: 1;
+        transform: translateX(2px);
+      }
+      .rh-tile-status {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9.5px;
+        letter-spacing: 0.14em;
+        border-radius: 999px;
+        text-transform: uppercase;
+        font-weight: 500;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #a3a3a3;
+        z-index: 2;
+      }
+      .rh-tile-status.live {
+        background: rgba(120, 200, 130, 0.08);
+        border-color: rgba(120, 200, 130, 0.28);
+        color: #a7e3a7;
+      }
+      .rh-tile-status.live::before {
+        content: "";
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #6ee06e;
+        box-shadow: 0 0 8px rgba(120, 200, 130, 0.5);
+      }
+
+      /* ── Account info card ── */
+      .info-card {
+        padding: 30px 34px 28px;
+        border-radius: 20px;
+        background: linear-gradient(
+          180deg,
+          rgba(20, 20, 22, 0.7) 0%,
+          rgba(10, 10, 12, 0.82) 100%
+        );
+        border: 1px solid rgba(64, 64, 64, 0.4);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      }
+      .info-group + .info-group {
+        margin-top: 28px;
+      }
+      .info-group-head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 16px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.22em;
+        color: #737373;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+      .info-group-head::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.05),
+          transparent
+        );
+      }
+      .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px 32px;
+      }
+      @media (max-width: 640px) {
+        .info-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .info-row {
+        min-width: 0;
+      }
+      .info-row.span2 {
+        grid-column: 1 / -1;
+      }
+      .info-label {
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--text-faint);
+        margin: 0 0 5px;
+      }
+      .info-value {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.92);
+        line-height: 1.55;
+        word-break: break-word;
+      }
+      .info-value.mono {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12.5px;
+        color: rgba(255, 255, 255, 0.82);
+        letter-spacing: 0.01em;
+      }
+
+      .info-divider {
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.08),
+          transparent
+        );
+        margin: 32px 0 24px;
+      }
+
+      /* ── Action buttons (Change password / Sign out) ── */
+      .info-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .act-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 11px 18px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 500;
+        font-family: inherit;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.04);
+        color: rgba(255, 255, 255, 0.85);
+        cursor: pointer;
+        transition:
+          background 0.2s ease,
+          border-color 0.2s ease,
+          color 0.2s ease,
+          transform 0.15s ease,
+          box-shadow 0.2s ease;
+      }
+      .act-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.28);
+        color: #fff;
+        transform: translateY(-1px);
+      }
+      .act-btn:active {
+        transform: translateY(0) scale(0.98);
+      }
+      .act-btn .act-btn-ico {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 7px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.75);
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .act-btn .act-btn-ico svg {
+        width: 12px;
+        height: 12px;
+      }
+      .act-btn:hover .act-btn-ico {
+        background: rgba(59, 130, 246, 0.18);
+        border-color: rgba(59, 130, 246, 0.4);
+        color: #bfdbfe;
+      }
+      .act-btn.danger {
+        color: #fca5a5;
+        border-color: rgba(248, 113, 113, 0.22);
+      }
+      .act-btn.danger:hover {
+        background: rgba(248, 113, 113, 0.08);
+        border-color: rgba(248, 113, 113, 0.5);
+        color: #fecaca;
+        box-shadow: 0 6px 20px -8px rgba(248, 113, 113, 0.4);
+      }
+      .act-btn.danger .act-btn-ico {
+        color: #fca5a5;
+      }
+      .act-btn.danger:hover .act-btn-ico {
+        background: rgba(248, 113, 113, 0.15);
+        border-color: rgba(248, 113, 113, 0.45);
+        color: #fecaca;
+      }
+
+      /* ── Footer ── */
+      footer {
+        position: relative;
+        z-index: 1;
+        max-width: 1040px;
+        margin: 40px auto 0;
+        padding: 32px;
+        border-top: 1px solid var(--border);
+        font-size: 12px;
+        color: var(--text-faint);
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      footer a {
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+      footer a:hover {
+        color: #fff;
+      }
+
+      /* ── Modals (change password + sign out confirm) ── */
+      .oz-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.28s ease;
+      }
+      .oz-modal.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .oz-modal-bg {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(8px) saturate(120%);
+        -webkit-backdrop-filter: blur(8px) saturate(120%);
+      }
+      .oz-modal-box {
+        position: relative;
+        width: 100%;
+        max-width: 440px;
+        margin: 0 20px;
+        padding: 32px 32px 28px;
+        border-radius: 22px;
+        background: linear-gradient(
+          180deg,
+          rgba(22, 22, 26, 0.96) 0%,
+          rgba(12, 12, 16, 0.96) 100%
+        );
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(24px) saturate(150%);
+        -webkit-backdrop-filter: blur(24px) saturate(150%);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.06),
+          0 30px 80px -20px rgba(0, 0, 0, 0.65),
+          0 0 0 1px rgba(255, 255, 255, 0.03);
+        transform: translateY(10px) scale(0.97);
+        opacity: 0;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .oz-modal.open .oz-modal-box {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      .oz-modal-box::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 120px;
+        background: radial-gradient(
+          ellipse 80% 100% at 50% 0%,
+          rgba(59, 130, 246, 0.08),
+          transparent 70%
+        );
+        border-radius: 22px 22px 0 0;
+        pointer-events: none;
+      }
+      .mod-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.6);
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s,
+          transform 0.15s;
+        z-index: 2;
+      }
+      .mod-close:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        transform: rotate(90deg);
+      }
+      .mod-close svg {
+        width: 12px;
+        height: 12px;
+      }
+
+      /* Header icon badge (for password & confirm modals) */
+      .mod-icon {
+        position: relative;
+        z-index: 1;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 0 18px;
+        background: rgba(59, 130, 246, 0.14);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        color: #93c5fd;
+        box-shadow: 0 6px 20px -10px rgba(59, 130, 246, 0.6);
+      }
+      .mod-icon svg {
+        width: 18px;
+        height: 18px;
+      }
+      .mod-icon.danger {
+        background: rgba(248, 113, 113, 0.12);
+        border-color: rgba(248, 113, 113, 0.35);
+        color: #fca5a5;
+        box-shadow: 0 6px 20px -10px rgba(248, 113, 113, 0.5);
+      }
+
+      .mod-title {
+        position: relative;
+        z-index: 1;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        margin: 0 0 6px;
+        color: #fff;
+      }
+      .mod-sub {
+        position: relative;
+        z-index: 1;
+        font-size: 13px;
+        color: var(--text-muted);
+        line-height: 1.55;
+        margin: 0 0 22px;
+      }
+
+      /* Input field with leading icon (mirrors main site .lm-iw pattern) */
+      .mod-field {
+        position: relative;
+        z-index: 1;
+        margin-bottom: 14px;
+      }
+      .mod-label {
+        display: block;
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--text-muted);
+        margin: 0 0 7px;
+        letter-spacing: 0.01em;
+      }
+      .mod-iw {
+        position: relative;
+      }
+      .mod-input-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.35);
+        pointer-events: none;
+        transition: color 0.2s;
+      }
+      .mod-input-icon svg {
+        width: 14px;
+        height: 14px;
+      }
+      .mod-iw:focus-within .mod-input-icon {
+        color: #7aabff;
+      }
+      .mod-input {
+        width: 100%;
+        padding: 11px 12px 11px 38px;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.32);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #fff;
+        font-size: 13.5px;
+        font-family: inherit;
+        letter-spacing: 0.04em;
+        transition:
+          border-color 0.2s,
+          background 0.2s,
+          box-shadow 0.2s;
+      }
+      .mod-input::placeholder {
+        color: rgba(255, 255, 255, 0.22);
+        letter-spacing: 0.08em;
+      }
+      .mod-input:focus {
+        outline: none;
+        border-color: rgba(59, 130, 246, 0.55);
+        background: rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      .mod-err {
+        display: none;
+        align-items: flex-start;
+        gap: 8px;
+        position: relative;
+        z-index: 1;
+        margin-bottom: 14px;
+        padding: 10px 12px;
+        border-radius: 9px;
+        background: rgba(248, 113, 113, 0.08);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+        color: #fca5a5;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+      .mod-err.show {
+        display: flex;
+      }
+      .mod-err svg {
+        width: 13px;
+        height: 13px;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      .mod-submit {
+        width: 100%;
+        margin-top: 4px;
+        padding: 12px 16px;
+        border-radius: 11px;
+        border: 1px solid rgba(59, 130, 246, 0.45);
+        background: linear-gradient(
+          180deg,
+          rgba(59, 130, 246, 0.35),
+          rgba(59, 130, 246, 0.22)
+        );
+        color: #fff;
+        font-size: 13.5px;
+        font-weight: 500;
+        cursor: pointer;
+        font-family: inherit;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.15),
+          0 6px 24px -8px rgba(59, 130, 246, 0.5);
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          transform 0.15s,
+          box-shadow 0.2s;
+      }
+      .mod-submit:hover {
+        background: linear-gradient(
+          180deg,
+          rgba(59, 130, 246, 0.48),
+          rgba(59, 130, 246, 0.3)
+        );
+        border-color: rgba(59, 130, 246, 0.7);
+        transform: translateY(-1px);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.22),
+          0 10px 30px -8px rgba(59, 130, 246, 0.6);
+      }
+      .mod-submit:active {
+        transform: translateY(0) scale(0.98);
+      }
+      .mod-submit svg {
+        width: 13px;
+        height: 13px;
+        transition: transform 0.2s;
+      }
+      .mod-submit:hover svg {
+        transform: translateX(3px);
+      }
+
+      /* Confirm modal (sign-out) variant — compact, two-button row */
+      .oz-modal-box.compact {
+        max-width: 400px;
+        padding: 28px 28px 24px;
+      }
+      .oz-modal-box.compact::before {
+        background: radial-gradient(
+          ellipse 80% 100% at 50% 0%,
+          rgba(248, 113, 113, 0.07),
+          transparent 70%
+        );
+      }
+      .mod-btn-row {
+        display: flex;
+        gap: 10px;
+        margin-top: 4px;
+      }
+      .mod-btn {
+        flex: 1;
+        padding: 11px 16px;
+        border-radius: 11px;
+        font-size: 13px;
+        font-weight: 500;
+        font-family: inherit;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          transform 0.15s,
+          color 0.2s;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.04);
+        color: rgba(255, 255, 255, 0.85);
+      }
+      .mod-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.24);
+        color: #fff;
+      }
+      .mod-btn:active {
+        transform: scale(0.98);
+      }
+      .mod-btn.danger {
+        background: linear-gradient(
+          180deg,
+          rgba(248, 113, 113, 0.32),
+          rgba(248, 113, 113, 0.2)
+        );
+        border-color: rgba(248, 113, 113, 0.5);
+        color: #fff;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.15),
+          0 6px 20px -8px rgba(248, 113, 113, 0.5);
+      }
+      .mod-btn.danger:hover {
+        background: linear-gradient(
+          180deg,
+          rgba(248, 113, 113, 0.45),
+          rgba(248, 113, 113, 0.28)
+        );
+        border-color: rgba(248, 113, 113, 0.7);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.22),
+          0 10px 28px -8px rgba(248, 113, 113, 0.65);
+      }
+      .mod-btn svg {
+        width: 13px;
+        height: 13px;
+      }
+
+      /* ── Toast ── */
+      .oz-toast {
+        position: fixed;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%) translateY(12px);
+        z-index: 200;
+        padding: 10px 18px;
+        border-radius: 999px;
+        background: rgba(14, 16, 22, 0.95);
+        border: 1px solid rgba(52, 211, 153, 0.4);
+        color: #a7f3d0;
+        font-size: 13px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.28s,
+          transform 0.28s;
+      }
+      .oz-toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      .oz-toast svg {
+        width: 13px;
+        height: 13px;
+      }
+
+      /* Responsive tweaks */
+      @media (max-width: 640px) {
+        .oz-top-nav {
+          padding: 0 18px;
+        }
+        .nav-user > span:last-child {
+          display: none;
+        }
+        main {
+          padding: 96px 18px 64px;
+        }
+        .acc-card {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 16px;
+        }
+        .acc-avatar {
+          width: 56px;
+          height: 56px;
+          font-size: 20px;
+        }
+        .approved-chip {
+          align-self: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── Top nav ── -->
+    <nav class="oz-top-nav">
+      <div class="nav-left">
+        <a class="nav-brand" href="index.html">
+          <span class="nav-brand-dot"></span>
+          Ozone
+        </a>
+        <a class="nav-back-btn" href="index.html" aria-label="Back to home">
+          <svg
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          Back
+        </a>
+      </div>
+      <div class="nav-user">
+        <span class="nav-user-avatar" id="navAvatar">U</span>
+        <span id="navUserName">User</span>
+      </div>
+    </nav>
+
+    <main>
+      <!-- Tab bar -->
+      <div class="prof-tabs">
+        <button
+          class="prof-tab active"
+          onclick="switchTab('resources')"
+          id="tabResources"
+        >
+          <svg
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          Resource Center
+        </button>
+        <button class="prof-tab" onclick="switchTab('account')" id="tabAccount">
+          <svg
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+            />
+          </svg>
+          Account
+        </button>
+      </div>
+
+      <!-- Panel 1: Resource Center -->
+      <div class="prof-panel active" id="panelResources">
+        <div class="rc-layout">
+          <nav class="rc-sidebar">
+            <div class="rc-section-label">Downloads</div>
+            <button
+              class="rc-nav-item active"
+              onclick="switchRcPage('datasets')"
+            >
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+                <line x1="8" y1="2" x2="8" y2="18" />
+                <line x1="16" y1="6" x2="16" y2="22" />
+              </svg>
+              Download Map
+              <span class="rc-badge">Live</span>
+            </button>
+            <button class="rc-nav-item" onclick="switchRcPage('trajectories')">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path d="M3 3v18h18" />
+                <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3" />
+              </svg>
+              Download Trajectory
+              <span class="rc-badge">Live</span>
+            </button>
+            <button class="rc-nav-item" onclick="switchRcPage('incidents')">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path
+                  d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+                />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+              Download Incidents
+              <span class="rc-badge">Live</span>
+            </button>
+            <button class="rc-nav-item" onclick="switchRcPage('paper')">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path
+                  d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
+                />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+              </svg>
+              Download Paper
+            </button>
+            <button class="rc-nav-item" onclick="switchRcPage('code')">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <polyline points="16 18 22 12 16 6" />
+                <polyline points="8 6 2 12 8 18" />
+              </svg>
+              Download Code
+            </button>
+            <div class="rc-section-label">Learn</div>
+            <button class="rc-nav-item" onclick="switchRcPage('tutorials')">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
+                <path d="M6.5 2H20v20H6.5a2.5 2.5 0 010-5H20" />
+              </svg>
+              Tutorials
+            </button>
+            <div class="rc-sub-menu open" id="tutSubMenu">
+              <a
+                class="rc-sub-item"
+                href="tutorial-viewer.html?doc=CARLA%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%20-%200417_Ze%20-%20yue.docx&title=CARLA%20basics%20and%20installation"
+                target="_blank"
+                >CARLA Introduction &amp; Setup</a
+              >
+              <a
+                class="rc-sub-item"
+                href="tutorial-viewer.html?doc=Carla%20%E5%9F%BA%E6%9C%AC%E5%9C%BA%E6%99%AF%E5%88%9B%E5%BB%BA%E6%95%99%E7%A8%8B.docx&title=Authoring%20CARLA%20scenarios%20end-to-end"
+                target="_blank"
+                >CARLA Scene Creation</a
+              >
+              <a
+                class="rc-sub-item"
+                href="tutorial-viewer.html?doc=%E5%9F%BA%E4%BA%8ERoadrunner%20%E7%9A%84Carla%E5%AD%AA%E7%94%9F%E5%9C%B0%E5%9B%BE%E7%BC%96%E8%BE%91%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B.docx&title=Digital-twin%20map%20editing%20in%20RoadRunner"
+                target="_blank"
+                >RoadRunner Twin Map</a
+              >
+            </div>
+            <button class="rc-nav-item" onclick="switchRcPage('community')">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                <path d="M16 3.13a4 4 0 010 7.75" />
+              </svg>
+              Community
+            </button>
+          </nav>
+          <div class="rc-content">
+            <!-- Datasets (iframe: index.html embed) -->
+            <div class="rc-page active" id="rcDatasets">
+              <div class="rc-embed-frame">
+                <iframe
+                  src="index.html?embed=1#download-map"
+                  title="Download Map"
+                ></iframe>
+              </div>
+            </div>
+            <!-- Trajectories (iframe: resources/trajectories_v2.html) -->
+            <div class="rc-page" id="rcTrajectories">
+              <div class="rc-embed-frame">
+                <iframe
+                  src="resources/trajectories_v2.html?embed=1"
+                  title="Trajectory Data"
+                ></iframe>
+              </div>
+            </div>
+            <!-- Incidents (iframe: resources/incidents.html) -->
+            <div class="rc-page" id="rcIncidents">
+              <div class="rc-embed-frame">
+                <iframe
+                  src="resources/incidents.html?embed=1"
+                  title="Incident Reports"
+                ></iframe>
+              </div>
+            </div>
+            <!-- Paper (iframe: index.html embed) -->
+            <div class="rc-page" id="rcPaper">
+              <div class="rc-embed-frame">
+                <iframe
+                  src="index.html?embed=1#download-paper"
+                  title="Download Paper"
+                ></iframe>
+              </div>
+            </div>
+            <!-- Code -->
+            <div class="rc-page" id="rcCode">
+              <h2 class="rc-page-title">Source &amp; SDK</h2>
+              <p class="rc-page-sub">
+                The reference implementation on GitHub. Schema validators,
+                conversion pipelines, and quickstart notebooks for every
+                supported dataset.
+              </p>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  gap: 12px;
+                  margin-top: 8px;
+                "
+              >
+                <a
+                  class="rc-link-out"
+                  href="https://github.com/ZhilingResearch/Ozone"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M7 7h10v10" />
+                    <path d="M7 17L17 7" />
+                  </svg>
+                  Open on GitHub
+                </a>
+              </div>
+            </div>
+            <!-- Tutorials -->
+            <!-- Tutorials (iframe: tutorials.html) -->
+            <div class="rc-page" id="rcTutorials">
+              <div class="rc-embed-frame">
+                <iframe src="tutorials.html?embed=1" title="Tutorials"></iframe>
+              </div>
+            </div>
+            <!-- Community (iframe: resources/community.html) -->
+            <div class="rc-page" id="rcCommunity">
+              <div class="rc-embed-frame">
+                <iframe
+                  src="resources/community.html?embed=1"
+                  title="Community"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 2: Account -->
+      <div class="prof-panel" id="panelAccount">
+        <section>
+          <div class="acc-card">
+            <div class="acc-avatar" id="accAvatar">U</div>
+            <div class="acc-body">
+              <h1 class="acc-name" id="accName">—</h1>
+              <div class="acc-meta" id="accMeta">—</div>
+              <div class="acc-badges" id="accBadges"></div>
+            </div>
+            <div class="approved-chip">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              Approved
+              <span class="approved-chip-date" id="accApprovedDate">—</span>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2 class="section-h">Account Details</h2>
+          <p class="section-sub">
+            Details from your approved research access application.
+          </p>
+          <div class="info-card">
+            <div id="infoGroups"></div>
+            <div class="info-divider"></div>
+            <div class="info-actions">
+              <button class="act-btn" type="button" onclick="openPwModal()">
+                <span class="act-btn-ico">
+                  <svg
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
+                    />
+                  </svg>
+                </span>
+                Change password
+              </button>
+              <button
+                class="act-btn danger"
+                type="button"
+                onclick="openSignOutModal()"
+              >
+                <span class="act-btn-ico">
+                  <svg
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    />
+                  </svg>
+                </span>
+                Sign out
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div>
+        © 2026 Ozone · By downloading you agree to the
+        <a href="index.html#apply">Terms of Use</a>
+        (non-commercial, no redistribution, cite on use).
+      </div>
+      <div>
+        Link broken? Email
+        <a href="mailto:support@ozone.example">support@ozone.example</a>
+      </div>
+    </footer>
+
+    <!-- ── Change password modal ── -->
+    <div
+      class="oz-modal"
+      id="pwModal"
+      onclick="handleModalOverlay(event, 'pwModal')"
+    >
+      <div class="oz-modal-bg"></div>
+      <div class="oz-modal-box">
+        <button
+          class="mod-close"
+          type="button"
+          onclick="closeModal('pwModal')"
+          aria-label="Close"
+        >
+          <svg
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+        <div class="mod-icon">
+          <svg
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
+            />
+          </svg>
+        </div>
+        <h3 class="mod-title">Change password</h3>
+        <p class="mod-sub">
+          Enter your current password and pick a new one — at least 8
+          characters.
+        </p>
+
+        <div class="mod-err" id="pwErr">
+          <svg
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+            />
+          </svg>
+          <span id="pwErrMsg"></span>
+        </div>
+
+        <div class="mod-field">
+          <label class="mod-label" for="pwCurrent">Current password</label>
+          <div class="mod-iw">
+            <span class="mod-input-icon">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.8"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                />
+              </svg>
+            </span>
+            <input
+              class="mod-input"
+              type="password"
+              id="pwCurrent"
+              autocomplete="current-password"
+              placeholder="••••••••"
+            />
+          </div>
+        </div>
+        <div class="mod-field">
+          <label class="mod-label" for="pwNew">New password</label>
+          <div class="mod-iw">
+            <span class="mod-input-icon">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.8"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 11c0-1.1.9-2 2-2s2 .9 2 2M9 21h6a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zM7 11V7a5 5 0 1110 0v4"
+                />
+              </svg>
+            </span>
+            <input
+              class="mod-input"
+              type="password"
+              id="pwNew"
+              autocomplete="new-password"
+              placeholder="At least 8 characters"
+            />
+          </div>
+        </div>
+        <div class="mod-field">
+          <label class="mod-label" for="pwConfirm">Confirm new password</label>
+          <div class="mod-iw">
+            <span class="mod-input-icon">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.8"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </span>
+            <input
+              class="mod-input"
+              type="password"
+              id="pwConfirm"
+              autocomplete="new-password"
+              placeholder="Re-enter new password"
+            />
+          </div>
+        </div>
+        <button
+          class="mod-submit"
+          id="pwSubmit"
+          type="button"
+          onclick="handlePwChange()"
+        >
+          <span>Update password</span>
+          <svg
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2.2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M14 5l7 7m0 0l-7 7m7-7H3"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Sign out confirmation modal ── -->
+    <div
+      class="oz-modal"
+      id="signOutModal"
+      onclick="handleModalOverlay(event, 'signOutModal')"
+    >
+      <div class="oz-modal-bg"></div>
+      <div class="oz-modal-box compact">
+        <button
+          class="mod-close"
+          type="button"
+          onclick="closeModal('signOutModal')"
+          aria-label="Close"
+        >
+          <svg
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+        <div class="mod-icon danger">
+          <svg
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+            />
+          </svg>
+        </div>
+        <h3 class="mod-title">Sign out of Ozone?</h3>
+        <p class="mod-sub">
+          You'll need to sign in again to access your research resources.
+        </p>
+        <div class="mod-btn-row">
+          <button
+            class="mod-btn"
+            type="button"
+            onclick="closeModal('signOutModal')"
+          >
+            Cancel
+          </button>
+          <button
+            class="mod-btn danger"
+            type="button"
+            onclick="confirmSignOut()"
+          >
+            <svg
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              />
+            </svg>
+            Sign out
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Toast ── -->
+    <div class="oz-toast" id="toast">
+      <svg
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2.5"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M5 13l4 4L19 7"
+        />
+      </svg>
+      <span id="toastMsg">Copied</span>
+    </div>
+
+    <script>
+      /* ══════════════ Mock API (phase 1) ══════════════ */
+      // Replace with real fetches once the backend is live:
+      //   GET /api/me → MOCK_USER shape
+      //   POST /api/auth/logout
+      //   POST /api/auth/change-password { oldPassword, newPassword }
+      // Resource tiles are static markup above — no data fetch needed.
+
+      const MOCK_USER = {
+        name: "Yufeng Yang",
+        email: "yqngyufengxly@gmail.com",
+        institution: "Tsinghua University",
+        country: "China",
+        role: "phd", // phd | faculty | industry
+        advisor_name: "Prof. Zhibin Li",
+        advisor_email: "zhibinli@tsinghua.edu.cn",
+        purpose:
+          "Investigating trajectory prediction and safety-critical behavior modeling using NGSIM data paired with CARLA digital-twin simulation.",
+        applied_at: "2026-04-07",
+        approved_at: "2026-04-10",
+      };
+
+      /* ══════════════ Session guard ══════════════ */
+      function getSession() {
+        try {
+          const raw = localStorage.getItem("ozone_session");
+          return raw ? JSON.parse(raw) : null;
+        } catch (e) {
+          return null;
+        }
+      }
+      // If no session, bounce back to the main site. Dev/demo override: add `?preview=1`.
+      (function guard() {
+        const params = new URLSearchParams(location.search);
+        if (!getSession() && params.get("preview") !== "1") {
+          location.replace("index.html");
+        }
+      })();
+
+      /* ══════════════ Helpers ══════════════ */
+      const escapeHTML = (s) =>
+        String(s ?? "").replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+      const initialsOf = (name) => {
+        const parts = (name || "").trim().split(/\s+/).filter(Boolean);
+        if (parts.length === 0) return "U";
+        if (parts.length === 1) return parts[0][0].toUpperCase();
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+      };
+      const roleLabel = (r) =>
+        ({ phd: "PhD Student", faculty: "Faculty", industry: "Industry" })[r] ||
+        "Researcher";
+
+      let toastTimer;
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        document.getElementById("toastMsg").textContent = msg;
+        t.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove("show"), 1800);
+      }
+
+      /* ══════════════ Render ══════════════ */
+      function renderHeader(u) {
+        const init = initialsOf(u.name);
+        document.getElementById("accAvatar").textContent = init;
+        document.getElementById("navAvatar").textContent = init;
+        document.getElementById("navUserName").textContent = u.name;
+        document.getElementById("accName").textContent = u.name;
+        document.getElementById("accMeta").innerHTML =
+          `<span>${escapeHTML(u.institution)}</span>` +
+          `<span class="sep"></span>` +
+          `<span>${escapeHTML(u.country)}</span>`;
+        document.getElementById("accApprovedDate").textContent = u.approved_at;
+        document.getElementById("accBadges").innerHTML =
+          `<span class="role-badge ${u.role}">${escapeHTML(roleLabel(u.role))}</span>`;
+        document.title = `${u.name} — Ozone`;
+      }
+
+      function renderInfo(u) {
+        const researchRows = [
+          { label: "Research Purpose", value: u.purpose, span2: true },
+        ];
+        if (u.role === "phd") {
+          researchRows.push({ label: "Advisor Name", value: u.advisor_name });
+          researchRows.push({
+            label: "Advisor Email",
+            value: u.advisor_email,
+            mono: true,
+          });
+        }
+
+        const groups = [
+          {
+            title: "Identity",
+            rows: [
+              { label: "Full Name", value: u.name },
+              { label: "Email", value: u.email, mono: true },
+            ],
+          },
+          {
+            title: "Affiliation",
+            rows: [
+              { label: "Institution", value: u.institution },
+              { label: "Country", value: u.country },
+              { label: "Role", value: roleLabel(u.role) },
+            ],
+          },
+          { title: "Research", rows: researchRows },
+          {
+            title: "Timeline",
+            rows: [
+              { label: "Applied on", value: u.applied_at, mono: true },
+              { label: "Approved on", value: u.approved_at, mono: true },
+            ],
+          },
+        ];
+
+        const rowHTML = (r) => `
+          <div class="info-row${r.span2 ? " span2" : ""}">
+            <div class="info-label">${escapeHTML(r.label)}</div>
+            <div class="info-value${r.mono ? " mono" : ""}">${escapeHTML(r.value || "—")}</div>
+          </div>
+        `;
+
+        document.getElementById("infoGroups").innerHTML = groups
+          .map(
+            (g) => `
+              <div class="info-group">
+                <div class="info-group-head">${escapeHTML(g.title)}</div>
+                <div class="info-grid">${g.rows.map(rowHTML).join("")}</div>
+              </div>
+            `,
+          )
+          .join("");
+      }
+
+      /* ══════════════ Generic modal helpers ══════════════ */
+      function openModal(id) {
+        const m = document.getElementById(id);
+        if (!m) return;
+        m.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeModal(id) {
+        const m = document.getElementById(id);
+        if (!m) return;
+        m.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      function handleModalOverlay(e, id) {
+        if (
+          e.target.classList.contains("oz-modal") ||
+          e.target.classList.contains("oz-modal-bg")
+        ) {
+          closeModal(id);
+        }
+      }
+
+      /* ══════════════ Change password ══════════════ */
+      function openPwModal() {
+        document.getElementById("pwCurrent").value = "";
+        document.getElementById("pwNew").value = "";
+        document.getElementById("pwConfirm").value = "";
+        document.getElementById("pwErr").classList.remove("show");
+        openModal("pwModal");
+        setTimeout(() => document.getElementById("pwCurrent").focus(), 280);
+      }
+      function showPwErr(msg) {
+        document.getElementById("pwErrMsg").textContent = msg;
+        document.getElementById("pwErr").classList.add("show");
+      }
+      function handlePwChange() {
+        const cur = document.getElementById("pwCurrent").value;
+        const neu = document.getElementById("pwNew").value;
+        const cnf = document.getElementById("pwConfirm").value;
+        if (!cur) return showPwErr("Please enter your current password.");
+        if (neu.length < 8)
+          return showPwErr("New password must be at least 8 characters.");
+        if (neu !== cnf) return showPwErr("New passwords do not match.");
+        if (neu === cur)
+          return showPwErr(
+            "New password must be different from the current one.",
+          );
+
+        const btn = document.getElementById("pwSubmit");
+        btn.style.opacity = "0.65";
+        btn.style.pointerEvents = "none";
+        btn.innerHTML = "<span>Updating…</span>";
+        setTimeout(() => {
+          // Mock success. Replace with:
+          //   fetch('/api/auth/change-password', { method: 'POST', body: ... })
+          btn.style.opacity = "";
+          btn.style.pointerEvents = "";
+          btn.innerHTML =
+            "<span>Update password</span>" +
+            '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">' +
+            '<path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>';
+          closeModal("pwModal");
+          showToast("Password updated");
+        }, 900);
+      }
+
+      /* ══════════════ Sign out (with confirmation) ══════════════ */
+      function openSignOutModal() {
+        openModal("signOutModal");
+      }
+      function confirmSignOut() {
+        // Later: await fetch('/api/auth/logout', { method: 'POST' });
+        try {
+          localStorage.removeItem("ozone_session");
+        } catch (e) {}
+        location.href = "index.html";
+      }
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeModal("pwModal");
+          closeModal("signOutModal");
+        }
+      });
+
+      /* ══════════════ Tab switching ══════════════ */
+      function switchTab(tab) {
+        document.querySelectorAll(".prof-tab").forEach(function (t) {
+          t.classList.remove("active");
+        });
+        document.querySelectorAll(".prof-panel").forEach(function (p) {
+          p.classList.remove("active");
+        });
+        if (tab === "resources") {
+          document.getElementById("tabResources").classList.add("active");
+          document.getElementById("panelResources").classList.add("active");
+        } else {
+          document.getElementById("tabAccount").classList.add("active");
+          document.getElementById("panelAccount").classList.add("active");
+        }
+      }
+
+      function switchRcPage(page) {
+        document.querySelectorAll(".rc-nav-item").forEach(function (n) {
+          n.classList.remove("active");
+        });
+        document.querySelectorAll(".rc-page").forEach(function (p) {
+          p.classList.remove("active");
+        });
+
+        var pageMap = {
+          datasets: "rcDatasets",
+          trajectories: "rcTrajectories",
+          incidents: "rcIncidents",
+          paper: "rcPaper",
+          code: "rcCode",
+          tutorials: "rcTutorials",
+          community: "rcCommunity",
+        };
+        var targetId = pageMap[page];
+        if (targetId) document.getElementById(targetId).classList.add("active");
+
+        // Activate the clicked sidebar button
+        var clicked = event.target.closest(".rc-nav-item");
+        if (clicked) clicked.classList.add("active");
+      }
+
+      /* ══════════════ Boot ══════════════ */
+      (function boot() {
+        // Phase 1: render from mock data.
+        // Later: const u = await fetch('/api/me').then(r => r.json());
+        renderHeader(MOCK_USER);
+        renderInfo(MOCK_USER);
+      })();
+    </script>
+  </body>
+</html>
