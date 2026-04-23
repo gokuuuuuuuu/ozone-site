@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Community · Ozone</title>
+    <style>
+      /* ── _base.css (inlined) ── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #000;
+        color: #fff;
+        min-height: 100vh;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .rp-body {
+        background: #000;
+      }
+      .rp-nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        background: rgba(0, 0, 0, 0.82);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      .rp-nav-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 28px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .rp-logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 18px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: -0.02em;
+      }
+      .rp-logo svg {
+        color: #3b82f6;
+      }
+      .rp-crumb {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.35);
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .rp-crumb a {
+        color: rgba(255, 255, 255, 0.5);
+        transition: color 0.2s;
+      }
+      .rp-crumb a:hover {
+        color: #fff;
+      }
+      .rp-crumb b {
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 600;
+      }
+      .rp-crumb span {
+        opacity: 0.4;
+      }
+      .rp-nav-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px 6px 6px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        font-size: 12.5px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.85);
+        transition:
+          background 0.2s,
+          border-color 0.2s;
+      }
+      .rp-nav-cta:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+      .rp-nav-cta .dot {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: #3b82f6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .rp-main {
+        position: relative;
+        z-index: 1;
+      }
+      .rp-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 24px 0;
+        margin-top: 40px;
+      }
+      .rp-footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.3);
+      }
+      .rp-footer a {
+        color: rgba(255, 255, 255, 0.5);
+        transition: color 0.2s;
+      }
+      .rp-footer a:hover {
+        color: #fff;
+      }
+      @media (max-width: 640px) {
+        .rp-crumb {
+          display: none;
+        }
+        .rp-nav-inner {
+          padding: 0 16px;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ── Ambient top glow ── */
+      .cm-glow {
+        position: fixed;
+        top: 0; left: 50%;
+        transform: translateX(-50%);
+        width: 1000px; height: 500px;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.22;
+        background: radial-gradient(ellipse 60% 60% at 50% 30%, rgba(59, 130, 246, 0.45), transparent 70%);
+        filter: blur(32px);
+      }
+
+      /* ── Page shell ── */
+      .cm-wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 36px 28px 80px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Back button (unchanged) */
+      .cm-back {
+        display: inline-flex; align-items: center; gap: 10px;
+        padding: 9px 16px 9px 12px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+        border: 1px solid rgba(255,255,255,0.1);
+        color: rgba(255,255,255,0.82);
+        font-size: 12.5px; font-weight: 500;
+        margin-bottom: 48px;
+        transition: background .22s, border-color .22s, transform .22s, color .22s;
+      }
+      .cm-back .ico {
+        width: 22px; height: 22px; border-radius: 50%;
+        display: inline-flex; align-items: center; justify-content: center;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.12);
+        color: rgba(255,255,255,0.9);
+        transition: transform .22s, background .22s;
+      }
+      .cm-back:hover {
+        background: rgba(255,255,255,0.07);
+        border-color: rgba(255,255,255,0.2);
+        color: #fff;
+        transform: translateX(-2px);
+      }
+      .cm-back:hover .ico { background: rgba(255,255,255,0.14); transform: translateX(-1px); }
+
+      /* Page head */
+      .cm-head { margin-bottom: 56px; }
+      .cm-eyebrow {
+        display: inline-flex; align-items: center; gap: 10px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10.5px; letter-spacing: 0.26em; text-transform: uppercase;
+        color: rgba(255,255,255,0.38);
+        font-weight: 500;
+        margin-bottom: 22px;
+      }
+      .cm-eyebrow .d {
+        width: 3px; height: 3px; border-radius: 50%;
+        background: rgba(255,255,255,0.18);
+      }
+      .cm-head h1 {
+        margin: 0; font-size: 56px; line-height: 1.1;
+        font-weight: 600;
+        letter-spacing: -0.025em;
+        color: #fff;
+      }
+      .cm-head h1 .accent {
+        background: linear-gradient(135deg, #60a5fa 0%, #818cf8 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .cm-head h1 .mute {
+        color: rgba(255,255,255,0.48);
+        font-weight: 500;
+      }
+      .cm-head .lead {
+        margin: 22px 0 0; max-width: 640px;
+        font-size: 16px; line-height: 1.65;
+        color: rgba(255,255,255,0.52);
+      }
+
+      /* Two-channel grid */
+      .cm-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+      }
+
+      /* Shared glass card */
+      .cm-card {
+        position: relative;
+        display: flex; flex-direction: column;
+        padding: 32px;
+        border-radius: 32px;
+        background: linear-gradient(180deg, rgba(20, 20, 22, 0.6) 0%, rgba(10, 10, 12, 0.82) 100%);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+        overflow: hidden;
+        transition: border-color .3s;
+      }
+      .cm-card:hover { border-color: rgba(255, 255, 255, 0.15); }
+
+      /* Hover shimmer — subtle top-left glow */
+      .cm-card::before {
+        content: "";
+        position: absolute; inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.025), transparent 55%);
+        opacity: 0; pointer-events: none;
+        transition: opacity .5s;
+      }
+      .cm-card:hover::before { opacity: 1; }
+      .cm-card.wechat::before {
+        background: linear-gradient(135deg, rgba(5,193,96,0.035), transparent 55%);
+      }
+
+      /* Card top: icon box + title block */
+      .cm-card-head {
+        display: flex; align-items: flex-start; gap: 16px;
+        position: relative; z-index: 1;
+        margin-bottom: 20px;
+      }
+      .cm-ico {
+        width: 56px; height: 56px;
+        border-radius: 18px;
+        display: inline-flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+        position: relative;
+        overflow: hidden;
+        transition: transform .3s ease, box-shadow .3s, border-color .3s;
+      }
+      .cm-ico::after {
+        content: "";
+        position: absolute; inset: 0;
+        background: linear-gradient(45deg, rgba(255,255,255,0.06), transparent 60%);
+        pointer-events: none;
+      }
+      .cm-ico svg { position: relative; z-index: 1; }
+
+      .cm-ico.github {
+        background: linear-gradient(135deg, rgba(113,113,122,0.28) 0%, rgba(82,82,91,0.14) 60%, rgba(63,63,70,0.08) 100%);
+        border: 1px solid rgba(82,82,91,0.35);
+        color: #e4e4e7;
+        box-shadow: 0 0 20px rgba(100,100,100,0.12);
+      }
+      .cm-card:hover .cm-ico.github {
+        transform: scale(1.08);
+        border-color: rgba(120,120,128,0.55);
+        box-shadow: 0 0 30px rgba(120,120,120,0.22);
+      }
+      .cm-ico.wechat {
+        background: linear-gradient(135deg, rgba(5,193,96,0.22) 0%, rgba(5,193,96,0.1) 60%, rgba(5,193,96,0.04) 100%);
+        border: 1px solid rgba(5,193,96,0.32);
+        color: #05c160;
+        box-shadow: 0 0 20px rgba(5,193,96,0.15);
+      }
+      .cm-card:hover .cm-ico.wechat {
+        transform: scale(1.08);
+        border-color: rgba(5,193,96,0.55);
+        box-shadow: 0 0 32px rgba(5,193,96,0.28);
+      }
+
+      .cm-title-block { padding-top: 4px; min-width: 0; }
+      .cm-title-block h3 {
+        margin: 0 0 8px;
+        font-size: 20px; font-weight: 600;
+        color: #fff; letter-spacing: -0.005em;
+      }
+      .cm-sub {
+        display: flex; align-items: center; gap: 10px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px; letter-spacing: 0.22em;
+        color: rgba(255,255,255,0.38);
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+      .cm-sub .d {
+        width: 3px; height: 3px; border-radius: 50%;
+        background: rgba(255,255,255,0.18);
+      }
+
+      /* Description */
+      .cm-desc {
+        margin: 0 0 28px;
+        padding-right: 16px;
+        font-size: 13.5px; line-height: 1.72;
+        color: rgba(255,255,255,0.56);
+        position: relative; z-index: 1;
+      }
+      .cm-card.github .cm-desc { flex-grow: 1; }
+
+      /* GitHub 3-col stats with border-y */
+      .cm-gh-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        padding: 22px 0;
+        border-top: 1px solid rgba(255,255,255,0.06);
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        margin-bottom: 22px;
+        position: relative; z-index: 1;
+      }
+      .cm-gh-stat { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+      .cm-gh-stat .k {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px; letter-spacing: 0.2em;
+        color: rgba(255,255,255,0.32);
+        text-transform: uppercase;
+      }
+      .cm-gh-stat .v {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px; color: rgba(255,255,255,0.85);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* GitHub bottom row */
+      .cm-cta {
+        margin-top: auto;
+        display: flex; align-items: center; justify-content: space-between;
+        position: relative; z-index: 1;
+      }
+      .cm-cta .btn {
+        display: inline-flex; align-items: center; gap: 9px;
+        padding: 10px 18px;
+        border-radius: 12px;
+        font-size: 13px; font-weight: 500;
+        background: #fff;
+        color: #0a0b12;
+        border: 1px solid #fff;
+        transition: transform .18s, background .18s;
+      }
+      .cm-cta .btn:hover {
+        transform: translateY(-1px);
+        background: #e4e4e7;
+      }
+      .cm-cta .btn svg { color: rgba(0,0,0,0.55); }
+      .cm-cta .hint {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px; letter-spacing: 0.2em;
+        color: rgba(255,255,255,0.32);
+        text-transform: uppercase;
+      }
+
+      /* WeChat QR area */
+      .cm-wechat-bottom {
+        margin-top: auto;
+        display: flex; flex-direction: column; align-items: center;
+        position: relative; z-index: 1;
+        padding-top: 8px;
+      }
+      .cm-qr {
+        padding: 14px;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 20px 50px -10px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+        display: flex; align-items: center; justify-content: center;
+        transition: transform .3s ease;
+        margin-bottom: 22px;
+      }
+      .cm-card:hover .cm-qr {
+        transform: scale(1.02);
+      }
+      .cm-qr img,
+      .cm-qr .cm-qr-fallback {
+        width: 180px; height: 180px;
+        display: block;
+      }
+      .cm-qr-hint {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px; letter-spacing: 0.22em;
+        color: rgba(255,255,255,0.42);
+        text-transform: uppercase;
+        text-align: center;
+      }
+      .cm-qr-hint b {
+        color: rgba(255,255,255,0.85);
+        font-weight: 500;
+        padding: 0 2px;
+      }
+
+      /* Footer override — tighter vertical breathing room */
+      .rp-footer { padding: 22px 32px !important; }
+
+      /* Responsive */
+      @media (max-width: 860px) {
+        .cm-grid { grid-template-columns: 1fr; }
+        .cm-head h1 { font-size: 42px; }
+      }
+      @media (max-width: 520px) {
+        .cm-head h1 { font-size: 34px; }
+        .cm-card { padding: 26px 22px; border-radius: 24px; }
+        .cm-gh-stats { gap: 14px; }
+      }
+    </style>
+  </head>
+  <body class="rp-body">
+    <div class="cm-glow"></div>
+
+    <header class="rp-nav">
+      <div class="rp-nav-inner">
+        <a class="rp-logo" href="../">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <span>Ozone</span>
+        </a>
+        <div class="rp-crumb">
+          <a href="../">Home</a><span>›</span>
+          <span>Resources</span><span>›</span>
+          <b>Community</b>
+        </div>
+        <a class="rp-nav-cta" href="../#apply">
+          <span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></span>
+          Get Access
+        </a>
+      </div>
+    </header>
+
+    <main class="rp-main">
+      <div class="cm-wrap">
+        <!-- Back button -->
+        <a href="../" class="cm-back">
+          <span class="ico">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+          </span>
+          Back
+        </a>
+
+        <!-- Page head -->
+        <div class="cm-head">
+          <div class="cm-eyebrow">
+            <span>Learn</span>
+            <span class="d"></span>
+            <span>Community</span>
+          </div>
+          <h1>
+            Build with <span class="accent">us,</span><br />
+            <span class="mute">in the open.</span>
+          </h1>
+          <p class="lead">
+            Two places to find us — code and issues live on GitHub; everyday conversation,
+            release notes and release-day Q&amp;A happen in the WeChat group.
+          </p>
+        </div>
+
+        <!-- Cards -->
+        <div class="cm-grid">
+          <!-- GitHub card -->
+          <a class="cm-card github" href="https://github.com/ZhilingResearch/Ozone" target="_blank" rel="noopener">
+            <div class="cm-card-head">
+              <span class="cm-ico github">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.58 2 12.2c0 4.49 2.87 8.3 6.84 9.65.5.1.68-.22.68-.48 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.55 2.35 1.1 2.92.85.09-.66.35-1.1.64-1.35-2.22-.26-4.56-1.13-4.56-5.04 0-1.11.39-2.02 1.03-2.74-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 2.5-.34c.85 0 1.7.12 2.5.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.74 0 3.92-2.34 4.78-4.57 5.03.36.32.68.94.68 1.91 0 1.38-.01 2.5-.01 2.83 0 .27.18.59.69.49A10.2 10.2 0 0 0 22 12.2C22 6.58 17.52 2 12 2z"/></svg>
+              </span>
+              <div class="cm-title-block">
+                <h3>GitHub</h3>
+                <div class="cm-sub">
+                  <span>Code</span>
+                  <span class="d"></span>
+                  <span>Issues</span>
+                  <span class="d"></span>
+                  <span>RFC</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="cm-desc">
+              Source code, issue tracker, and long-form discussions. Report bugs, propose changes,
+              or browse the roadmap — every issue is triaged by a core maintainer.
+            </p>
+
+            <div class="cm-gh-stats">
+              <div class="cm-gh-stat">
+                <span class="k">Repo</span>
+                <span class="v">ZhilingResearch/Ozone</span>
+              </div>
+              <div class="cm-gh-stat">
+                <span class="k">License</span>
+                <span class="v">Zhiling Research</span>
+              </div>
+              <div class="cm-gh-stat">
+                <span class="k">Release</span>
+                <span class="v">v0.4.2</span>
+              </div>
+            </div>
+
+            <div class="cm-cta">
+              <span class="btn">
+                Open repository
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+              </span>
+              <span class="hint">Triaged &lt; 48h</span>
+            </div>
+          </a>
+
+          <!-- WeChat card -->
+          <div class="cm-card wechat">
+            <div class="cm-card-head">
+              <span class="cm-ico wechat">
+                <svg width="26" height="26" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true"><path d="M690.1 377.4c5.9 0 11.8.2 17.6.5-24.4-128.7-158.3-227.1-313.4-227.1C209 150.8 57.7 284.2 57.7 447.4c0 89.5 44.2 160.6 131.3 222.1l-32.9 98.7c-2.2 6.6 3.2 12.8 9.5 11l115.6-57.8c32.1 12.3 72.4 24.6 112.6 24.6 7.6 0 15.1-.3 22.5-.9-9.5-28.6-14.8-58.8-14.8-90.1 0-155.2 142.3-277.6 288.6-277.6zm-195.8-72.1c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40 17.9-40 40-40zM296.1 385.3c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40z"/><path d="M966.3 655.4c0-134.2-123.8-243.1-278.7-243.1-156 0-278.7 108.9-278.7 243.1 0 134.3 122.7 243.1 278.7 243.1 32.9 0 65.7-10.6 98.6-22.1l82.8 44.2c6.3 3.4 13.6-2.5 11.7-9.5l-22.1-76.6c65.8-52.4 107.7-113.6 107.7-179.1zm-367.2-40c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40zm176.5 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40z"/></svg>
+              </span>
+              <div class="cm-title-block">
+                <h3>WeChat group</h3>
+                <div class="cm-sub">
+                  <span>中文社区</span>
+                  <span class="d"></span>
+                  <span>Daily chat</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="cm-desc">
+              Chinese-language community for everyday discussion, release notes, and real-time Q&amp;A
+              with the maintainers. Researchers, students, and industry folks welcome.
+            </p>
+
+            <div class="cm-wechat-bottom">
+              <div class="cm-qr" aria-label="WeChat group QR code">
+                <img src="../public/wechat.jpg" alt="WeChat group QR code" />
+                <svg class="cm-qr-fallback" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+                  <rect width="100" height="100" fill="#fff"/>
+                  <g fill="#000">
+                    <path d="M0 0H28V28H0V0ZM4 4V24H24V4H4ZM8 8H20V20H8V8Z"/>
+                    <path d="M72 0H100V28H72V0ZM76 4V24H96V4H76ZM80 8H92V20H80V8Z"/>
+                    <path d="M0 72H28V100H0V72ZM4 76V96H24V76H4ZM8 80H20V92H8V80Z"/>
+                    <rect x="34" y="0" width="8" height="8"/><rect x="46" y="0" width="8" height="8"/>
+                    <rect x="58" y="0" width="8" height="8"/><rect x="34" y="12" width="20" height="8"/>
+                    <rect x="62" y="12" width="4" height="8"/><rect x="34" y="24" width="8" height="8"/>
+                    <rect x="50" y="24" width="16" height="8"/><rect x="0" y="34" width="8" height="8"/>
+                    <rect x="12" y="34" width="16" height="8"/><rect x="34" y="34" width="32" height="8"/>
+                    <rect x="72" y="34" width="12" height="8"/><rect x="92" y="34" width="8" height="8"/>
+                    <rect x="4" y="46" width="12" height="8"/><rect x="24" y="46" width="8" height="8"/>
+                    <rect x="42" y="46" width="16" height="8"/><rect x="66" y="46" width="24" height="8"/>
+                    <rect x="96" y="46" width="4" height="8"/><rect x="0" y="58" width="20" height="8"/>
+                    <rect x="28" y="58" width="12" height="8"/><rect x="48" y="58" width="8" height="8"/>
+                    <rect x="64" y="58" width="16" height="8"/><rect x="88" y="58" width="12" height="8"/>
+                    <rect x="34" y="72" width="8" height="8"/><rect x="46" y="72" width="16" height="8"/>
+                    <rect x="66" y="72" width="12" height="8"/><rect x="86" y="72" width="14" height="8"/>
+                    <rect x="34" y="84" width="24" height="8"/><rect x="66" y="84" width="8" height="8"/>
+                    <rect x="82" y="84" width="18" height="8"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="cm-qr-hint">
+                Scan with <b>WeChat</b> to join
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="rp-footer">
+      <div class="rp-footer-inner">
+        <div>© 2026 Ozone · A Unified Platform for Transportation Research</div>
+        <div><a href="../">← Back to site</a></div>
+      </div>
+    </footer>
+  </body>
+</html>
