@@ -13119,36 +13119,31 @@
             "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
           var container = document.getElementById("pub-pdf-container");
           if (!container) return;
-          pdfjsLib
-            .getDocument("public/ozone-paper.pdf")
-            .promise.then(function (pdf) {
-              var totalPages = Math.min(pdf.numPages, 5);
-              container.innerHTML = "";
-              for (var i = 1; i <= totalPages; i++) {
-                (function (pageNum) {
-                  pdf.getPage(pageNum).then(function (page) {
-                    var scale = 1.5;
-                    var viewport = page.getViewport({ scale: scale });
-                    var canvas = document.createElement("canvas");
-                    canvas.width = viewport.width;
-                    canvas.height = viewport.height;
-                    canvas.style.cursor = "pointer";
-                    canvas.title = "Page " + pageNum;
-                    canvas.addEventListener("click", function () {
-                      window.open(
-                        "public/ozone-paper.pdf#page=" + pageNum,
-                        "_blank",
-                      );
-                    });
-                    container.appendChild(canvas);
-                    page.render({
-                      canvasContext: canvas.getContext("2d"),
-                      viewport: viewport,
-                    });
+          pdfjsLib.getDocument("/ozone-paper.pdf").promise.then(function (pdf) {
+            var totalPages = Math.min(pdf.numPages, 5);
+            container.innerHTML = "";
+            for (var i = 1; i <= totalPages; i++) {
+              (function (pageNum) {
+                pdf.getPage(pageNum).then(function (page) {
+                  var scale = 1.5;
+                  var viewport = page.getViewport({ scale: scale });
+                  var canvas = document.createElement("canvas");
+                  canvas.width = viewport.width;
+                  canvas.height = viewport.height;
+                  canvas.style.cursor = "pointer";
+                  canvas.title = "Page " + pageNum;
+                  canvas.addEventListener("click", function () {
+                    window.open("/ozone-paper.pdf#page=" + pageNum, "_blank");
                   });
-                })(i);
-              }
-            });
+                  container.appendChild(canvas);
+                  page.render({
+                    canvasContext: canvas.getContext("2d"),
+                    viewport: viewport,
+                  });
+                });
+              })(i);
+            }
+          });
         });
 
         // ── Animated counters (cubic ease-out) ───────────────────────
