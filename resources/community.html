@@ -4,154 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Community · Ozone</title>
-    <style>
-      /* ── _base.css (inlined) ── */
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      html {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      body {
-        font-family: "Inter", sans-serif;
-        background: #000;
-        color: #fff;
-        min-height: 100vh;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-      .rp-body {
-        background: #000;
-      }
-      .rp-nav {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-        background: rgba(0, 0, 0, 0.82);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-      }
-      .rp-nav-inner {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 28px;
-        height: 56px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-      }
-      .rp-logo {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 18px;
-        font-weight: 700;
-        color: #fff;
-        letter-spacing: -0.02em;
-      }
-      .rp-logo svg {
-        color: #3b82f6;
-      }
-      .rp-crumb {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 11px;
-        color: rgba(255, 255, 255, 0.35);
-        font-family: "JetBrains Mono", monospace;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-      }
-      .rp-crumb a {
-        color: rgba(255, 255, 255, 0.5);
-        transition: color 0.2s;
-      }
-      .rp-crumb a:hover {
-        color: #fff;
-      }
-      .rp-crumb b {
-        color: rgba(255, 255, 255, 0.8);
-        font-weight: 600;
-      }
-      .rp-crumb span {
-        opacity: 0.4;
-      }
-      .rp-nav-cta {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 16px 6px 6px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        font-size: 12.5px;
-        font-weight: 500;
-        color: rgba(255, 255, 255, 0.85);
-        transition:
-          background 0.2s,
-          border-color 0.2s;
-      }
-      .rp-nav-cta:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.2);
-      }
-      .rp-nav-cta .dot {
-        width: 26px;
-        height: 26px;
-        border-radius: 50%;
-        background: #3b82f6;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .rp-main {
-        position: relative;
-        z-index: 1;
-      }
-      .rp-footer {
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
-        padding: 24px 0;
-        margin-top: 40px;
-      }
-      .rp-footer-inner {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 28px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 11px;
-        color: rgba(255, 255, 255, 0.3);
-      }
-      .rp-footer a {
-        color: rgba(255, 255, 255, 0.5);
-        transition: color 0.2s;
-      }
-      .rp-footer a:hover {
-        color: #fff;
-      }
-      @media (max-width: 640px) {
-        .rp-crumb {
-          display: none;
-        }
-        .rp-nav-inner {
-          padding: 0 16px;
-        }
-      }
-    </style>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="_shared.css" />
     <style>
       /* ── Ambient top glow ── */
       .cm-glow {
@@ -176,54 +33,6 @@
       .cm-wrap {
         position: relative;
         z-index: 1;
-      }
-
-      /* Back button (unchanged) */
-      .cm-back {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 9px 16px 9px 12px;
-        border-radius: 999px;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.05),
-          rgba(255, 255, 255, 0.02)
-        );
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: rgba(255, 255, 255, 0.82);
-        font-size: 12.5px;
-        font-weight: 500;
-        margin-bottom: 48px;
-        transition:
-          background 0.22s,
-          border-color 0.22s,
-          transform 0.22s,
-          color 0.22s;
-      }
-      .cm-back .ico {
-        width: 22px;
-        height: 22px;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        color: rgba(255, 255, 255, 0.9);
-        transition:
-          transform 0.22s,
-          background 0.22s;
-      }
-      .cm-back:hover {
-        background: rgba(255, 255, 255, 0.07);
-        border-color: rgba(255, 255, 255, 0.2);
-        color: #fff;
-        transform: translateX(-2px);
-      }
-      .cm-back:hover .ico {
-        background: rgba(255, 255, 255, 0.14);
-        transform: translateX(-1px);
       }
 
       /* Page head */
@@ -304,7 +113,7 @@
         border-color: rgba(255, 255, 255, 0.15);
       }
 
-      /* Hover shimmer — subtle top-left glow */
+      /* Hover shimmer */
       .cm-card::before {
         content: "";
         position: absolute;
@@ -518,7 +327,7 @@
         text-transform: uppercase;
       }
 
-      /* WeChat QR area */
+      /* WeCom QR area */
       .cm-wechat-bottom {
         margin-top: auto;
         display: flex;
@@ -564,11 +373,6 @@
         padding: 0 2px;
       }
 
-      /* Footer override — tighter vertical breathing room */
-      .rp-footer {
-        padding: 22px 32px !important;
-      }
-
       /* Responsive */
       @media (max-width: 860px) {
         .cm-grid {
@@ -590,561 +394,224 @@
           gap: 14px;
         }
       }
-
-      /* ── Resource sidebar ── */
-      .res-sidebar {
-        position: sticky;
-        top: 70px;
-        flex: 0 0 220px;
-        width: 220px;
-        max-height: calc(100vh - 80px);
-        overflow-y: auto;
-        padding: 20px 0 32px;
-        background: rgba(255, 255, 255, 0.03);
-        border-right: 1px solid rgba(255, 255, 255, 0.06);
-      }
-      .res-sidebar::-webkit-scrollbar {
-        width: 0;
-        background: transparent;
-      }
-      .res-sidebar-section {
-        padding: 0 16px;
-        margin-bottom: 22px;
-      }
-      .res-sidebar-section:last-child {
-        margin-bottom: 0;
-      }
-      .res-sidebar-title {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 10px;
-        font-weight: 500;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.3);
-        margin-bottom: 10px;
-        padding: 0 10px;
-      }
-      .res-sidebar-links {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-      .res-sidebar-links li {
-        margin: 0;
-      }
-      .res-sidebar-links a {
-        display: flex;
-        align-items: center;
-        gap: 9px;
-        padding: 8px 10px;
-        border-radius: 8px;
-        border-left: 2px solid transparent;
-        font-family: "Inter", sans-serif;
-        font-size: 13px;
-        font-weight: 400;
-        color: rgba(255, 255, 255, 0.5);
-        transition:
-          color 0.18s,
-          background 0.18s,
-          border-color 0.18s;
-        text-decoration: none;
-      }
-      .res-sidebar-links a:hover {
-        color: rgba(255, 255, 255, 0.85);
-        background: rgba(255, 255, 255, 0.04);
-      }
-      .res-sidebar-links a.active {
-        color: #fff;
-        background: rgba(255, 255, 255, 0.06);
-        border-left-color: #3b82f6;
-        font-weight: 500;
-      }
-      .res-sidebar-links a svg {
-        flex-shrink: 0;
-        opacity: 0.55;
-      }
-      .res-sidebar-links a:hover svg,
-      .res-sidebar-links a.active svg {
-        opacity: 0.9;
-      }
-      .res-flex {
-        display: flex;
-        gap: 0;
-        align-items: flex-start;
-        max-width: 1400px;
-        margin: 0 auto;
-      }
-      .res-content {
-        flex: 1;
-        min-width: 0;
-        padding: 32px 28px 120px;
-      }
-      @media (max-width: 860px) {
-        .res-sidebar {
-          display: none;
-        }
-        .res-flex {
-          display: block;
-        }
-      }
-
-      /* ── embed mode ── */
-      .embed-mode .rp-nav,
-      .embed-mode .rp-footer,
-      .embed-mode .cm-back,
-      .embed-mode .ng-back,
-      .embed-mode .ng-toprow,
-      .embed-mode .res-sidebar {
-        display: none !important;
-      }
-      .embed-mode .res-flex {
-        display: block;
-      }
-      .embed-mode .rp-body {
-        padding-top: 0 !important;
-      }
-      .embed-mode main {
-        padding-top: 20px !important;
-      }
-      .embed-mode ::-webkit-scrollbar {
-        width: 0px;
-        background: transparent;
-      }
     </style>
   </head>
-  <body class="rp-body">
-    <script>
-      (function () {
-        if (new URLSearchParams(location.search).get("embed") === "1") {
-          document.documentElement.classList.add("embed-mode");
-        }
-      })();
-    </script>
+  <body data-page="community" data-crumb="Community">
+    <script src="_shared.js"></script>
     <div class="cm-glow"></div>
 
-    <header class="rp-nav">
-      <div class="rp-nav-inner">
-        <a class="rp-logo" href="../">
-          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-          <span>Ozone</span>
-        </a>
-        <div class="rp-crumb">
-          <a href="../">Home</a><span>›</span> <span>Resources</span
-          ><span>›</span>
-          <b>Community</b>
+    <!-- Back button -->
+    <a href="../" class="res-back">
+      <span class="ico">
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M19 12H5" />
+          <polyline points="12 19 5 12 12 5" />
+        </svg>
+      </span>
+      Back
+    </a>
+
+    <!-- Page head -->
+    <div class="cm-head">
+      <div class="cm-eyebrow">
+        <span>Learn</span>
+        <span class="d"></span>
+        <span>Community</span>
+      </div>
+      <h1>
+        Build with <span class="accent">us,</span><br />
+        <span class="mute">in the open.</span>
+      </h1>
+      <p class="lead">
+        Two places to find us — code and issues live on GitHub; everyday
+        conversation, release notes and release-day Q&amp;A happen in the WeCom
+        group.
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <div class="cm-grid">
+      <!-- GitHub card -->
+      <a
+        class="cm-card github"
+        href="https://github.com/ZhilingResearch/Ozone"
+        target="_blank"
+        rel="noopener"
+      >
+        <div class="cm-card-head">
+          <span class="cm-ico github">
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M12 2C6.48 2 2 6.58 2 12.2c0 4.49 2.87 8.3 6.84 9.65.5.1.68-.22.68-.48 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.55 2.35 1.1 2.92.85.09-.66.35-1.1.64-1.35-2.22-.26-4.56-1.13-4.56-5.04 0-1.11.39-2.02 1.03-2.74-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 2.5-.34c.85 0 1.7.12 2.5.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.74 0 3.92-2.34 4.78-4.57 5.03.36.32.68.94.68 1.91 0 1.38-.01 2.5-.01 2.83 0 .27.18.59.69.49A10.2 10.2 0 0 0 22 12.2C22 6.58 17.52 2 12 2z"
+              />
+            </svg>
+          </span>
+          <div class="cm-title-block">
+            <h3>GitHub</h3>
+            <div class="cm-sub">
+              <span>Code</span>
+              <span class="d"></span>
+              <span>Issues</span>
+              <span class="d"></span>
+              <span>RFC</span>
+            </div>
+          </div>
         </div>
-        <a class="rp-nav-cta" href="../#apply">
-          <span class="dot"
-            ><svg
-              width="14"
-              height="14"
+
+        <p class="cm-desc">
+          Source code, issue tracker, and long-form discussions. Report bugs,
+          propose changes, or browse the roadmap — every issue is triaged by a
+          core maintainer.
+        </p>
+
+        <div class="cm-gh-stats">
+          <div class="cm-gh-stat">
+            <span class="k">Repo</span>
+            <span class="v">ZhilingResearch/Ozone</span>
+          </div>
+          <div class="cm-gh-stat">
+            <span class="k">License</span>
+            <span class="v">Zhiling Research</span>
+          </div>
+          <div class="cm-gh-stat">
+            <span class="k">Release</span>
+            <span class="v">v0.4.2</span>
+          </div>
+        </div>
+
+        <div class="cm-cta">
+          <span class="btn">
+            Open repository
+            <svg
+              width="13"
+              height="13"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#fff"
+              stroke="currentColor"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <path d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg
-          ></span>
-          Get Access
-        </a>
-      </div>
-    </header>
+              <path d="M7 17L17 7" />
+              <polyline points="7 7 17 7 17 17" />
+            </svg>
+          </span>
+          <span class="hint">Triaged &lt; 48h</span>
+        </div>
+      </a>
 
-    <main class="rp-main">
-      <div class="res-flex">
-        <!-- Sidebar -->
-        <nav class="res-sidebar">
-          <div class="res-sidebar-section">
-            <div class="res-sidebar-title">Downloads</div>
-            <ul class="res-sidebar-links">
-              <li>
-                <a href="../index.html#resources"
-                  ><svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <rect x="3" y="3" width="7" height="7" />
-                    <rect x="14" y="3" width="7" height="7" />
-                    <rect x="3" y="14" width="7" height="7" />
-                    <rect x="14" y="14" width="7" height="7" /></svg
-                  >Browse All Resources</a
-                >
-              </li>
-              <li>
-                <a href="map.html"
-                  ><svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <polygon
-                      points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"
-                    />
-                    <line x1="8" y1="2" x2="8" y2="18" />
-                    <line x1="16" y1="6" x2="16" y2="22" /></svg
-                  >Download Map</a
-                >
-              </li>
-              <li>
-                <a href="trajectories_v2.html"
-                  ><svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg
-                  >Download Trajectory</a
-                >
-              </li>
-              <li>
-                <a href="incidents.html"
-                  ><svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path
-                      d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
-                    />
-                    <line x1="12" y1="9" x2="12" y2="13" />
-                    <line x1="12" y1="17" x2="12.01" y2="17" /></svg
-                  >Download Incidents</a
-                >
-              </li>
-              <li>
-                <a href="paper.html"
-                  ><svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path
-                      d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
-                    />
-                    <polyline points="14 2 14 8 20 8" />
-                    <line x1="16" y1="13" x2="8" y2="13" />
-                    <line x1="16" y1="17" x2="8" y2="17" />
-                    <polyline points="10 9 9 9 8 9" /></svg
-                  >Download Paper</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://github.com/ZhilingResearch/Ozone"
-                  target="_blank"
-                  ><svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <polyline points="16 18 22 12 16 6" />
-                    <polyline points="8 6 2 12 8 18" /></svg
-                  >Download Code</a
-                >
-              </li>
-            </ul>
-          </div>
-          <div class="res-sidebar-section">
-            <div class="res-sidebar-title">Learn</div>
-            <ul class="res-sidebar-links">
-              <li>
-                <a href="../tutorials.html"
-                  ><svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" />
-                    <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" /></svg
-                  >Tutorials</a
-                >
-              </li>
-              <li>
-                <a class="active" href="community.html"
-                  ><svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 00-3-3.87" />
-                    <path d="M16 3.13a4 4 0 010 7.75" /></svg
-                  >Join Community</a
-                >
-              </li>
-            </ul>
-          </div>
-        </nav>
-
-        <!-- Main content -->
-        <div class="res-content">
-          <!-- Back button -->
-          <a href="../" class="cm-back">
-            <span class="ico">
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M19 12H5" />
-                <polyline points="12 19 5 12 12 5" />
-              </svg>
-            </span>
-            Back
-          </a>
-
-          <!-- Page head -->
-          <div class="cm-head">
-            <div class="cm-eyebrow">
-              <span>Learn</span>
-              <span class="d"></span>
-              <span>Community</span>
-            </div>
-            <h1>
-              Build with <span class="accent">us,</span><br />
-              <span class="mute">in the open.</span>
-            </h1>
-            <p class="lead">
-              Two places to find us — code and issues live on GitHub; everyday
-              conversation, release notes and release-day Q&amp;A happen in the
-              WeChat group.
-            </p>
-          </div>
-
-          <!-- Cards -->
-          <div class="cm-grid">
-            <!-- GitHub card -->
-            <a
-              class="cm-card github"
-              href="https://github.com/ZhilingResearch/Ozone"
-              target="_blank"
-              rel="noopener"
+      <!-- WeCom card -->
+      <div class="cm-card wechat">
+        <div class="cm-card-head">
+          <span class="cm-ico wechat">
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 1024 1024"
+              fill="currentColor"
+              aria-hidden="true"
             >
-              <div class="cm-card-head">
-                <span class="cm-ico github">
-                  <svg
-                    width="26"
-                    height="26"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M12 2C6.48 2 2 6.58 2 12.2c0 4.49 2.87 8.3 6.84 9.65.5.1.68-.22.68-.48 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.55 2.35 1.1 2.92.85.09-.66.35-1.1.64-1.35-2.22-.26-4.56-1.13-4.56-5.04 0-1.11.39-2.02 1.03-2.74-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 2.5-.34c.85 0 1.7.12 2.5.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.74 0 3.92-2.34 4.78-4.57 5.03.36.32.68.94.68 1.91 0 1.38-.01 2.5-.01 2.83 0 .27.18.59.69.49A10.2 10.2 0 0 0 22 12.2C22 6.58 17.52 2 12 2z"
-                    />
-                  </svg>
-                </span>
-                <div class="cm-title-block">
-                  <h3>GitHub</h3>
-                  <div class="cm-sub">
-                    <span>Code</span>
-                    <span class="d"></span>
-                    <span>Issues</span>
-                    <span class="d"></span>
-                    <span>RFC</span>
-                  </div>
-                </div>
-              </div>
-
-              <p class="cm-desc">
-                Source code, issue tracker, and long-form discussions. Report
-                bugs, propose changes, or browse the roadmap — every issue is
-                triaged by a core maintainer.
-              </p>
-
-              <div class="cm-gh-stats">
-                <div class="cm-gh-stat">
-                  <span class="k">Repo</span>
-                  <span class="v">ZhilingResearch/Ozone</span>
-                </div>
-                <div class="cm-gh-stat">
-                  <span class="k">License</span>
-                  <span class="v">Zhiling Research</span>
-                </div>
-                <div class="cm-gh-stat">
-                  <span class="k">Release</span>
-                  <span class="v">v0.4.2</span>
-                </div>
-              </div>
-
-              <div class="cm-cta">
-                <span class="btn">
-                  Open repository
-                  <svg
-                    width="13"
-                    height="13"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M7 17L17 7" />
-                    <polyline points="7 7 17 7 17 17" />
-                  </svg>
-                </span>
-                <span class="hint">Triaged &lt; 48h</span>
-              </div>
-            </a>
-
-            <!-- WeChat card -->
-            <div class="cm-card wechat">
-              <div class="cm-card-head">
-                <span class="cm-ico wechat">
-                  <svg
-                    width="26"
-                    height="26"
-                    viewBox="0 0 1024 1024"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M690.1 377.4c5.9 0 11.8.2 17.6.5-24.4-128.7-158.3-227.1-313.4-227.1C209 150.8 57.7 284.2 57.7 447.4c0 89.5 44.2 160.6 131.3 222.1l-32.9 98.7c-2.2 6.6 3.2 12.8 9.5 11l115.6-57.8c32.1 12.3 72.4 24.6 112.6 24.6 7.6 0 15.1-.3 22.5-.9-9.5-28.6-14.8-58.8-14.8-90.1 0-155.2 142.3-277.6 288.6-277.6zm-195.8-72.1c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40 17.9-40 40-40zM296.1 385.3c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40z"
-                    />
-                    <path
-                      d="M966.3 655.4c0-134.2-123.8-243.1-278.7-243.1-156 0-278.7 108.9-278.7 243.1 0 134.3 122.7 243.1 278.7 243.1 32.9 0 65.7-10.6 98.6-22.1l82.8 44.2c6.3 3.4 13.6-2.5 11.7-9.5l-22.1-76.6c65.8-52.4 107.7-113.6 107.7-179.1zm-367.2-40c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40zm176.5 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40z"
-                    />
-                  </svg>
-                </span>
-                <div class="cm-title-block">
-                  <h3>WeChat group</h3>
-                  <div class="cm-sub">
-                    <span>中文社区</span>
-                    <span class="d"></span>
-                    <span>Daily chat</span>
-                  </div>
-                </div>
-              </div>
-
-              <p class="cm-desc">
-                Chinese-language community for everyday discussion, release
-                notes, and real-time Q&amp;A with the maintainers. Researchers,
-                students, and industry folks welcome.
-              </p>
-
-              <div class="cm-wechat-bottom">
-                <div class="cm-qr" aria-label="WeChat group QR code">
-                  <img
-                    src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/wechat.jpg"
-                    alt="WeChat group QR code"
-                  />
-                  <svg
-                    class="cm-qr-fallback"
-                    viewBox="0 0 100 100"
-                    xmlns="http://www.w3.org/2000/svg"
-                    style="display: none"
-                    aria-hidden="true"
-                  >
-                    <rect width="100" height="100" fill="#fff" />
-                    <g fill="#000">
-                      <path d="M0 0H28V28H0V0ZM4 4V24H24V4H4ZM8 8H20V20H8V8Z" />
-                      <path
-                        d="M72 0H100V28H72V0ZM76 4V24H96V4H76ZM80 8H92V20H80V8Z"
-                      />
-                      <path
-                        d="M0 72H28V100H0V72ZM4 76V96H24V76H4ZM8 80H20V92H8V80Z"
-                      />
-                      <rect x="34" y="0" width="8" height="8" />
-                      <rect x="46" y="0" width="8" height="8" />
-                      <rect x="58" y="0" width="8" height="8" />
-                      <rect x="34" y="12" width="20" height="8" />
-                      <rect x="62" y="12" width="4" height="8" />
-                      <rect x="34" y="24" width="8" height="8" />
-                      <rect x="50" y="24" width="16" height="8" />
-                      <rect x="0" y="34" width="8" height="8" />
-                      <rect x="12" y="34" width="16" height="8" />
-                      <rect x="34" y="34" width="32" height="8" />
-                      <rect x="72" y="34" width="12" height="8" />
-                      <rect x="92" y="34" width="8" height="8" />
-                      <rect x="4" y="46" width="12" height="8" />
-                      <rect x="24" y="46" width="8" height="8" />
-                      <rect x="42" y="46" width="16" height="8" />
-                      <rect x="66" y="46" width="24" height="8" />
-                      <rect x="96" y="46" width="4" height="8" />
-                      <rect x="0" y="58" width="20" height="8" />
-                      <rect x="28" y="58" width="12" height="8" />
-                      <rect x="48" y="58" width="8" height="8" />
-                      <rect x="64" y="58" width="16" height="8" />
-                      <rect x="88" y="58" width="12" height="8" />
-                      <rect x="34" y="72" width="8" height="8" />
-                      <rect x="46" y="72" width="16" height="8" />
-                      <rect x="66" y="72" width="12" height="8" />
-                      <rect x="86" y="72" width="14" height="8" />
-                      <rect x="34" y="84" width="24" height="8" />
-                      <rect x="66" y="84" width="8" height="8" />
-                      <rect x="82" y="84" width="18" height="8" />
-                    </g>
-                  </svg>
-                </div>
-                <div class="cm-qr-hint">Scan with <b>WeChat</b> to join</div>
-              </div>
+              <path
+                d="M690.1 377.4c5.9 0 11.8.2 17.6.5-24.4-128.7-158.3-227.1-313.4-227.1C209 150.8 57.7 284.2 57.7 447.4c0 89.5 44.2 160.6 131.3 222.1l-32.9 98.7c-2.2 6.6 3.2 12.8 9.5 11l115.6-57.8c32.1 12.3 72.4 24.6 112.6 24.6 7.6 0 15.1-.3 22.5-.9-9.5-28.6-14.8-58.8-14.8-90.1 0-155.2 142.3-277.6 288.6-277.6zm-195.8-72.1c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40 17.9-40 40-40zM296.1 385.3c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40z"
+              />
+              <path
+                d="M966.3 655.4c0-134.2-123.8-243.1-278.7-243.1-156 0-278.7 108.9-278.7 243.1 0 134.3 122.7 243.1 278.7 243.1 32.9 0 65.7-10.6 98.6-22.1l82.8 44.2c6.3 3.4 13.6-2.5 11.7-9.5l-22.1-76.6c65.8-52.4 107.7-113.6 107.7-179.1zm-367.2-40c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40zm176.5 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40z"
+              />
+            </svg>
+          </span>
+          <div class="cm-title-block">
+            <h3>WeCom group</h3>
+            <div class="cm-sub">
+              <span>中文社区</span>
+              <span class="d"></span>
+              <span>Daily chat</span>
             </div>
           </div>
         </div>
-        <!-- /.res-content -->
-      </div>
-      <!-- /.res-flex -->
-    </main>
 
-    <footer class="rp-footer">
-      <div class="rp-footer-inner">
-        <div>© 2026 Ozone · A Unified Platform for Transportation Research</div>
-        <div><a href="../">← Back to site</a></div>
+        <p class="cm-desc">
+          Enterprise communication group for everyday discussion, release notes,
+          and real-time Q&amp;A with the maintainers. Researchers, students, and
+          industry folks welcome.
+        </p>
+
+        <div class="cm-wechat-bottom">
+          <div class="cm-qr" aria-label="WeCom group QR code">
+            <img
+              src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/wechat.jpg"
+              alt="WeCom group QR code"
+            />
+            <svg
+              class="cm-qr-fallback"
+              viewBox="0 0 100 100"
+              xmlns="http://www.w3.org/2000/svg"
+              style="display: none"
+              aria-hidden="true"
+            >
+              <rect width="100" height="100" fill="#fff" />
+              <g fill="#000">
+                <path d="M0 0H28V28H0V0ZM4 4V24H24V4H4ZM8 8H20V20H8V8Z" />
+                <path
+                  d="M72 0H100V28H72V0ZM76 4V24H96V4H76ZM80 8H92V20H80V8Z"
+                />
+                <path
+                  d="M0 72H28V100H0V72ZM4 76V96H24V76H4ZM8 80H20V92H8V80Z"
+                />
+                <rect x="34" y="0" width="8" height="8" />
+                <rect x="46" y="0" width="8" height="8" />
+                <rect x="58" y="0" width="8" height="8" />
+                <rect x="34" y="12" width="20" height="8" />
+                <rect x="62" y="12" width="4" height="8" />
+                <rect x="34" y="24" width="8" height="8" />
+                <rect x="50" y="24" width="16" height="8" />
+                <rect x="0" y="34" width="8" height="8" />
+                <rect x="12" y="34" width="16" height="8" />
+                <rect x="34" y="34" width="32" height="8" />
+                <rect x="72" y="34" width="12" height="8" />
+                <rect x="92" y="34" width="8" height="8" />
+                <rect x="4" y="46" width="12" height="8" />
+                <rect x="24" y="46" width="8" height="8" />
+                <rect x="42" y="46" width="16" height="8" />
+                <rect x="66" y="46" width="24" height="8" />
+                <rect x="96" y="46" width="4" height="8" />
+                <rect x="0" y="58" width="20" height="8" />
+                <rect x="28" y="58" width="12" height="8" />
+                <rect x="48" y="58" width="8" height="8" />
+                <rect x="64" y="58" width="16" height="8" />
+                <rect x="88" y="58" width="12" height="8" />
+                <rect x="34" y="72" width="8" height="8" />
+                <rect x="46" y="72" width="16" height="8" />
+                <rect x="66" y="72" width="12" height="8" />
+                <rect x="86" y="72" width="14" height="8" />
+                <rect x="34" y="84" width="24" height="8" />
+                <rect x="66" y="84" width="8" height="8" />
+                <rect x="82" y="84" width="18" height="8" />
+              </g>
+            </svg>
+          </div>
+          <div class="cm-qr-hint">Scan with <b>WeCom</b> to join</div>
+        </div>
       </div>
-    </footer>
+    </div>
+    <script>
+      __closeShell();
+    </script>
   </body>
 </html>
