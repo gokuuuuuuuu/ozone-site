@@ -8944,6 +8944,15 @@
         .join-field textarea::placeholder {
           color: rgba(255, 255, 255, 0.2);
         }
+        .join-field input:-webkit-autofill,
+        .join-field input:-webkit-autofill:hover,
+        .join-field input:-webkit-autofill:focus,
+        .join-field textarea:-webkit-autofill {
+          -webkit-text-fill-color: #eef0ff;
+          -webkit-box-shadow: 0 0 0 1000px #111113 inset;
+          border-color: rgba(255, 255, 255, 0.09);
+          transition: background-color 5000s ease-in-out 0s;
+        }
         .join-field.has-error input,
         .join-field.has-error textarea {
           border-color: rgba(248, 113, 113, 0.45);
@@ -9120,6 +9129,15 @@
         #applyPageForm input::placeholder,
         #applyPageForm textarea::placeholder {
           color: rgba(255, 255, 255, 0.2) !important;
+        }
+        #applyPageForm input:-webkit-autofill,
+        #applyPageForm input:-webkit-autofill:hover,
+        #applyPageForm input:-webkit-autofill:focus,
+        #applyPageForm textarea:-webkit-autofill {
+          -webkit-text-fill-color: #eef0ff !important;
+          -webkit-box-shadow: 0 0 0 1000px rgba(15, 15, 20, 1) inset !important;
+          border-color: rgba(255, 255, 255, 0.08) !important;
+          transition: background-color 5000s ease-in-out 0s !important;
         }
         #apfSubmitBtn {
           background: rgba(59, 130, 246, 0.12) !important;
@@ -9958,7 +9976,7 @@
                     margin-bottom: 14px;
                   "
                 >
-                  Research Purpose
+                  Research Purpose <span style="color: #f87171">*</span>
                 </div>
                 <textarea
                   id="apfPurpose"
