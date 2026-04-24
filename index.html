@@ -1811,6 +1811,17 @@
       .lm-input::placeholder {
         color: rgba(255, 255, 255, 0.22);
       }
+      .lm-input:-webkit-autofill,
+      .lm-input:-webkit-autofill:hover,
+      .lm-input:-webkit-autofill:focus {
+        -webkit-text-fill-color: #eef0ff;
+        -webkit-box-shadow:
+          0 0 0 1000px rgba(15, 15, 20, 1) inset,
+          inset 0 1px 0 rgba(255, 255, 255, 0.07),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+        border-color: rgba(255, 255, 255, 0.12);
+        transition: background-color 5000s ease-in-out 0s;
+      }
 
       .lm-input:focus {
         border-color: rgba(90, 140, 255, 0.6);
@@ -4814,7 +4825,7 @@
                   >Why Ozone</span
                 >
               </div>
-              <h2 class="section-title mb-6">The Problem We<br />Solve</h2>
+              <h2 class="section-title mb-6">What We Solve</h2>
               <p class="text-lg text-white/50 leading-relaxed">
                 Autonomous driving research is held back by fragmented,
                 incompatible data sources. Traditional approaches fail to bridge
@@ -5060,9 +5071,9 @@
                 style="background: #0a0e18"
               >
                 <img
-                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMTAwIDQ4MCIgZm9udC1mYW1pbHk9IkludGVyLCBzYW5zLXNlcmlmIj4KICA8ZGVmcz4KICAgIDxwYXR0ZXJuIGlkPSJnIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8cGF0aCBkPSJNIDMyIDAgTCAwIDAgMCAzMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTJlOGYwIiBzdHJva2Utd2lkdGg9IjAuNSIvPgogICAgPC9wYXR0ZXJuPgogICAgPGZpbHRlciBpZD0ic2giPjxmZURyb3BTaGFkb3cgZHg9IjAiIGR5PSIxIiBzdGREZXZpYXRpb249IjMiIGZsb29kLW9wYWNpdHk9IjAuMDgiLz48L2ZpbHRlcj4KICA8L2RlZnM+CgogIDwhLS0gYmFja2dyb3VuZCAtLT4KICA8cmVjdCB3aWR0aD0iMTEwMCIgaGVpZ2h0PSI0ODAiIGZpbGw9IiNmOGZhZmMiLz4KICA8cmVjdCB3aWR0aD0iMTEwMCIgaGVpZ2h0PSI0ODAiIGZpbGw9InVybCgjZykiLz4KCiAgPCEtLSDilIDilIAgQ0VOVEVSIExPR08g4pSA4pSAIC0tPgogIDxyZWN0IHg9IjQ3NCIgeT0iMTcwIiB3aWR0aD0iMTUyIiBoZWlnaHQ9IjE0MCIgcng9IjIwIiBmaWxsPSIjMWExYTFhIi8+CiAgPHBhdGggZD0iTTUxOCAyMDYgTDQ5NiAyNTIgaDI2IEw0OTYgMjk0IEw1NDYgMjQ0IGgtMjQgWiIgZmlsbD0iIzI1NjNFQiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjksLTEwKSIvPgogIDx0ZXh0IHg9IjU1MCIgeT0iMzI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEwIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMiIgZmlsbD0iIzI1NjNFQiI+T1pPTkU8L3RleHQ+CiAgPHRleHQgeD0iNTUwIiB5PSIzMzkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzk0YTNiOCI+RGlnaXRhbCBUd2luIEJlbmNobWFyazwvdGV4dD4KCiAgPCEtLSDilIDilIAgQ09OTkVDVElPTiBMSU5FUyDilIDilIAgLS0+CiAgPGxpbmUgeDE9IjI5NiIgeTE9IjI0MCIgeDI9IjQ3MiIgeTI9IjI0MCIgc3Ryb2tlPSIjY2JkNWUxIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWRhc2hhcnJheT0iNSw0Ii8+CiAgPGxpbmUgeDE9IjYyOCIgeTE9IjI0MCIgeDI9IjgwNCIgeTI9IjI0MCIgc3Ryb2tlPSIjY2JkNWUxIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWRhc2hhcnJheT0iNSw0Ii8+CiAgPGxpbmUgeDE9IjU1MCIgeTE9IjYwIiAgeDI9IjU1MCIgeTI9IjE2OCIgc3Ryb2tlPSIjY2JkNWUxIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWRhc2hhcnJheT0iNSw0Ii8+CiAgPGxpbmUgeDE9IjU1MCIgeTE9IjMxMiIgeDI9IjU1MCIgeTI9IjQwMCIgc3Ryb2tlPSIjY2JkNWUxIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWRhc2hhcnJheT0iNSw0Ii8+CiAgPGxpbmUgeDE9IjE5OCIgeTE9Ijg4IiAgeDI9IjQ3NCIgeTI9IjIwNSIgc3Ryb2tlPSIjY2JkNWUxIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWRhc2hhcnJheT0iNCw1Ii8+CiAgPGxpbmUgeDE9IjkwMiIgeTE9Ijg4IiAgeDI9IjYyOCIgeTI9IjIwNSIgc3Ryb2tlPSIjY2JkNWUxIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWRhc2hhcnJheT0iNCw1Ii8+CiAgPGxpbmUgeDE9IjE5OCIgeTE9IjM5MiIgeDI9IjQ3NCIgeTI9IjI3NSIgc3Ryb2tlPSIjY2JkNWUxIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWRhc2hhcnJheT0iNCw1Ii8+CiAgPGxpbmUgeDE9IjkwMiIgeTE9IjM5MiIgeDI9IjYyOCIgeTI9IjI3NSIgc3Ryb2tlPSIjY2JkNWUxIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWRhc2hhcnJheT0iNCw1Ii8+CgogIDwhLS0g4pWQ4pWQIFRPUDogRGF0YSBTb3VyY2VzIOKVkOKVkCAtLT4KICA8dGV4dCB4PSI1NTAiIHk9IjIyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEwIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjNjQ3NDhiIiBsZXR0ZXItc3BhY2luZz0iMiI+SEVURVJPR0VORU9VUyBEQVRBIFNPVVJDRVM8L3RleHQ+CgogIDwhLS0gc291cmNlIHBpbGxzIC0tPgogIDxyZWN0IHg9IjMxMCIgeT0iMjgiIHdpZHRoPSI5NiIgaGVpZ2h0PSIzNiIgcng9IjEwIiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI3NoKSIgc3Ryb2tlPSIjZTJlOGYwIi8+CiAgPHRleHQgeD0iMzIzIiB5PSI0OCIgZm9udC1zaXplPSIxNCI+8J+agTwvdGV4dD48dGV4dCB4PSIzNDQiIHk9IjQ0IiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9IiMxZTI5M2IiPkRyb25lIFVBVjwvdGV4dD48dGV4dCB4PSIzNDQiIHk9IjU2IiBmb250LXNpemU9IjgiIGZpbGw9IiM5NGEzYjgiPlRyYWplY3Rvcnk8L3RleHQ+CgogIDxyZWN0IHg9IjQxNiIgeT0iMjgiIHdpZHRoPSI5NiIgaGVpZ2h0PSIzNiIgcng9IjEwIiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI3NoKSIgc3Ryb2tlPSIjZTJlOGYwIi8+CiAgPHRleHQgeD0iNDI5IiB5PSI0OCIgZm9udC1zaXplPSIxNCI+8J+ToTwvdGV4dD48dGV4dCB4PSI0NTAiIHk9IjQ0IiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9IiMxZTI5M2IiPlJTVSAvIFYyWDwvdGV4dD48dGV4dCB4PSI0NTAiIHk9IjU2IiBmb250LXNpemU9IjgiIGZpbGw9IiM5NGEzYjgiPlJvYWRzaWRlPC90ZXh0PgoKICA8cmVjdCB4PSI1MjIiIHk9IjI4IiB3aWR0aD0iOTYiIGhlaWdodD0iMzYiIHJ4PSIxMCIgZmlsbD0id2hpdGUiIGZpbHRlcj0idXJsKCNzaCkiIHN0cm9rZT0iI2UyZThmMCIvPgogIDx0ZXh0IHg9IjUzNSIgeT0iNDgiIGZvbnQtc2l6ZT0iMTQiPvCfmpc8L3RleHQ+PHRleHQgeD0iNTU2IiB5PSI0NCIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iNjAwIiBmaWxsPSIjMWUyOTNiIj5WZWhpY2xlPC90ZXh0Pjx0ZXh0IHg9IjU1NiIgeT0iNTYiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzk0YTNiOCI+T24tQm9hcmQ8L3RleHQ+CgogIDxyZWN0IHg9IjYyOCIgeT0iMjgiIHdpZHRoPSI5NiIgaGVpZ2h0PSIzNiIgcng9IjEwIiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI3NoKSIgc3Ryb2tlPSIjZTJlOGYwIi8+CiAgPHRleHQgeD0iNjQxIiB5PSI0OCIgZm9udC1zaXplPSIxNCI+8J+WpTwvdGV4dD48dGV4dCB4PSI2NjIiIHk9IjQ0IiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9IiMxZTI5M2IiPkNBUkxBPC90ZXh0Pjx0ZXh0IHg9IjY2MiIgeT0iNTYiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzk0YTNiOCI+U2ltdWxhdG9yPC90ZXh0PgoKICA8cmVjdCB4PSI3MzQiIHk9IjI4IiB3aWR0aD0iOTYiIGhlaWdodD0iMzYiIHJ4PSIxMCIgZmlsbD0id2hpdGUiIGZpbHRlcj0idXJsKCNzaCkiIHN0cm9rZT0iI2UyZThmMCIvPgogIDx0ZXh0IHg9Ijc0NyIgeT0iNDgiIGZvbnQtc2l6ZT0iMTQiPvCflK08L3RleHQ+PHRleHQgeD0iNzY4IiB5PSI0NCIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iNjAwIiBmaWxsPSIjMWUyOTNiIj5MaURBUjwvdGV4dD48dGV4dCB4PSI3NjgiIHk9IjU2IiBmb250LXNpemU9IjgiIGZpbGw9IiM5NGEzYjgiPlBvaW50IENsb3VkPC90ZXh0PgoKICA8IS0tIOKVkOKVkCBMRUZUOiBEYXRhc2V0cyDilZDilZAgLS0+CiAgPHRleHQgeD0iMTQ4IiB5PSIxNDYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiM2NDc0OGIiIGxldHRlci1zcGFjaW5nPSIxLjUiPlRSQUpFQ1RPUlkgREFUQVNFVFM8L3RleHQ+CgogIDxyZWN0IHg9IjI4IiAgeT0iMTU2IiB3aWR0aD0iMTA4IiBoZWlnaHQ9IjM2IiByeD0iOSIgZmlsbD0id2hpdGUiIGZpbHRlcj0idXJsKCNzaCkiIHN0cm9rZT0iI2RiZWFmZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8dGV4dCB4PSI0MCIgIHk9IjE3MiIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMjU2M0VCIj5OR1NJTTwvdGV4dD4KICA8dGV4dCB4PSI0MCIgIHk9IjE4MyIgZm9udC1zaXplPSI4IiBmaWxsPSIjOTRhM2I4Ij5VUyBIaWdod2F5IEktODA8L3RleHQ+CgogIDxyZWN0IHg9IjE0OCIgeT0iMTU2IiB3aWR0aD0iMTA4IiBoZWlnaHQ9IjM2IiByeD0iOSIgZmlsbD0id2hpdGUiIGZpbHRlcj0idXJsKCNzaCkiIHN0cm9rZT0iI2RiZWFmZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8dGV4dCB4PSIxNjAiIHk9IjE3MiIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMjU2M0VCIj5pbkQgLyBSVU1BPC90ZXh0PgogIDx0ZXh0IHg9IjE2MCIgeT0iMTgzIiBmb250LXNpemU9IjgiIGZpbGw9IiM5NGEzYjgiPkRyb25lIMK3IDExNWsgVHJhajwvdGV4dD4KCiAgPHJlY3QgeD0iMjgiICB5PSIyMDAiIHdpZHRoPSIxMDgiIGhlaWdodD0iMzYiIHJ4PSI5IiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI3NoKSIgc3Ryb2tlPSIjZGJlYWZlIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDx0ZXh0IHg9IjQwIiAgeT0iMjE2IiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMyNTYzRUIiPklOVEVSQUNUSU9OPC90ZXh0PgogIDx0ZXh0IHg9IjQwIiAgeT0iMjI3IiBmb250LXNpemU9IjgiIGZpbGw9IiM5NGEzYjgiPlJvdW5kYWJvdXQvSW50eDwvdGV4dD4KCiAgPHJlY3QgeD0iMTQ4IiB5PSIyMDAiIHdpZHRoPSIxMDgiIGhlaWdodD0iMzYiIHJ4PSI5IiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI3NoKSIgc3Ryb2tlPSIjZGJlYWZlIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDx0ZXh0IHg9IjE2MCIgeT0iMjE2IiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMyNTYzRUIiPlJPRDwvdGV4dD4KICA8dGV4dCB4PSIxNjAiIHk9IjIyNyIgZm9udC1zaXplPSI4IiBmaWxsPSIjOTRhM2I4Ij5Db29wZXJhdGl2ZSBEcml2ZTwvdGV4dD4KCiAgPHJlY3QgeD0iMjgiICB5PSIyNDQiIHdpZHRoPSIxMDgiIGhlaWdodD0iMzYiIHJ4PSI5IiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI3NoKSIgc3Ryb2tlPSIjZGJlYWZlIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDx0ZXh0IHg9IjQwIiAgeT0iMjYwIiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMyNTYzRUIiPkNpdHlTaW08L3RleHQ+CiAgPHRleHQgeD0iNDAiICB5PSIyNzEiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzk0YTNiOCI+VXJiYW4gU2ltdWxhdGlvbjwvdGV4dD4KCiAgPHJlY3QgeD0iMTQ4IiB5PSIyNDQiIHdpZHRoPSIxMDgiIGhlaWdodD0iMzYiIHJ4PSI5IiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI3NoKSIgc3Ryb2tlPSIjZGJlYWZlIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDx0ZXh0IHg9IjE2MCIgeT0iMjYwIiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMyNTYzRUIiPlplbiBWMlggLyBVcmJhbk5hdjwvdGV4dD4KICA8dGV4dCB4PSIxNjAiIHk9IjI3MSIgZm9udC1zaXplPSI4IiBmaWxsPSIjOTRhM2I4Ij5GbG93ICZhbXA7IENvbmdlc3Rpb248L3RleHQ+CgogIDxyZWN0IHg9IjY4IiB5PSIyOTAiIHdpZHRoPSIxNDgiIGhlaWdodD0iMjgiIHJ4PSI4IiBmaWxsPSIjZWZmNmZmIiBzdHJva2U9IiNiZmRiZmUiLz4KICA8dGV4dCB4PSIxNDIiIHk9IjMwOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMjU2M0VCIj4xMCArIE9wZW4gRGF0YXNldHM8L3RleHQ+CgogIDwhLS0g4pWQ4pWQIFJJR0hUOiBCYXNlbWFwcyDilZDilZAgLS0+CiAgPHRleHQgeD0iOTUyIiB5PSIxNDYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiM2NDc0OGIiIGxldHRlci1zcGFjaW5nPSIxLjUiPkRJR0lUQUwgVFdJTiBCQVNFTUFQUzwvdGV4dD4KCiAgPHJlY3QgeD0iODQ0IiB5PSIxNTYiIHdpZHRoPSIxMTYiIGhlaWdodD0iMzYiIHJ4PSI5IiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI3NoKSIgc3Ryb2tlPSIjZGJlYWZlIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDx0ZXh0IHg9Ijg1NiIgeT0iMTcyIiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9IiMxZTI5M2IiPvCfm6MgIEV4cHJlc3N3YXk8L3RleHQ+CiAgPHRleHQgeD0iODU2IiB5PSIxODMiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzk0YTNiOCI+Ni1MYW5lIEhpZ2h3YXk8L3RleHQ+CgogIDxyZWN0IHg9Ijk2NCIgeT0iMTU2IiB3aWR0aD0iMTE2IiBoZWlnaHQ9IjM2IiByeD0iOSIgZmlsbD0id2hpdGUiIGZpbHRlcj0idXJsKCNzaCkiIHN0cm9rZT0iI2RiZWFmZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8dGV4dCB4PSI5NzYiIHk9IjE3MiIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iNjAwIiBmaWxsPSIjMWUyOTNiIj7wn4+ZICBVcmJhbiBBcnRlcmlhbDwvdGV4dD4KICA8dGV4dCB4PSI5NzYiIHk9IjE4MyIgZm9udC1zaXplPSI4IiBmaWxsPSIjOTRhM2I4Ij5DaXR5IFJvYWQ8L3RleHQ+CgogIDxyZWN0IHg9Ijg0NCIgeT0iMjAwIiB3aWR0aD0iMTE2IiBoZWlnaHQ9IjM2IiByeD0iOSIgZmlsbD0id2hpdGUiIGZpbHRlcj0idXJsKCNzaCkiIHN0cm9rZT0iI2RiZWFmZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8dGV4dCB4PSI4NTYiIHk9IjIxNiIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iNjAwIiBmaWxsPSIjMWUyOTNiIj7im7AgIE1vdW50YWluIFJvYWQ8L3RleHQ+CiAgPHRleHQgeD0iODU2IiB5PSIyMjciIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzk0YTNiOCI+V2luZGluZyAvIEVsZXZhdGlvbjwvdGV4dD4KCiAgPHJlY3QgeD0iOTY0IiB5PSIyMDAiIHdpZHRoPSIxMTYiIGhlaWdodD0iMzYiIHJ4PSI5IiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI3NoKSIgc3Ryb2tlPSIjZGJlYWZlIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDx0ZXh0IHg9Ijk3NiIgeT0iMjE2IiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9IiMxZTI5M2IiPvCfmocgIFVyYmFuIFR1bm5lbDwvdGV4dD4KICA8dGV4dCB4PSI5NzYiIHk9IjIyNyIgZm9udC1zaXplPSI4IiBmaWxsPSIjOTRhM2I4Ij5HUFMtRGVuaWVkIEVudjwvdGV4dD4KCiAgPHJlY3QgeD0iODQ0IiB5PSIyNDQiIHdpZHRoPSIxMTYiIGhlaWdodD0iMzYiIHJ4PSI5IiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI3NoKSIgc3Ryb2tlPSIjZGJlYWZlIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDx0ZXh0IHg9Ijg1NiIgeT0iMjYwIiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9IiMxZTI5M2IiPvCfj5ggIFJ1cmFsIFJvYWQ8L3RleHQ+CiAgPHRleHQgeD0iODU2IiB5PSIyNzEiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzk0YTNiOCI+TG93LVRyYWZmaWM8L3RleHQ+CgogIDxyZWN0IHg9Ijk2NCIgeT0iMjQ0IiB3aWR0aD0iMTE2IiBoZWlnaHQ9IjM2IiByeD0iOSIgZmlsbD0id2hpdGUiIGZpbHRlcj0idXJsKCNzaCkiIHN0cm9rZT0iI2RiZWFmZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8dGV4dCB4PSI5NzYiIHk9IjI2MCIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iNjAwIiBmaWxsPSIjMWUyOTNiIj7inKYgIEFWIFRlc3QgRmllbGQ8L3RleHQ+CiAgPHRleHQgeD0iOTc2IiB5PSIyNzEiIGZvbnQtc2l6ZT0iOCIgZmlsbD0iIzk0YTNiOCI+MTIgU2NlbmFyaW9zPC90ZXh0PgoKICA8cmVjdCB4PSI4ODQiIHk9IjI5MCIgd2lkdGg9IjEzNiIgaGVpZ2h0PSIyOCIgcng9IjgiIGZpbGw9IiNlZmY2ZmYiIHN0cm9rZT0iI2JmZGJmZSIvPgogIDx0ZXh0IHg9Ijk1MiIgeT0iMzA4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMyNTYzRUIiPjEgOiAxIFJlYWwtV29ybGQgTWFwcGluZzwvdGV4dD4KCiAgPCEtLSDilZDilZAgQk9UVE9NOiBQbGF0Zm9ybSDilZDilZAgLS0+CiAgPHRleHQgeD0iNTUwIiB5PSI0MjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiM2NDc0OGIiIGxldHRlci1zcGFjaW5nPSIyIj5QTEFURk9STSBDQVBBQklMSVRJRVM8L3RleHQ+CgogIDxyZWN0IHg9IjI1OCIgeT0iNDMwIiB3aWR0aD0iMTEyIiBoZWlnaHQ9IjM4IiByeD0iMTAiIGZpbGw9IndoaXRlIiBmaWx0ZXI9InVybCgjc2gpIiBzdHJva2U9IiNlMmU4ZjAiLz4KICA8dGV4dCB4PSIzMTQiIHk9IjQ0OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxNiI+8J+UlzwvdGV4dD4KICA8dGV4dCB4PSIzMTQiIHk9IjQ2MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iNjAwIiBmaWxsPSIjMWUyOTNiIj5TZW5zb3IgRnVzaW9uPC90ZXh0PgoKICA8cmVjdCB4PSIzODAiIHk9IjQzMCIgd2lkdGg9IjExMiIgaGVpZ2h0PSIzOCIgcng9IjEwIiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI3NoKSIgc3Ryb2tlPSIjZTJlOGYwIi8+CiAgPHRleHQgeD0iNDM2IiB5PSI0NDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTYiPvCfp6A8L3RleHQ+CiAgPHRleHQgeD0iNDM2IiB5PSI0NjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOSIgZm9udC13ZWlnaHQ9IjYwMCIgZmlsbD0iIzFlMjkzYiI+QUkgLyBNTCBFdmFsPC90ZXh0PgoKICA8cmVjdCB4PSI1MDIiIHk9IjQzMCIgd2lkdGg9IjExMiIgaGVpZ2h0PSIzOCIgcng9IjEwIiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI3NoKSIgc3Ryb2tlPSIjZTJlOGYwIi8+CiAgPHRleHQgeD0iNTU4IiB5PSI0NDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTYiPuKame+4jzwvdGV4dD4KICA8dGV4dCB4PSI1NTgiIHk9IjQ2MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iNjAwIiBmaWxsPSIjMWUyOTNiIj5DQVJMQSBDby1TaW08L3RleHQ+CgogIDxyZWN0IHg9IjYyNCIgeT0iNDMwIiB3aWR0aD0iMTEyIiBoZWlnaHQ9IjM4IiByeD0iMTAiIGZpbGw9IndoaXRlIiBmaWx0ZXI9InVybCgjc2gpIiBzdHJva2U9IiNlMmU4ZjAiLz4KICA8dGV4dCB4PSI2ODAiIHk9IjQ0OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxNiI+8J+TijwvdGV4dD4KICA8dGV4dCB4PSI2ODAiIHk9IjQ2MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iNjAwIiBmaWxsPSIjMWUyOTNiIj5IVUQgVGVzdGluZzwvdGV4dD4KCiAgPHJlY3QgeD0iNzQ2IiB5PSI0MzAiIHdpZHRoPSIxMTIiIGhlaWdodD0iMzgiIHJ4PSIxMCIgZmlsbD0id2hpdGUiIGZpbHRlcj0idXJsKCNzaCkiIHN0cm9rZT0iI2UyZThmMCIvPgogIDx0ZXh0IHg9IjgwMiIgeT0iNDQ4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2Ij7wn5SsPC90ZXh0PgogIDx0ZXh0IHg9IjgwMiIgeT0iNDYyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjkiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9IiMxZTI5M2IiPlNESyAmYW1wOyBSZXNlYXJjaDwvdGV4dD4KPC9zdmc+"
+                  src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/SystemArchitecture.png"
                   alt="Ozone System Architecture"
-                  class="w-full h-auto object-contain rounded-xl w-full h-auto"
+                  class="w-full h-auto object-contain rounded-xl"
                 />
               </div>
             </div>
@@ -9136,12 +9147,8 @@
           gap: 5px;
           transition: opacity 0.25s;
         }
-        .apf-hint.hidden {
-          opacity: 0;
-          pointer-events: none;
-        }
         #apfFooterHint .hidden {
-          display: none;
+          display: none !important;
         }
       </style>
 
@@ -9616,7 +9623,7 @@
                     margin-bottom: 14px;
                   "
                 >
-                  Role
+                  Role <span style="color: #f87171">*</span>
                 </div>
                 <div style="display: flex; gap: 8px">
                   <input
@@ -9684,7 +9691,7 @@
                         transition: color 0.25s;
                         white-space: nowrap;
                       "
-                      >PhD Student</span
+                      >Student</span
                     >
                   </label>
                   <input
@@ -10354,11 +10361,27 @@
         /* ── Download Map inline view ── */
         .dl-view {
           position: fixed;
-          inset: 0;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
           z-index: 9999;
-          background: #000;
+          background:
+            radial-gradient(
+              ellipse 60% 40% at 15% 8%,
+              rgba(59, 130, 246, 0.08),
+              transparent 55%
+            ),
+            radial-gradient(
+              ellipse 50% 40% at 85% 95%,
+              rgba(120, 90, 255, 0.06),
+              transparent 55%
+            ),
+            #000;
           color: #fff;
+          overflow-x: hidden;
           overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
           display: none;
           font-family:
             "Inter",
@@ -10372,25 +10395,6 @@
 
         .dl-view.active {
           display: block;
-        }
-
-        .dl-view::before {
-          content: "";
-          position: fixed;
-          inset: 0;
-          background:
-            radial-gradient(
-              ellipse 60% 40% at 15% 8%,
-              rgba(59, 130, 246, 0.08),
-              transparent 55%
-            ),
-            radial-gradient(
-              ellipse 50% 40% at 85% 95%,
-              rgba(120, 90, 255, 0.06),
-              transparent 55%
-            );
-          pointer-events: none;
-          z-index: 0;
         }
 
         .dl-view a {
@@ -11195,14 +11199,8 @@
 
         .dl-view .rh-grid {
           display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 20px;
-        }
-
-        @media (max-width: 860px) {
-          .dl-view .rh-grid {
-            grid-template-columns: 1fr;
-          }
+          grid-template-columns: 1fr;
+          gap: 16px;
         }
 
         .dl-view .rh-tile {
@@ -39495,6 +39493,63 @@
             </div>
           </a>
 
+          <!-- Incidents tile -->
+          <a class="rh-tile" href="resources/incidents.html" data-auth-required>
+            <span class="rh-tile-status live">Live</span>
+            <div class="rh-tile-head">
+              <span class="rh-ico">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+                  />
+                  <line x1="12" y1="9" x2="12" y2="13" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+              </span>
+              <div>
+                <div class="rh-tile-type">Incidents</div>
+                <h3>AV &amp; ADAS incident records</h3>
+              </div>
+            </div>
+            <p class="rh-tile-desc">
+              Two curated incident corpora — California DMV collision reports
+              and NHTSA Standing General Order for ADS and ADAS. Cleaned,
+              geo-located, and tagged.
+            </p>
+            <div class="rh-tile-foot">
+              <div class="rh-tile-meta">
+                <span>CA DMV · NHTSA SGO</span>
+                <span class="sep"></span>
+                <span>7,900+ records</span>
+              </div>
+              <span class="rh-tile-cta">
+                Browse
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M5 12h14" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </span>
+            </div>
+          </a>
+
           <!-- Code tile -->
           <a
             class="rh-tile"
@@ -39522,7 +39577,7 @@
               </span>
               <div>
                 <div class="rh-tile-type">Code</div>
-                <h3>Source &amp; SDK</h3>
+                <h3>code source</h3>
               </div>
             </div>
             <p class="rh-tile-desc">
@@ -39550,6 +39605,58 @@
                 >
                   <path d="M7 7h10v10" />
                   <path d="M7 17 17 7" />
+                </svg>
+              </span>
+            </div>
+          </a>
+
+          <!-- Tutorials tile -->
+          <a class="rh-tile" href="tutorials.html" data-auth-required>
+            <span class="rh-tile-status">3 guides</span>
+            <div class="rh-tile-head">
+              <span class="rh-ico">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                </svg>
+              </span>
+              <div>
+                <div class="rh-tile-type">Tutorials</div>
+                <h3>Step-by-step guides</h3>
+              </div>
+            </div>
+            <p class="rh-tile-desc">
+              Hands-on tutorials covering CARLA basics &amp; installation,
+              digital-twin map editing in RoadRunner, and end-to-end scenario
+              authoring.
+            </p>
+            <div class="rh-tile-foot">
+              <div class="rh-tile-meta">
+                <span>CARLA · RoadRunner · Scenarios</span>
+              </div>
+              <span class="rh-tile-cta">
+                Learn
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M5 12h14" />
+                  <polyline points="12 5 19 12 12 19" />
                 </svg>
               </span>
             </div>
@@ -39682,7 +39789,7 @@
                     <span>4 sites</span>
                   </div>
                 </div>
-                <a class="ng-view-more" href="#ngsim">
+                <!-- <a class="ng-view-more" href="#ngsim">
                   View full details
                   <svg
                     width="13"
@@ -39697,7 +39804,7 @@
                     <path d="M5 12h14" />
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
-                </a>
+                </a> -->
               </div>
 
               <p class="ng-desc">
@@ -40846,8 +40953,9 @@
                 <path d="M7 17 17 7" />
               </svg>
             </button>
-            — non-commercial research, no redistribution, cite on use. For
-            commercial licensing, please contact us.
+            — Ozone retains exclusive commercial rights (commercial use
+            prohibited), non-commercial research only, no redistribution, cite
+            on use.
           </p>
         </div>
       </div>

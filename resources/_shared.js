@@ -62,23 +62,26 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
     );
   }
 
+  // SPA mode: when page is resources/index.html, use hash links
+  var isSPA = page === "spa-resources";
+  var spaBase = "index.html";
+
   var sidebar =
     '<nav class="res-sidebar">' +
     '<div class="res-sidebar-section"><div class="res-sidebar-title">Downloads</div><ul class="res-sidebar-links">' +
+    li(isSPA ? "#map" : P + "map.html", ICO.map, "Download Map", "map") +
     li(
-      R + "index.html#resources",
-      ICO.grid,
-      "Browse All Resources",
-      "resources",
-    ) +
-    li(P + "map.html", ICO.map, "Download Map", "map") +
-    li(
-      P + "trajectories_v2.html",
+      isSPA ? "#trajectory" : P + "trajectories_v2.html",
       ICO.traj,
       "Download Trajectory",
       "trajectory",
     ) +
-    li(P + "incidents.html", ICO.incidents, "Download Incidents", "incidents") +
+    li(
+      isSPA ? "#incidents" : P + "incidents.html",
+      ICO.incidents,
+      "Download Incidents",
+      "incidents",
+    ) +
     li(
       "https://github.com/ZhilingResearch/Ozone",
       ICO.code,
@@ -88,7 +91,12 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
     ) +
     "</ul></div>" +
     '<div class="res-sidebar-section"><div class="res-sidebar-title">Learn</div><ul class="res-sidebar-links">' +
-    li(R + "tutorials.html", ICO.tutorials, "Tutorials", "tutorials") +
+    li(
+      isSPA ? "#tutorials" : R + "tutorials.html",
+      ICO.tutorials,
+      "Tutorials",
+      "tutorials",
+    ) +
     '<ul class="res-sidebar-sub">' +
     '<li><a href="' +
     R +
@@ -100,7 +108,12 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
     R +
     'tutorial-viewer.html?doc=Carla%20%E5%9F%BA%E6%9C%AC%E5%9C%BA%E6%99%AF%E5%88%9B%E5%BB%BA%E6%95%99%E7%A8%8B.docx&amp;title=Authoring%20CARLA%20scenarios%20end-to-end" target="_blank">CARLA Scenarios End-to-End</a></li>' +
     "</ul>" +
-    li(P + "community.html", ICO.community, "Join Community", "community") +
+    li(
+      isSPA ? "#community" : P + "community.html",
+      ICO.community,
+      "Join Community",
+      "community",
+    ) +
     "</ul></div>" +
     "</nav>";
 
@@ -114,9 +127,18 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
     '">Home</a><span>›</span><span>Resources</span><span>›</span><b>' +
     crumb +
     "</b></div>" +
-    '<a class="rp-nav-cta" href="' +
+    '<span id="rp-nav-right">' +
+    '<a class="rp-nav-cta" id="rp-get-access" href="' +
     R +
     '#apply"><span class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></span>Get Access</a>' +
+    '<a class="rp-profile-btn" id="rp-profile-btn" href="' +
+    R +
+    'profile.html" style="display:none;text-decoration:none">' +
+    '<span class="rp-profile-avatar" id="rp-profile-avatar">U</span>' +
+    '<span class="rp-profile-label">Profile</span>' +
+    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.5"><path d="M9 18l6-6-6-6"/></svg>' +
+    "</a>" +
+    "</span>" +
     "</div></header>";
 
   // Write opening shell — content follows naturally in HTML
@@ -126,6 +148,24 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
       sidebar +
       '<div class="res-content">',
   );
+
+  // Check login state and toggle nav buttons
+  try {
+    var session = localStorage.getItem("ozone_session");
+    if (session) {
+      var data = JSON.parse(session);
+      if (data && data.loggedIn) {
+        var ga = document.getElementById("rp-get-access");
+        var pb = document.getElementById("rp-profile-btn");
+        var av = document.getElementById("rp-profile-avatar");
+        var nm = document.getElementById("rp-profile-name");
+        if (ga) ga.style.display = "none";
+        if (pb) pb.style.display = "";
+        if (av && data.name) av.textContent = data.name.charAt(0).toUpperCase();
+        if (nm && data.name) nm.textContent = data.name;
+      }
+    }
+  } catch (e) {}
 
   // Expose close function for body end
   window.__closeShell = function () {
