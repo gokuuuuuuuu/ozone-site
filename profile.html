@@ -4313,6 +4313,7 @@
         }
       }
     </style>
+    <script src="/api.js"></script>
   </head>
   <body>
     <!-- ── Top nav ── -->
@@ -6801,43 +6802,63 @@
     </div>
 
     <script>
-      /* ══════════════ Mock API (phase 1) ══════════════ */
-      // Replace with real fetches once the backend is live:
-      //   GET /api/me → MOCK_USER shape
-      //   POST /api/auth/logout
-      //   POST /api/auth/change-password { oldPassword, newPassword }
+      /* ══════════════ Auth-backed user fetch ══════════════ */
+      // GET /api/v1/user/me  (Bearer token)
+      // POST /api/auth/change-password { oldPassword, newPassword }   ← still mock; not in current spec
       // Resource tiles are static markup above — no data fetch needed.
 
-      const MOCK_USER = {
-        name: "Yufeng Yang",
-        email: "yqngyufengxly@gmail.com",
-        institution: "Tsinghua University",
-        country: "China",
-        role: "phd", // phd | faculty | industry
-        advisor_name: "Prof. Zhibin Li",
-        advisor_email: "zhibinli@tsinghua.edu.cn",
-        purpose:
-          "Investigating trajectory prediction and safety-critical behavior modeling using NGSIM data paired with CARLA digital-twin simulation.",
-        applied_at: "2026-04-07",
-        approved_at: "2026-04-10",
-      };
-
       /* ══════════════ Session guard ══════════════ */
-      function getSession() {
-        try {
-          const raw = localStorage.getItem("ozone_session");
-          return raw ? JSON.parse(raw) : null;
-        } catch (e) {
-          return null;
-        }
-      }
-      // If no session, bounce back to the main site. Dev/demo override: add `?preview=1`.
+      // If no token, bounce back to the main site. Dev/demo override: add `?preview=1`.
       (function guard() {
         const params = new URLSearchParams(location.search);
-        if (!getSession() && params.get("preview") !== "1") {
-          location.replace("index.html");
-        }
+        const isPreview = params.get("preview") === "1";
+        if (isPreview) return;
+        const loggedIn = window.OzoneAPI && window.OzoneAPI.isLoggedIn();
+        if (!loggedIn) location.replace("index.html");
       })();
+
+      /* ══════════════ User shape adapter ══════════════ */
+      // The API returns camelCase fields; the renderers below expect a mix of
+      // snake_case (advisor_name, applied_at) and short keys (institution,
+      // role, purpose). Normalize once so render code stays unchanged.
+      function adaptUser(u) {
+        if (!u || typeof u !== "object") return u;
+        function pick() {
+          for (var i = 0; i < arguments.length; i++) {
+            var v = u[arguments[i]];
+            if (v !== undefined && v !== null && v !== "") return v;
+          }
+          return "";
+        }
+        function dateOnly(v) {
+          if (!v) return "";
+          var s = String(v);
+          // Trim ISO-8601 "2026-04-07T..." down to the date portion.
+          var m = s.match(/^\d{4}-\d{2}-\d{2}/);
+          return m ? m[0] : s;
+        }
+        var role = pick("role", "academicRole");
+        if (typeof role === "string") {
+          var ROLE_FROM_API = {
+            STUDENT: "phd",
+            FACULTY: "faculty",
+            INDUSTRY: "industry",
+          };
+          role = ROLE_FROM_API[role] || role.toLowerCase();
+        }
+        return {
+          name: pick("name", "fullName"),
+          email: pick("email"),
+          institution: pick("institution", "organization"),
+          country: pick("country"),
+          role: role,
+          advisor_name: pick("advisor_name", "advisorName"),
+          advisor_email: pick("advisor_email", "advisorEmail"),
+          purpose: pick("purpose", "researchPurpose"),
+          applied_at: dateOnly(pick("applied_at", "appliedAt", "createdAt")),
+          approved_at: dateOnly(pick("approved_at", "approvedAt", "updatedAt")),
+        };
+      }
 
       /* ══════════════ Helpers ══════════════ */
       const escapeHTML = (s) =>
@@ -6860,7 +6881,7 @@
       };
       const roleLabel = (r) =>
         ({
-          phdStudent: "hHD Student",
+          phd: "PhD Student",
           faculty: "Faculty",
           industry: "Industry",
         })[r] || "Researcher";
@@ -7020,10 +7041,7 @@
         openModal("signOutModal");
       }
       function confirmSignOut() {
-        // Later: await fetch('/api/auth/logout', { method: 'POST' });
-        try {
-          localStorage.removeItem("ozone_session");
-        } catch (e) {}
+        if (window.OzoneAPI) window.OzoneAPI.logout();
         location.href = "index.html";
       }
 
@@ -7083,11 +7101,39 @@
       }
 
       /* ══════════════ Boot ══════════════ */
-      (function boot() {
-        // Phase 1: render from mock data.
-        // Later: const u = await fetch('/api/me').then(r => r.json());
-        renderHeader(MOCK_USER);
-        renderInfo(MOCK_USER);
+      (async function boot() {
+        const params = new URLSearchParams(location.search);
+        const isPreview = params.get("preview") === "1";
+
+        // Render an immediate skeleton from the cached user (if any) so the
+        // page doesn't flash empty while /user/me is in flight.
+        const cached =
+          window.OzoneAPI && window.OzoneAPI.getUser
+            ? window.OzoneAPI.getUser()
+            : null;
+        if (cached) {
+          const u = adaptUser(cached);
+          renderHeader(u);
+          renderInfo(u);
+        }
+
+        if (!window.OzoneAPI || (!window.OzoneAPI.isLoggedIn() && !isPreview)) {
+          return;
+        }
+
+        try {
+          const fresh = await window.OzoneAPI.me();
+          if (!fresh) return;
+          const u = adaptUser(fresh);
+          renderHeader(u);
+          renderInfo(u);
+        } catch (e) {
+          if (e && e.status === 401) {
+            window.OzoneAPI.clearSession();
+            if (!isPreview) location.replace("index.html");
+          }
+          // Otherwise leave the cached render in place.
+        }
       })();
     </script>
 

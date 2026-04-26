@@ -3922,6 +3922,7 @@
         white-space: pre;
       }
     </style>
+    <script src="/api.js"></script>
   </head>
 
   <body
@@ -9037,6 +9038,27 @@
           transform: translateX(-50%) translateY(0);
           pointer-events: auto;
         }
+        .join-toast.error {
+          border-color: rgba(248, 113, 113, 0.4);
+        }
+        .join-toast.error svg {
+          stroke: #f87171;
+        }
+        .join-submit:disabled {
+          opacity: 0.65;
+          cursor: progress;
+        }
+        @keyframes joinSpin {
+          to { transform: rotate(360deg); }
+        }
+        .join-submit .join-spin {
+          width: 14px;
+          height: 14px;
+          border: 2px solid rgba(0, 0, 0, 0.2);
+          border-top-color: #000;
+          border-radius: 50%;
+          animation: joinSpin 0.8s linear infinite;
+        }
       </style>
 
       <script>
@@ -9071,13 +9093,42 @@
             closeJoinModal();
           }
         });
-        function submitJoinForm(e) {
+        function showJoinToast(kind, msg) {
+          var toast = document.getElementById("joinToast");
+          if (!toast) return;
+          var label = toast.querySelector("span");
+          if (label && msg) label.textContent = msg;
+          var icon = toast.querySelector("svg");
+          if (icon) {
+            if (kind === "error") {
+              icon.innerHTML =
+                '<circle cx="12" cy="12" r="10"></circle>' +
+                '<line x1="12" y1="8" x2="12" y2="12"></line>' +
+                '<line x1="12" y1="16" x2="12.01" y2="16"></line>';
+            } else {
+              icon.innerHTML = '<polyline points="20 6 9 17 4 12"></polyline>';
+            }
+          }
+          toast.classList.toggle("error", kind === "error");
+          toast.classList.add("show");
+          clearTimeout(toast._hideTimer);
+          toast._hideTimer = setTimeout(function () {
+            toast.classList.remove("show");
+          }, kind === "error" ? 4500 : 3500);
+        }
+
+        async function submitJoinForm(e) {
           e.preventDefault();
           var form = document.getElementById("joinForm");
           var fields = form.querySelectorAll(".join-field");
           var valid = true;
           fields.forEach(function (f) {
             var input = f.querySelector("input, textarea");
+            // Message field is optional per the API spec; skip its validity gate.
+            if (input && input.name === "join_msg") {
+              f.classList.remove("has-error");
+              return;
+            }
             if (input && !input.validity.valid) {
               f.classList.add("has-error");
               valid = false;
@@ -9086,17 +9137,41 @@
             }
           });
           if (!valid) return false;
-          // Clear errors & submit
-          fields.forEach(function (f) {
-            f.classList.remove("has-error");
-          });
-          closeJoinModal();
-          form.reset();
-          var toast = document.getElementById("joinToast");
-          toast.classList.add("show");
-          setTimeout(function () {
-            toast.classList.remove("show");
-          }, 3500);
+
+          var payload = {
+            name: (form.elements["join_name"].value || "").trim(),
+            email: (form.elements["join_email"].value || "").trim(),
+            organization: (form.elements["join_inst"].value || "").trim(),
+            role: (form.elements["join_role"].value || "").trim(),
+          };
+          var info = (form.elements["join_msg"].value || "").trim();
+          if (info) payload.info = info.slice(0, 1000);
+
+          var btn = form.querySelector(".join-submit");
+          var originalBtn = btn.innerHTML;
+          btn.disabled = true;
+          btn.innerHTML =
+            '<span class="join-spin"></span><span>Submitting…</span>';
+
+          try {
+            await window.OzoneAPI.joinUs(payload);
+            btn.disabled = false;
+            btn.innerHTML = originalBtn;
+            closeJoinModal();
+            form.reset();
+            showJoinToast(
+              "success",
+              "Submitted successfully — we'll be in touch soon!",
+            );
+          } catch (err) {
+            btn.disabled = false;
+            btn.innerHTML = originalBtn;
+            showJoinToast(
+              "error",
+              (err && err.message) ||
+                "Submission failed. Please try again later.",
+            );
+          }
           return false;
         }
       </script>
@@ -41340,6 +41415,220 @@
     </div>
 
     <!-- ══════════════════════════════════════
+         APPLY RESULT DIALOG
+    ══════════════════════════════════════ -->
+    <style>
+      #apfResultModal {
+        position: fixed;
+        inset: 0;
+        z-index: 1100;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      #apfResultModal.open {
+        display: flex;
+      }
+      #apfResultModal .apf-rs-bg {
+        position: absolute;
+        inset: 0;
+        background: rgba(2, 4, 12, 0.66);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        animation: apfRsFadeIn 0.22s ease-out;
+      }
+      #apfResultModal .apf-rs-card {
+        position: relative;
+        width: min(420px, 100%);
+        border-radius: 22px;
+        padding: 32px 28px 24px;
+        background: linear-gradient(
+          165deg,
+          rgba(20, 24, 38, 0.94) 0%,
+          rgba(10, 12, 22, 0.96) 100%
+        );
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow:
+          0 30px 80px -20px rgba(0, 0, 0, 0.7),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          inset 0 0 60px rgba(59, 130, 246, 0.06);
+        text-align: center;
+        animation: apfRsPopIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      #apfResultModal[data-kind="success"] .apf-rs-card {
+        box-shadow:
+          0 30px 80px -20px rgba(0, 0, 0, 0.7),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          inset 0 0 60px rgba(74, 222, 128, 0.08);
+      }
+      #apfResultModal[data-kind="error"] .apf-rs-card {
+        box-shadow:
+          0 30px 80px -20px rgba(0, 0, 0, 0.7),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          inset 0 0 60px rgba(248, 113, 113, 0.08);
+      }
+      #apfResultModal .apf-rs-edge {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 70%;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          rgba(120, 170, 255, 0.5),
+          transparent
+        );
+        pointer-events: none;
+      }
+      #apfResultModal[data-kind="success"] .apf-rs-edge {
+        background: linear-gradient(
+          to right,
+          transparent,
+          rgba(74, 222, 128, 0.55),
+          transparent
+        );
+      }
+      #apfResultModal[data-kind="error"] .apf-rs-edge {
+        background: linear-gradient(
+          to right,
+          transparent,
+          rgba(248, 113, 113, 0.55),
+          transparent
+        );
+      }
+      #apfResultModal .apf-rs-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        margin: 0 auto 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(96, 165, 250, 0.12);
+        color: #93c5fd;
+        border: 1px solid rgba(96, 165, 250, 0.3);
+      }
+      #apfResultModal .apf-rs-icon svg {
+        width: 28px;
+        height: 28px;
+      }
+      #apfResultModal[data-kind="success"] .apf-rs-icon {
+        background: rgba(74, 222, 128, 0.12);
+        color: #86efac;
+        border-color: rgba(74, 222, 128, 0.32);
+        box-shadow: 0 0 32px rgba(74, 222, 128, 0.18);
+      }
+      #apfResultModal[data-kind="error"] .apf-rs-icon {
+        background: rgba(248, 113, 113, 0.12);
+        color: #fca5a5;
+        border-color: rgba(248, 113, 113, 0.32);
+        box-shadow: 0 0 32px rgba(248, 113, 113, 0.18);
+      }
+      #apfResultModal .apf-rs-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #eef0ff;
+        letter-spacing: -0.01em;
+        margin-bottom: 8px;
+      }
+      #apfResultModal .apf-rs-msg {
+        font-size: 13.5px;
+        line-height: 1.65;
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 22px;
+      }
+      #apfResultModal .apf-rs-ok {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 11px 26px;
+        border-radius: 11px;
+        border: 1px solid rgba(120, 160, 255, 0.42);
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.18) 0%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(0, 0, 20, 0.12) 100%
+          ),
+          linear-gradient(135deg, #2f58eb 0%, #3d70ff 50%, #4d82ff 100%);
+        color: #fff;
+        font-size: 13.5px;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.22),
+          0 6px 22px rgba(45, 90, 255, 0.4);
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      #apfResultModal .apf-rs-ok:hover {
+        transform: translateY(-1px);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.28),
+          0 10px 28px rgba(45, 90, 255, 0.55);
+      }
+      #apfResultModal[data-kind="error"] .apf-rs-ok {
+        border-color: rgba(248, 113, 113, 0.5);
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.18) 0%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(20, 0, 0, 0.12) 100%
+          ),
+          linear-gradient(135deg, #c2410c 0%, #ef4444 55%, #f87171 100%);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.22),
+          0 6px 22px rgba(220, 38, 38, 0.4);
+      }
+      #apfResultModal[data-kind="error"] .apf-rs-ok:hover {
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.28),
+          0 10px 28px rgba(220, 38, 38, 0.55);
+      }
+      @keyframes apfRsFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes apfRsPopIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px) scale(0.96);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+    <div
+      id="apfResultModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="apfResultTitle"
+      onclick="if(event.target===this||event.target.classList.contains('apf-rs-bg'))closeApfResult()"
+    >
+      <div class="apf-rs-bg"></div>
+      <div class="apf-rs-card">
+        <div class="apf-rs-edge"></div>
+        <div class="apf-rs-icon" id="apfResultIcon"></div>
+        <div class="apf-rs-title" id="apfResultTitle"></div>
+        <div class="apf-rs-msg" id="apfResultMsg"></div>
+        <button
+          type="button"
+          id="apfResultOk"
+          class="apf-rs-ok"
+          onclick="closeApfResult()"
+        >
+          Got it
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
          LOGIN MODAL
     ══════════════════════════════════════ -->
     <div
@@ -41597,22 +41886,53 @@
       }
 
       // ── Login handler ──
-      function handleLogin() {
+      function showLoginError(msg) {
+        var err = document.getElementById("loginError");
+        if (!err) return;
+        err.textContent = "";
+        var icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        icon.setAttribute("fill", "none");
+        icon.setAttribute("viewBox", "0 0 24 24");
+        icon.setAttribute("stroke", "currentColor");
+        icon.setAttribute("stroke-width", "2");
+        icon.innerHTML =
+          '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>';
+        err.appendChild(icon);
+        err.appendChild(document.createTextNode(" " + msg));
+        err.classList.add("show");
+        err.style.display = "";
+      }
+
+      function resetLoginBtn() {
+        var btn = document.getElementById("lmSubmitBtn");
+        if (!btn) return;
+        btn.style.opacity = "";
+        btn.style.pointerEvents = "";
+        btn.innerHTML =
+          '<span>Sign In</span><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>';
+      }
+
+      async function handleLogin() {
         var btn = document.getElementById("lmSubmitBtn");
         var err = document.getElementById("loginError");
-        var emailValue = document.getElementById("loginEmail").value;
+        var emailValue = document.getElementById("loginEmail").value.trim();
+        var passwordValue = document.getElementById("loginPw").value;
         err.classList.remove("show");
+        if (!emailValue || !passwordValue) {
+          showLoginError("Please enter your email and password.");
+          return;
+        }
         btn.innerHTML =
           '<svg style="animation:ozSpin 0.8s linear infinite;width:14px;height:14px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> Signing in...';
         btn.style.opacity = "0.7";
         btn.style.pointerEvents = "none";
-        setTimeout(function () {
-          localStorage.setItem(
-            "ozone_session",
-            JSON.stringify({ name: emailValue, loggedIn: true }),
-          );
+        try {
+          await window.OzoneAPI.login(emailValue, passwordValue);
           location.href = "profile.html";
-        }, 1400);
+        } catch (e) {
+          showLoginError(e && e.message ? e.message : "Sign in failed.");
+          resetLoginBtn();
+        }
       }
 
       // ── Mini Earth Renderer for Login Modal ──
@@ -42040,54 +42360,143 @@
         });
       })();
 
-      function handleApfSubmit() {
+      async function handleApfSubmit() {
         var btn = document.getElementById("apfSubmitBtn");
+        var form = document.getElementById("applyPageForm");
+        if (!form) return;
+
+        var roleEl = form.querySelector('[name="apfRole"]:checked');
+        var ROLE_TO_API = {
+          phd: "STUDENT",
+          faculty: "FACULTY",
+          industry: "INDUSTRY",
+        };
+        var payload = {
+          name: (form.querySelector('[name="name"]') || {}).value || "",
+          email: (form.querySelector('[name="email"]') || {}).value || "",
+          organization:
+            (form.querySelector('[name="institution"]') || {}).value || "",
+          country: (document.getElementById("countrySelect") || {}).value || "",
+          academicRole: roleEl
+            ? ROLE_TO_API[roleEl.value] || roleEl.value.toUpperCase()
+            : "",
+          advisorName:
+            (form.querySelector('[name="advisor_name"]') || {}).value || "",
+          advisorEmail:
+            (form.querySelector('[name="advisor_email"]') || {}).value || "",
+          researchPurpose:
+            (document.getElementById("apfPurpose") || {}).value || "",
+        };
+        // Trim and drop blank optional fields so the API doesn't reject them.
+        Object.keys(payload).forEach(function (k) {
+          if (typeof payload[k] === "string") payload[k] = payload[k].trim();
+        });
+        if (!payload.advisorName) delete payload.advisorName;
+        if (!payload.advisorEmail) delete payload.advisorEmail;
+
         btn.style.opacity = "0.65";
         btn.style.pointerEvents = "none";
         btn.innerHTML =
           '<svg style="animation:ozSpin 0.8s linear infinite;width:14px;height:14px;position:relative;z-index:1;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> <span style="position:relative;z-index:1;">Submitting...</span>';
-        setTimeout(function () {
+
+        function restoreBtn() {
           btn.style.opacity = "";
           btn.style.pointerEvents = "";
           btn.innerHTML =
             '<span style="position:relative;z-index:1;">Submit Application</span><svg style="width:14px;height:14px;position:relative;z-index:1;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>';
-          alert(
-            "Application submitted! We will review within 3-5 business days.",
-          );
-        }, 1400);
+        }
+
+        try {
+          await window.OzoneAPI.apply(payload);
+          restoreBtn();
+          showApfResult("success", {
+            title: "Application submitted",
+            message:
+              "Thanks — we'll review your request and email you within 3–5 business days.",
+          });
+        } catch (e) {
+          restoreBtn();
+          showApfResult("error", {
+            title: "Submission failed",
+            message:
+              (e && e.message) ||
+              "Please review your details and try again.",
+          });
+        }
       }
+
+      // ── Application-result dialog ──
+      function showApfResult(kind, opts) {
+        var modal = document.getElementById("apfResultModal");
+        if (!modal) return;
+        var iconWrap = document.getElementById("apfResultIcon");
+        var titleEl = document.getElementById("apfResultTitle");
+        var msgEl = document.getElementById("apfResultMsg");
+        var okBtn = document.getElementById("apfResultOk");
+
+        var isSuccess = kind === "success";
+        modal.dataset.kind = kind;
+        titleEl.textContent = opts.title || (isSuccess ? "Done" : "Error");
+        msgEl.textContent = opts.message || "";
+        okBtn.textContent = isSuccess ? "Got it" : "Try again";
+        iconWrap.innerHTML = isSuccess
+          ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>'
+          : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>';
+
+        modal.classList.add("open");
+        document.body.style.overflow = "hidden";
+        setTimeout(function () {
+          okBtn.focus();
+        }, 60);
+      }
+      function closeApfResult() {
+        var modal = document.getElementById("apfResultModal");
+        if (!modal) return;
+        modal.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeApfResult();
+      });
     </script>
     <script>
       // ── Session-aware navbar toggle ──
       (function () {
-        var session = localStorage.getItem("ozone_session");
         var profileBtn = document.getElementById("profileBtn");
         var loginBtn = document.getElementById("loginBtn");
-        if (session) {
-          try {
-            var data = JSON.parse(session);
-            if (data && data.loggedIn) {
-              var initial =
-                (data.name && data.name.charAt(0).toUpperCase()) || "U";
-              document.getElementById("profileAvatar").textContent = initial;
-              if (profileBtn) profileBtn.style.display = "inline-flex";
-              if (loginBtn) loginBtn.style.display = "none";
-              var applyNavBtn = document.getElementById("applyNavBtn");
-              if (applyNavBtn) applyNavBtn.style.display = "none";
-            }
-          } catch (e) {}
+        var applyNavBtn = document.getElementById("applyNavBtn");
+
+        function applyLoggedIn(user) {
+          var name = (user && (user.name || user.fullName || user.email)) || "U";
+          var initial = name.charAt(0).toUpperCase() || "U";
+          var avatar = document.getElementById("profileAvatar");
+          if (avatar) avatar.textContent = initial;
+          if (profileBtn) profileBtn.style.display = "inline-flex";
+          if (loginBtn) loginBtn.style.display = "none";
+          if (applyNavBtn) applyNavBtn.style.display = "none";
+        }
+
+        if (window.OzoneAPI && window.OzoneAPI.isLoggedIn()) {
+          var cached = window.OzoneAPI.getUser();
+          if (cached) applyLoggedIn(cached);
+          // Refresh in the background; if the token is invalid, drop it.
+          window.OzoneAPI.me()
+            .then(applyLoggedIn)
+            .catch(function (err) {
+              if (err && err.status === 401) {
+                window.OzoneAPI.clearSession();
+                if (profileBtn) profileBtn.style.display = "";
+                if (loginBtn) loginBtn.style.display = "";
+                if (applyNavBtn) applyNavBtn.style.display = "";
+              }
+            });
         }
       })();
 
       // ── Auth guard for resource links ──
       (function () {
         function isLoggedIn() {
-          try {
-            var s = JSON.parse(localStorage.getItem("ozone_session"));
-            return s && s.loggedIn;
-          } catch (e) {
-            return false;
-          }
+          return !!(window.OzoneAPI && window.OzoneAPI.isLoggedIn());
         }
         if (!isLoggedIn()) {
           document.addEventListener(
@@ -42098,7 +42507,7 @@
               e.preventDefault();
               e.stopPropagation();
               var errEl = document.getElementById("loginError");
-              if (errEl) errEl.style.display = "none";
+              if (errEl) errEl.classList.remove("show");
               openLoginModal();
             },
             true,
