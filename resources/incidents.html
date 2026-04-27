@@ -1045,6 +1045,54 @@
         font-family: "JetBrains Mono", monospace;
       }
 
+      /* ── Cite modal – small screen ── */
+      @media (max-width: 640px) {
+        .cite-modal {
+          padding: 10px;
+        }
+        .cite-modal-card {
+          border-radius: 12px;
+          max-height: calc(100vh - 20px);
+        }
+        .cite-modal-head {
+          padding: 16px 16px 12px;
+        }
+        .cite-modal h3 {
+          font-size: 15px;
+        }
+        .cite-modal-body {
+          padding: 0 16px 20px;
+          gap: 18px;
+        }
+        .cite-modal .lead {
+          font-size: 14px;
+        }
+        .bib-block pre {
+          font-size: 11.5px;
+          padding: 10px 12px;
+        }
+        .bib-block-head {
+          padding: 6px 8px 6px 12px;
+        }
+        .link-block-main {
+          padding: 12px;
+        }
+        .link-block .url {
+          font-size: 13px;
+        }
+        .link-block .actions {
+          flex-wrap: wrap;
+        }
+        .link-block .act {
+          font-size: 12px;
+          padding: 6px 10px;
+        }
+        .link-block .pwd {
+          padding: 10px 12px;
+          font-size: 12px;
+        }
+      }
+
       /* terms line */
       .terms-line {
         margin: 0;
@@ -1081,6 +1129,73 @@
       .terms-toggle svg {
         transform: translateY(2px);
         color: #a1a1aa;
+      }
+
+      /* ── Terms of Use Modal ── */
+      .terms-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 10020;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+      .terms-modal.active {
+        display: flex;
+      }
+      .terms-modal-card {
+        width: 100%;
+        max-width: 560px;
+        max-height: calc(100vh - 40px);
+        background: #111113;
+        border: 1px solid #27272a;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.95);
+        display: flex;
+        flex-direction: column;
+        animation: citeIn 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .terms-modal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 24px 14px;
+      }
+      .terms-modal-head h3 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+      }
+      .terms-modal-head .close {
+        background: none;
+        border: 0;
+        color: #a1a1aa;
+        cursor: pointer;
+        padding: 4px;
+        transition: color 0.18s;
+      }
+      .terms-modal-head .close:hover {
+        color: #fff;
+      }
+      .terms-modal-body {
+        padding: 0 24px 24px;
+        overflow-y: auto;
+        font-size: 14px;
+        line-height: 1.7;
+        color: #d4d4d8;
+      }
+      .terms-modal-body ol {
+        padding-left: 20px;
+        margin: 12px 0 0;
+      }
+      .terms-modal-body li {
+        margin-bottom: 8px;
       }
 
       /* Responsive */
@@ -1856,13 +1971,87 @@
           </div>
           <p class="terms-line">
             By downloading, you agree to Ozone's
-            <span class="terms-toggle" style="cursor: default">
+            <button type="button" class="terms-toggle" data-terms-open>
               <span>Terms of Use</span>
-            </span>
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M7 7h10v10" />
+                <path d="M7 17 17 7" />
+              </svg>
+            </button>
             — Ozone retains exclusive commercial rights (commercial use
             prohibited), non-commercial research only, no redistribution, cite
             on use.
           </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terms of Use Modal -->
+    <div
+      class="terms-modal"
+      id="terms-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+    >
+      <div class="terms-modal-card">
+        <div class="terms-modal-head">
+          <h3>Terms of Use</h3>
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            data-terms-close
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="terms-modal-body">
+          <p>
+            The Ozone dataset is made freely available for
+            <b>non-commercial use only</b> — including academic research,
+            teaching, and scientific publications. By downloading, you agree to
+            the following terms:
+          </p>
+          <ol>
+            <li>
+              <b>Citation requirement.</b> Any work that uses the Ozone dataset
+              must clearly cite it.
+            </li>
+            <li>
+              <b>No redistribution.</b> You may not redistribute the dataset or
+              any modified version of it.
+            </li>
+            <li>
+              <b>Non-commercial use only.</b> You may not use the dataset for
+              commercial purposes. For commercial licensing, please contact us.
+            </li>
+            <li>
+              <b>Reservation of rights.</b> All rights not expressly granted are
+              reserved by the dataset provider.
+            </li>
+          </ol>
         </div>
       </div>
     </div>
@@ -2230,6 +2419,37 @@
         // Ensure Leaflet computes size correctly inside the flex layout
         setTimeout(() => map.invalidateSize(), 120);
         window.addEventListener("resize", () => map.invalidateSize());
+      })();
+    </script>
+    <script>
+      (function () {
+        // ── Terms of Use modal ──
+        var termsModal = document.getElementById("terms-modal");
+        document.querySelectorAll("[data-terms-open]").forEach(function (btn) {
+          btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (termsModal) {
+              termsModal.classList.add("active");
+              termsModal.setAttribute("aria-hidden", "false");
+            }
+          });
+        });
+        if (termsModal) {
+          termsModal.addEventListener("click", function (e) {
+            if (e.target === termsModal) {
+              termsModal.classList.remove("active");
+              termsModal.setAttribute("aria-hidden", "true");
+            }
+          });
+          termsModal
+            .querySelectorAll("[data-terms-close]")
+            .forEach(function (btn) {
+              btn.addEventListener("click", function () {
+                termsModal.classList.remove("active");
+                termsModal.setAttribute("aria-hidden", "true");
+              });
+            });
+        }
       })();
     </script>
     <script>

@@ -3195,6 +3195,55 @@
         font-weight: 500;
         font-family: "JetBrains Mono", monospace;
       }
+
+      /* ── Cite modal – small screen ── */
+      @media (max-width: 640px) {
+        .cite-modal {
+          padding: 10px;
+        }
+        .cite-modal-card {
+          border-radius: 12px;
+          max-height: calc(100vh - 20px);
+        }
+        .cite-modal-head {
+          padding: 16px 16px 12px;
+        }
+        .cite-modal h3 {
+          font-size: 15px;
+        }
+        .cite-modal-body {
+          padding: 0 16px 20px;
+          gap: 18px;
+        }
+        .cite-modal .lead {
+          font-size: 14px;
+        }
+        .bib-block pre {
+          font-size: 11.5px;
+          padding: 10px 12px;
+        }
+        .bib-block-head {
+          padding: 6px 8px 6px 12px;
+        }
+        .link-block-main {
+          padding: 12px;
+        }
+        .link-block .url {
+          font-size: 13px;
+        }
+        .link-block .actions {
+          flex-wrap: wrap;
+        }
+        .link-block .act {
+          font-size: 12px;
+          padding: 6px 10px;
+        }
+        .link-block .pwd {
+          padding: 10px 12px;
+          font-size: 12px;
+        }
+      }
+
       .terms-line {
         margin: 0;
         padding: 8px 0 0;
@@ -6036,7 +6085,7 @@
     <footer>
       <div>
         © 2026 Ozone · By downloading you agree to the
-        <a href="index.html#apply">Terms of Use</a>
+        <a href="#" data-terms-open style="color: #e4e4e7">Terms of Use</a>
         (non-commercial, no redistribution, cite on use).
       </div>
       <div>
