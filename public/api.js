@@ -7,7 +7,11 @@
   var SESSION_KEY = "ozone_session";
 
   function getToken() {
-    try { return localStorage.getItem(TOKEN_KEY) || ""; } catch (e) { return ""; }
+    try {
+      return localStorage.getItem(TOKEN_KEY) || "";
+    } catch (e) {
+      return "";
+    }
   }
   function setToken(t) {
     try {
@@ -19,7 +23,9 @@
     try {
       var raw = localStorage.getItem(USER_KEY);
       return raw ? JSON.parse(raw) : null;
-    } catch (e) { return null; }
+    } catch (e) {
+      return null;
+    }
   }
   function setUser(u) {
     try {
@@ -29,7 +35,7 @@
         var name = u.name || u.fullName || u.email || "User";
         localStorage.setItem(
           SESSION_KEY,
-          JSON.stringify({ name: name, loggedIn: true })
+          JSON.stringify({ name: name, loggedIn: true }),
         );
       } else {
         localStorage.removeItem(USER_KEY);
@@ -44,8 +50,12 @@
 
   // Strip a common envelope { code, msg, data } if present, otherwise return as-is.
   function unwrap(json) {
-    if (json && typeof json === "object" && "data" in json &&
-        ("code" in json || "msg" in json || "message" in json)) {
+    if (
+      json &&
+      typeof json === "object" &&
+      "data" in json &&
+      ("code" in json || "msg" in json || "message" in json)
+    ) {
       return json.data;
     }
     return json;
@@ -75,7 +85,7 @@
     opts = opts || {};
     var headers = Object.assign(
       { "Content-Type": "application/json", Accept: "application/json" },
-      opts.headers || {}
+      opts.headers || {},
     );
     if (opts.auth) {
       var t = getToken();
@@ -94,13 +104,17 @@
     var text = await res.text();
     var json = null;
     if (text) {
-      try { json = JSON.parse(text); } catch (e) { json = null; }
+      try {
+        json = JSON.parse(text);
+      } catch (e) {
+        json = null;
+      }
     }
     if (!res.ok) {
       var msg =
         (json && (json.message || json.msg || json.error)) ||
         (typeof json === "string" ? json : "") ||
-        ("Request failed (" + res.status + ")");
+        "Request failed (" + res.status + ")";
       var err = new Error(msg);
       err.status = res.status;
       err.body = json;
@@ -118,7 +132,11 @@
     if (token) setToken(token);
     var user = pickUser(data);
     if (!user && token) {
-      try { user = await me(); } catch (e) { user = null; }
+      try {
+        user = await me();
+      } catch (e) {
+        user = null;
+      }
     }
     if (user) setUser(user);
     return { token: token, user: user };
@@ -139,6 +157,14 @@
     return user;
   }
 
+  async function changePassword(oldPassword, newPassword) {
+    return request("/user/change-password", {
+      method: "POST",
+      auth: true,
+      body: { oldPassword: oldPassword, newPassword: newPassword },
+    });
+  }
+
   function logout() {
     clearSession();
   }
@@ -149,10 +175,13 @@
     apply: apply,
     joinUs: joinUs,
     me: me,
+    changePassword: changePassword,
     logout: logout,
     getToken: getToken,
     getUser: getUser,
     clearSession: clearSession,
-    isLoggedIn: function () { return !!getToken(); },
+    isLoggedIn: function () {
+      return !!getToken();
+    },
   };
 })(window);

@@ -9049,7 +9049,9 @@
           cursor: progress;
         }
         @keyframes joinSpin {
-          to { transform: rotate(360deg); }
+          to {
+            transform: rotate(360deg);
+          }
         }
         .join-submit .join-spin {
           width: 14px;
@@ -9112,9 +9114,12 @@
           toast.classList.toggle("error", kind === "error");
           toast.classList.add("show");
           clearTimeout(toast._hideTimer);
-          toast._hideTimer = setTimeout(function () {
-            toast.classList.remove("show");
-          }, kind === "error" ? 4500 : 3500);
+          toast._hideTimer = setTimeout(
+            function () {
+              toast.classList.remove("show");
+            },
+            kind === "error" ? 4500 : 3500,
+          );
         }
 
         async function submitJoinForm(e) {
@@ -13200,7 +13205,8 @@
             for (var i = 1; i <= totalPages; i++) {
               (function (pageNum) {
                 pdf.getPage(pageNum).then(function (page) {
-                  var scale = 1.5;
+                  var dpr = window.devicePixelRatio || 1;
+                  var scale = 1.5 * dpr;
                   var viewport = page.getViewport({ scale: scale });
                   var canvas = document.createElement("canvas");
                   canvas.width = viewport.width;
@@ -41548,7 +41554,8 @@
         padding: 11px 26px;
         border-radius: 11px;
         border: 1px solid rgba(120, 160, 255, 0.42);
-        background: linear-gradient(
+        background:
+          linear-gradient(
             180deg,
             rgba(255, 255, 255, 0.18) 0%,
             rgba(255, 255, 255, 0) 50%,
@@ -41563,7 +41570,9 @@
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.22),
           0 6px 22px rgba(45, 90, 255, 0.4);
-        transition: transform 0.2s, box-shadow 0.2s;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
       }
       #apfResultModal .apf-rs-ok:hover {
         transform: translateY(-1px);
@@ -41573,7 +41582,8 @@
       }
       #apfResultModal[data-kind="error"] .apf-rs-ok {
         border-color: rgba(248, 113, 113, 0.5);
-        background: linear-gradient(
+        background:
+          linear-gradient(
             180deg,
             rgba(255, 255, 255, 0.18) 0%,
             rgba(255, 255, 255, 0) 50%,
@@ -41590,8 +41600,12 @@
           0 10px 28px rgba(220, 38, 38, 0.55);
       }
       @keyframes apfRsFadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
       @keyframes apfRsPopIn {
         from {
@@ -41609,7 +41623,13 @@
       role="dialog"
       aria-modal="true"
       aria-labelledby="apfResultTitle"
-      onclick="if(event.target===this||event.target.classList.contains('apf-rs-bg'))closeApfResult()"
+      onclick="
+        if (
+          event.target === this ||
+          event.target.classList.contains('apf-rs-bg')
+        )
+          closeApfResult();
+      "
     >
       <div class="apf-rs-bg"></div>
       <div class="apf-rs-card">
@@ -41890,7 +41910,10 @@
         var err = document.getElementById("loginError");
         if (!err) return;
         err.textContent = "";
-        var icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        var icon = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "svg",
+        );
         icon.setAttribute("fill", "none");
         icon.setAttribute("viewBox", "0 0 24 24");
         icon.setAttribute("stroke", "currentColor");
@@ -42419,8 +42442,7 @@
           showApfResult("error", {
             title: "Submission failed",
             message:
-              (e && e.message) ||
-              "Please review your details and try again.",
+              (e && e.message) || "Please review your details and try again.",
           });
         }
       }
@@ -42467,7 +42489,8 @@
         var applyNavBtn = document.getElementById("applyNavBtn");
 
         function applyLoggedIn(user) {
-          var name = (user && (user.name || user.fullName || user.email)) || "U";
+          var name =
+            (user && (user.name || user.fullName || user.email)) || "U";
           var initial = name.charAt(0).toUpperCase() || "U";
           var avatar = document.getElementById("profileAvatar");
           if (avatar) avatar.textContent = initial;

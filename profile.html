@@ -3468,7 +3468,7 @@
         background: currentColor;
         opacity: 0.85;
       }
-      .role-badge.phd {
+      .role-badge.student {
         background: rgba(167, 139, 250, 0.12);
         color: #c4b5fd;
         border: 1px solid rgba(167, 139, 250, 0.3);
@@ -6837,10 +6837,10 @@
           var m = s.match(/^\d{4}-\d{2}-\d{2}/);
           return m ? m[0] : s;
         }
-        var role = pick("role", "academicRole");
+        var role = pick("academicRole", "role");
         if (typeof role === "string") {
           var ROLE_FROM_API = {
-            STUDENT: "phd",
+            STUDENT: "student",
             FACULTY: "faculty",
             INDUSTRY: "industry",
           };
@@ -6856,7 +6856,9 @@
           advisor_email: pick("advisor_email", "advisorEmail"),
           purpose: pick("purpose", "researchPurpose"),
           applied_at: dateOnly(pick("applied_at", "appliedAt", "createdAt")),
-          approved_at: dateOnly(pick("approved_at", "approvedAt", "updatedAt")),
+          approved_at: dateOnly(
+            pick("approved_at", "approvedAt", "reviewedAt"),
+          ),
         };
       }
 
@@ -6881,7 +6883,7 @@
       };
       const roleLabel = (r) =>
         ({
-          phd: "PhD Student",
+          student: "Student",
           faculty: "Faculty",
           industry: "Industry",
         })[r] || "Researcher";
@@ -6916,7 +6918,7 @@
         const researchRows = [
           { label: "Research Purpose", value: u.purpose, span2: true },
         ];
-        if (u.role === "phd") {
+        if (u.role === "student") {
           researchRows.push({ label: "Advisor Name", value: u.advisor_name });
           researchRows.push({
             label: "Advisor Email",
@@ -7005,7 +7007,7 @@
         document.getElementById("pwErrMsg").textContent = msg;
         document.getElementById("pwErr").classList.add("show");
       }
-      function handlePwChange() {
+      async function handlePwChange() {
         const cur = document.getElementById("pwCurrent").value;
         const neu = document.getElementById("pwNew").value;
         const cnf = document.getElementById("pwConfirm").value;
@@ -7022,18 +7024,27 @@
         btn.style.opacity = "0.65";
         btn.style.pointerEvents = "none";
         btn.innerHTML = "<span>Updating…</span>";
-        setTimeout(() => {
-          // Mock success. Replace with:
-          //   fetch('/api/auth/change-password', { method: 'POST', body: ... })
+
+        const resetBtn = () => {
           btn.style.opacity = "";
           btn.style.pointerEvents = "";
           btn.innerHTML =
             "<span>Update password</span>" +
             '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">' +
             '<path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>';
+        };
+
+        try {
+          await window.OzoneAPI.changePassword(cur, neu);
+          resetBtn();
           closeModal("pwModal");
           showToast("Password updated");
-        }, 900);
+        } catch (e) {
+          resetBtn();
+          showPwErr(
+            e.message || "Failed to change password. Please try again.",
+          );
+        }
       }
 
       /* ══════════════ Sign out (with confirmation) ══════════════ */
