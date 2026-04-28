@@ -24,6 +24,7 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
   var isRoot = body.getAttribute("data-root") === "1";
   var P = isRoot ? "resources/" : "";
   var R = isRoot ? "" : "../";
+  var HOME = isRoot ? "index.html" : R;
 
   var ICO = {
     grid: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>',
@@ -100,13 +101,13 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
     '<ul class="res-sidebar-sub">' +
     '<li><a href="' +
     R +
-    'tutorial-viewer.html?doc=CARLA%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%20-%200417_Ze%20-%20yue.docx&amp;title=CARLA%20basics%20and%20installation" target="_blank">CARLA Basics &amp; Installation</a></li>' +
+    'tutorial-viewer.html?doc=CARLA%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%20-%200417_Ze%20-%20yue.docx&amp;title=CARLA%20basics%20and%20installation" data-tut-link>CARLA Basics &amp; Installation</a></li>' +
     '<li><a href="' +
     R +
-    'tutorial-viewer.html?doc=%E5%9F%BA%E4%BA%8ERoadrunner%20%E7%9A%84Carla%E5%AD%AA%E7%94%9F%E5%9C%B0%E5%9B%BE%E7%BC%96%E8%BE%91%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B.docx&amp;title=Digital-twin%20map%20editing%20in%20RoadRunner" target="_blank">Map Editing in RoadRunner</a></li>' +
+    'tutorial-viewer.html?doc=%E5%9F%BA%E4%BA%8ERoadrunner%20%E7%9A%84Carla%E5%AD%AA%E7%94%9F%E5%9C%B0%E5%9B%BE%E7%BC%96%E8%BE%91%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B.docx&amp;title=Digital-twin%20map%20editing%20in%20RoadRunner" data-tut-link>Map Editing in RoadRunner</a></li>' +
     '<li><a href="' +
     R +
-    'tutorial-viewer.html?doc=Carla%20%E5%9F%BA%E6%9C%AC%E5%9C%BA%E6%99%AF%E5%88%9B%E5%BB%BA%E6%95%99%E7%A8%8B.docx&amp;title=Authoring%20CARLA%20scenarios%20end-to-end" target="_blank">CARLA Scenarios End-to-End</a></li>' +
+    'tutorial-viewer.html?doc=Carla%20%E5%9F%BA%E6%9C%AC%E5%9C%BA%E6%99%AF%E5%88%9B%E5%BB%BA%E6%95%99%E7%A8%8B.docx&amp;title=Authoring%20CARLA%20scenarios%20end-to-end" data-tut-link>CARLA Scenarios End-to-End</a></li>' +
     "</ul>" +
     li(
       isSPA ? "#community" : P + "community.html",
@@ -120,10 +121,10 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
   var nav =
     '<header class="rp-nav"><div class="rp-nav-inner">' +
     '<a class="rp-logo" href="' +
-    R +
+    HOME +
     '"><svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg><span>Ozone</span></a>' +
     '<div class="rp-crumb"><a href="' +
-    R +
+    HOME +
     '">Home</a><span>›</span><span>Resources</span><span>›</span><b>' +
     crumb +
     "</b></div>" +
