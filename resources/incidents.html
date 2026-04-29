@@ -223,6 +223,9 @@
       .hm-tog[data-k="adas"] .sw {
         background: #dc944a;
       }
+      .hm-tog[data-k="uk_dft"] .sw {
+        background: #9b6dcc;
+      }
       .hm-tog.active {
         background: rgba(255, 255, 255, 0.08);
         color: #fff;
@@ -754,7 +757,7 @@
         display: none;
         align-items: center;
         justify-content: center;
-        padding: 20px;
+        padding: 70px 20px 20px;
         background: rgba(9, 9, 11, 0.72);
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
@@ -781,7 +784,7 @@
         animation: citeIn 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
         display: flex;
         flex-direction: column;
-        max-height: calc(100vh - 40px);
+        max-height: calc(100vh - 90px);
       }
       @keyframes citeIn {
         from {
@@ -1048,11 +1051,11 @@
       /* ── Cite modal – small screen ── */
       @media (max-width: 640px) {
         .cite-modal {
-          padding: 10px;
+          padding: 64px 10px 10px;
         }
         .cite-modal-card {
           border-radius: 12px;
-          max-height: calc(100vh - 20px);
+          max-height: calc(100vh - 74px);
         }
         .cite-modal-head {
           padding: 16px 16px 12px;
@@ -1526,9 +1529,9 @@
             <a
               class="inc-dl primary"
               href="#"
-              data-cite-download="https://pan.baidu.com/s/ca-dmv-incidents"
+              data-cite-download="https://pan.baidu.com/s/1wHYz3-FHNpHI2Xsw-Urklg?pwd=NBDT"
               data-cite-label="CA DMV AV Collision Reports"
-              data-cite-pwd="ozon"
+              data-cite-pwd="NBDT"
             >
               <svg
                 width="14"
@@ -1561,12 +1564,12 @@
                 <polyline points="7 7 17 7 17 17" />
               </svg>
             </a>
-            <a
+            <!-- <a
               class="inc-dl ghost"
               href="#"
-              data-cite-download="https://pan.baidu.com/s/ca-dmv-raw"
+              data-cite-download="https://pan.baidu.com/s/1wHYz3-FHNpHI2Xsw-Urklg?pwd=NBDT"
               data-cite-label="CA DMV Raw Data"
-              data-cite-pwd="ozon"
+              data-cite-pwd="NBDT"
             >
               <svg
                 width="13"
@@ -1598,7 +1601,7 @@
                 <path d="M7 17L17 7" />
                 <polyline points="7 7 17 7 17 17" />
               </svg>
-            </a>
+            </a> -->
           </div>
           <div class="inc-sizes">
             <span class="sep">·</span>
@@ -1755,9 +1758,9 @@
             <a
               class="inc-dl primary"
               href="#"
-              data-cite-download="https://pan.baidu.com/s/nhtsa-sgo-ads-adas"
+              data-cite-download="https://pan.baidu.com/s/1cGEzrhChH_3huvbE1PFipw?pwd=NBDT"
               data-cite-label="NHTSA SGO ADS + ADAS"
-              data-cite-pwd="ozon"
+              data-cite-pwd="NBDT"
             >
               <svg
                 width="14"
@@ -1790,12 +1793,12 @@
                 <polyline points="7 7 17 7 17 17" />
               </svg>
             </a>
-            <a
+            <!-- <a
               class="inc-dl ghost"
               href="#"
-              data-cite-download="https://pan.baidu.com/s/nhtsa-sgo-raw"
+              data-cite-download="https://pan.baidu.com/s/1cGEzrhChH_3huvbE1PFipw?pwd=NBDT"
               data-cite-label="NHTSA SGO Raw Data"
-              data-cite-pwd="ozon"
+              data-cite-pwd="NBDT"
             >
               <svg
                 width="13"
@@ -1827,7 +1830,7 @@
                 <path d="M7 17L17 7" />
                 <polyline points="7 7 17 7 17 17" />
               </svg>
-            </a>
+            </a> -->
           </div>
           <div class="inc-sizes">
             <span class="sep">·</span>
@@ -1905,9 +1908,9 @@
             <a
               class="inc-dl primary"
               href="#"
-              data-cite-download="https://pan.baidu.com/s/uk-dft-london-collisions"
+              data-cite-download="https://pan.baidu.com/s/1NNpLUKDi6h_DTczwM-BJ0A?pwd=NBDT"
               data-cite-label="UK DfT London Road Collisions"
-              data-cite-pwd="ozon"
+              data-cite-pwd="NBDT"
             >
               <svg
                 width="14"
@@ -1940,6 +1943,44 @@
                 <polyline points="7 7 17 7 17 17" />
               </svg>
             </a>
+            <!-- <a
+              class="inc-dl ghost"
+              href="#"
+              data-cite-download="https://pan.baidu.com/s/1NNpLUKDi6h_DTczwM-BJ0A?pwd=NBDT"
+              data-cite-label="UK DfT Raw Data"
+              data-cite-pwd="NBDT"
+            >
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Download raw data
+              <svg
+                class="ext"
+                width="11"
+                height="11"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M7 17L17 7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
+            </a> -->
           </div>
           <div class="inc-sizes">
             <span class="sep">·</span>
@@ -2378,10 +2419,10 @@
             },
           }),
           adas: L.heatLayer([], {
-            radius: 13,
-            blur: 10,
+            radius: 14,
+            blur: 11,
             max: 1.0,
-            minOpacity: 0.35,
+            minOpacity: 0.4,
             gradient: {
               0.2: "#6b3a10",
               0.45: "#b06820",
@@ -2391,8 +2432,8 @@
             },
           }),
           uk_dft: L.heatLayer([], {
-            radius: 13,
-            blur: 10,
+            radius: 14,
+            blur: 11,
             max: 1.0,
             minOpacity: 0.4,
             gradient: {
@@ -2476,6 +2517,9 @@
             layers[k].addTo(map);
             markers[k].addTo(map);
           });
+          // Pan to relevant region only when needed
+          if (which === "uk_dft") map.setView([51.5, -0.1], 10);
+          else if (which === "all") map.setView([38.5, -97.5], 3.5);
         }
 
         // KPI panel updates
@@ -2568,7 +2612,9 @@
           const r = Math.max(8, Math.min(26, 5 + z * 2));
           const b = Math.round(r * 0.78);
           Object.keys(layers).forEach((k) => {
-            layers[k].setOptions({ radius: r, blur: b });
+            if (map.hasLayer(layers[k])) {
+              layers[k].setOptions({ radius: r, blur: b });
+            }
           });
         }
         map.on("zoomend", rescaleHeat);
