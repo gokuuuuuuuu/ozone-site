@@ -4540,7 +4540,7 @@
           <div class="hl-bar"></div>
           <div class="hl-labels"><span>1</span><span>1,900+</span></div>
           <div class="hl-stat">
-            <b>8,549</b> incidents &middot; <b>460</b> locations
+            <b>130,256</b> incidents &middot; <b>2,490</b> locations
           </div>
         </div>
         <div class="heat-tooltip" id="heat-tooltip">
@@ -37800,12 +37800,12 @@
       }
       initCountryLabels();
       // ═══════════════════════════════════════════════════════════════════
-      // ── ACCIDENT HEATMAP (from INC_DATA — ca + ads + adas merged)    ─
+      // ── ACCIDENT HEATMAP (from INC_DATA — ca + ads + adas + uk_dft merged) ─
       // ═══════════════════════════════════════════════════════════════════
       var HEAT_PTS = (function buildHeatPts() {
         if (typeof INC_DATA === "undefined") return [];
         var map = {};
-        ["ca", "ads", "adas"].forEach(function (src) {
+        ["ca", "ads", "adas", "uk_dft"].forEach(function (src) {
           (INC_DATA[src] || []).forEach(function (p) {
             // p = [city, lat, lon, count]
             var key = p[1].toFixed(4) + "," + p[2].toFixed(4);

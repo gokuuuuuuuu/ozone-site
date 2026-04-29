@@ -170,14 +170,159 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
 
   // Expose close function for body end
   window.__closeShell = function () {
+    // Tutorial viewer HTML — injected inside res-content before closing
+    var tvHTML =
+      '<div id="tutViewer">' +
+      '<button type="button" class="tv-back" id="tvBackBtn">' +
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>' +
+      "Back" +
+      "</button>" +
+      '<div class="tv-eyebrow"><span>Learn</span><span class="d"></span><span>Tutorial</span></div>' +
+      '<h1 class="tv-title" id="tvTitle">Loading...</h1>' +
+      '<div class="tv-loading" id="tvLoading"><div class="tv-spinner"></div>' +
+      "<span style=\"font-size:13px;color:#6b7280;font-family:'JetBrains Mono',monospace\">Loading document...</span>" +
+      "</div>" +
+      '<div class="tv-error" id="tvError"><p style="font-size:16px;margin-bottom:8px">Failed to load document</p><p id="tvErrorMsg" style="font-size:13px;color:#6b7280"></p></div>' +
+      '<article id="tutDocContent"></article>' +
+      "</div>";
+
     document.write(
-      "</div></div></main>" +
+      tvHTML +
+        "</div></div></main>" +
         '<footer class="rp-footer"><div class="rp-footer-inner">' +
         "<div>© 2026 Ozone · A Unified Platform for Transportation Research</div>" +
         '<div><a href="' +
         R +
         '">← Back to site</a></div>' +
-        "</div></footer>",
+        "</div></footer>" +
+        // Inline CSS for tutorial viewer
+        "<style>" +
+        "#tutViewer{display:none}" +
+        "#tutViewer.active{display:block}" +
+        "#tutViewer .tv-back{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:transparent;color:#d4d4d8;font-size:13px;font-family:inherit;cursor:pointer;transition:background .18s,color .18s;margin-bottom:32px}" +
+        "#tutViewer .tv-back:hover{background:rgba(255,255,255,.03);color:#fff}" +
+        '#tutViewer .tv-eyebrow{display:flex;align-items:center;gap:10px;font-size:11px;font-family:"JetBrains Mono",monospace;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:16px}' +
+        "#tutViewer .tv-eyebrow .d{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.15)}" +
+        "#tutViewer .tv-title{font-size:32px;font-weight:600;letter-spacing:-.02em;color:#fff;margin:0 0 32px}" +
+        "#tutViewer .tv-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 0}" +
+        "#tutViewer .tv-spinner{width:32px;height:32px;border:2px solid rgba(59,130,246,.3);border-top-color:#3b82f6;border-radius:50%;animation:tvSpin .7s linear infinite;margin-bottom:16px}" +
+        "@keyframes tvSpin{to{transform:rotate(360deg)}}" +
+        "#tutViewer .tv-error{display:none;text-align:center;padding:80px 0;color:#f87171}" +
+        "#tutDocContent{border-radius:24px;border:1px solid rgba(255,255,255,.05);background:linear-gradient(180deg,#0a0a0c,#050505);padding:32px;color:#d1d5db;line-height:1.8}" +
+        "#tutDocContent h1{font-size:2rem;font-weight:600;color:#fff;margin:2rem 0 1rem}" +
+        "#tutDocContent h2{font-size:1.5rem;font-weight:600;color:#fff;margin:1.8rem 0 .8rem}" +
+        "#tutDocContent h3{font-size:1.25rem;font-weight:500;color:#e5e7eb;margin:1.5rem 0 .6rem}" +
+        "#tutDocContent h4{font-size:1.1rem;font-weight:500;color:#e5e7eb;margin:1.2rem 0 .5rem}" +
+        "#tutDocContent p{margin:.8rem 0}" +
+        "#tutDocContent ul,#tutDocContent ol{margin:.8rem 0;padding-left:1.5rem}" +
+        "#tutDocContent li{margin:.3rem 0}" +
+        "#tutDocContent ul li{list-style-type:disc}" +
+        "#tutDocContent ol li{list-style-type:decimal}" +
+        "#tutDocContent img{max-width:100%;height:auto;border-radius:12px;margin:1.5rem 0;border:1px solid rgba(255,255,255,.08)}" +
+        "#tutDocContent table{width:100%;border-collapse:collapse;margin:1rem 0}" +
+        "#tutDocContent th,#tutDocContent td{border:1px solid rgba(255,255,255,.1);padding:.6rem 1rem;text-align:left}" +
+        "#tutDocContent th{background:rgba(255,255,255,.03);color:#fff;font-weight:500}" +
+        "#tutDocContent a{color:#60a5fa;text-decoration:underline}" +
+        "#tutDocContent a:hover{color:#93bbfd}" +
+        '#tutDocContent code,#tutDocContent pre{font-family:"JetBrains Mono",monospace;background:rgba(255,255,255,.05);border-radius:4px;padding:.15rem .4rem;font-size:.9em}' +
+        "#tutDocContent pre{padding:1rem;overflow-x:auto;margin:1rem 0}" +
+        "#tutDocContent blockquote{border-left:3px solid #3b82f6;padding-left:1rem;margin:1rem 0;color:#9ca3af}" +
+        "@media(max-width:640px){#tutViewer .tv-title{font-size:24px}}" +
+        ".res-sidebar-sub a.active{color:rgba(255,255,255,.9);background:rgba(255,255,255,.06)}" +
+        "</style>" +
+        // Mammoth.js
+        '<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"><\/script>' +
+        // Tutorial viewer logic
+        "<script>" +
+        "(function(){" +
+        'var tv=document.getElementById("tutViewer");' +
+        "if(!tv)return;" +
+        'var tvTitle=document.getElementById("tvTitle");' +
+        'var tvLoading=document.getElementById("tvLoading");' +
+        'var tvError=document.getElementById("tvError");' +
+        'var tvErrorMsg=document.getElementById("tvErrorMsg");' +
+        'var tutDoc=document.getElementById("tutDocContent");' +
+        'var resContent=document.querySelector(".res-content");' +
+        'var _lastDoc="";' +
+        "var _origChildren=[];" +
+        "var _prevActiveLink=null;" +
+        // Save original page content refs
+        "Array.prototype.forEach.call(resContent.children,function(c){" +
+        "if(c!==tv)_origChildren.push(c);" +
+        "});" +
+        "function openTut(docFile,title){" +
+        '_origChildren.forEach(function(c){c.style.display="none"});' +
+        'tv.classList.add("active");' +
+        "tvTitle.textContent=title;" +
+        'tvLoading.style.display="flex";' +
+        'tvError.style.display="none";' +
+        'tutDoc.style.display="none";' +
+        'tutDoc.innerHTML="";' +
+        // Remove active from main sidebar link, save ref
+        'var curActive=document.querySelector(".res-sidebar-links>li>a.active");' +
+        "if(curActive){_prevActiveLink=curActive;curActive.classList.remove('active');}" +
+        // Highlight sidebar sub-item
+        'document.querySelectorAll(".res-sidebar-sub a").forEach(function(a){' +
+        'var h=a.getAttribute("href")||"";' +
+        'var q=h.indexOf("?")!==-1?h.split("?")[1]:"";' +
+        'var d=new URLSearchParams(q).get("doc")||"";' +
+        'if(d===docFile)a.classList.add("active");' +
+        'else a.classList.remove("active");' +
+        "});" +
+        'window.scrollTo({top:0,behavior:"smooth"});' +
+        "if(docFile===_lastDoc&&tutDoc.dataset.cached){" +
+        "tutDoc.innerHTML=tutDoc.dataset.cached;" +
+        'tvLoading.style.display="none";' +
+        'tutDoc.style.display="block";' +
+        "return;" +
+        "}" +
+        'var docUrl="' +
+        R +
+        '"+docFile;' +
+        "fetch(docUrl).then(function(r){" +
+        'if(!r.ok)throw new Error("HTTP "+r.status);' +
+        "return r.arrayBuffer();" +
+        "}).then(function(buf){" +
+        "return mammoth.convertToHtml({arrayBuffer:buf},{" +
+        "convertImage:mammoth.images.imgElement(function(img){" +
+        'return img.read("base64").then(function(b64){' +
+        'return{src:"data:"+img.contentType+";base64,"+b64};' +
+        "});" +
+        "})" +
+        "});" +
+        "}).then(function(result){" +
+        "_lastDoc=docFile;" +
+        "tutDoc.dataset.cached=result.value;" +
+        "tutDoc.innerHTML=result.value;" +
+        'tvLoading.style.display="none";' +
+        'tutDoc.style.display="block";' +
+        "}).catch(function(err){" +
+        'tvLoading.style.display="none";' +
+        'tvError.style.display="block";' +
+        "tvErrorMsg.textContent=err.message;" +
+        "});" +
+        "}" +
+        "function closeTut(){" +
+        'tv.classList.remove("active");' +
+        '_origChildren.forEach(function(c){c.style.display=""});' +
+        'document.querySelectorAll(".res-sidebar-sub a").forEach(function(a){a.classList.remove("active")});' +
+        "if(_prevActiveLink)_prevActiveLink.classList.add('active');" +
+        "}" +
+        'document.getElementById("tvBackBtn").addEventListener("click",closeTut);' +
+        // Intercept all data-tut-link clicks
+        'document.querySelectorAll("[data-tut-link]").forEach(function(a){' +
+        'a.addEventListener("click",function(e){' +
+        "e.preventDefault();" +
+        'var href=a.getAttribute("href");' +
+        'var qs=href.indexOf("?")!==-1?href.split("?")[1]:"";' +
+        "var params=new URLSearchParams(qs);" +
+        'var doc=params.get("doc")||"";' +
+        'var title=params.get("title")||"Tutorial";' +
+        "if(doc)openTut(doc,title);" +
+        "});" +
+        "});" +
+        "})();" +
+        "<\/script>",
     );
   };
 })();

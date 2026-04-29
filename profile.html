@@ -5174,11 +5174,12 @@
                 <div class="eyebrow">Downloads &middot; Incidents</div>
                 <h1>AV &amp; ADAS incident <em>records.</em></h1>
                 <p class="lead">
-                  Two curated incident corpora covering California's
-                  state-mandated AV collision reports and NHTSA's federal
-                  Standing General Order for ADS and ADAS. Every record is
-                  cleaned, geo-located and tagged -- ready for comparative
-                  safety analysis and SOTIF scenario construction.
+                  Three curated incident corpora covering California's
+                  state-mandated AV collision reports, NHTSA's federal Standing
+                  General Order for ADS and ADAS, and UK DfT London road
+                  collisions. Every record is cleaned, geo-located and tagged --
+                  ready for comparative safety analysis and SOTIF scenario
+                  construction.
                 </p>
               </div>
               <section class="heatmap-section" id="heatmapSection">
@@ -5187,10 +5188,10 @@
                     <span class="k">Geospatial &middot; All incidents</span>
                     <h3>Where incidents occur</h3>
                     <p>
-                      Every geocoded incident from the CA DMV and NHTSA SGO
-                      corpora, aggregated to city centroids and rendered as a
-                      density heatmap. Toggle the overlays to compare ADS vs
-                      ADAS vs California-only reporting.
+                      Every geocoded incident from the CA DMV, NHTSA SGO and UK
+                      DfT corpora, aggregated to city centroids and rendered as
+                      a density heatmap. Toggle the overlays to compare ADS vs
+                      ADAS vs California-only vs UK reporting.
                     </p>
                   </div>
                   <div
@@ -5209,6 +5210,9 @@
                     </button>
                     <button class="hm-tog" data-k="adas" type="button">
                       <span class="sw"></span>NHTSA&nbsp;ADAS
+                    </button>
+                    <button class="hm-tog" data-k="uk_dft" type="button">
+                      <span class="sw"></span>UK&nbsp;DfT
                     </button>
                   </div>
                 </div>
@@ -5340,7 +5344,7 @@
                       Top cities
                     </div>
                     <p class="inc-citylist">
-                      <span><b>San Francisco</b><span class="n">644</span></span
+                      <span><b>San Francisco</b><span class="n">645</span></span
                       ><span class="sep">&middot;</span
                       ><span><b>Mountain View</b><span class="n">71</span></span
                       ><span class="sep">&middot;</span
@@ -5679,6 +5683,108 @@
                     </div>
                     <div class="inc-sizes">
                       <span class="sep">&middot;</span> xlsx + csv <b>~20 MB</b>
+                    </div>
+                  </div>
+                </article>
+                <article
+                  class="inc-dataset"
+                  data-tone="uk"
+                  id="uk-dft"
+                  data-name="uk dft department for transport london collisions stats19 road traffic accidents england united kingdom tfl 2020 2025"
+                >
+                  <div class="inc-caption">
+                    <h2>UK DfT &middot; London Road Collisions</h2>
+                    <div class="sub">
+                      United Kingdom &middot; London &middot; 2020 -- 2025
+                      &middot; STATS19 &middot; 121,707 records
+                    </div>
+                    <div class="tags">
+                      National regulator<span class="sep">&middot;</span>Road
+                      traffic<span class="sep">&middot;</span>STATS19
+                    </div>
+                  </div>
+                  <div class="inc-body">
+                    <p class="inc-desc">
+                      The <b>UK Department for Transport STATS19</b> dataset
+                      covering all reported road traffic collisions in the
+                      Greater London area from 2020 to 2025. Each record is
+                      individually geocoded to collision-level coordinates,
+                      aggregated here into ~1 km grid cells for heatmap
+                      visualisation. The corpus provides a comprehensive
+                      baseline of <b>121,707 collision events</b> across the
+                      London metropolitan region.
+                    </p>
+                    <div class="inc-divider"></div>
+                    <div class="inc-stats">
+                      <div class="inc-stat">
+                        <span class="k">Records</span
+                        ><span class="v">121,707</span>
+                      </div>
+                      <div class="inc-stat">
+                        <span class="k">Grid cells</span
+                        ><span class="v">2,030</span>
+                      </div>
+                      <div class="inc-stat">
+                        <span class="k">Region</span
+                        ><span class="v">Greater London</span>
+                      </div>
+                      <div class="inc-stat">
+                        <span class="k">Span</span
+                        ><span class="v">2020 -- 2025</span>
+                      </div>
+                      <div class="inc-stat">
+                        <span class="k">Updated</span
+                        ><span class="v">Apr 2026</span>
+                      </div>
+                    </div>
+                    <div class="inc-seclabel" style="margin-top: 4px">
+                      Schema highlights
+                    </div>
+                    <p class="inc-schema">
+                      Collision index &middot; Year<span class="sep">/</span>
+                      GPS coordinates<span class="sep">/</span> Grid-aggregated
+                      density
+                    </p>
+                  </div>
+                  <div class="inc-actionbar">
+                    <div class="inc-action-left">
+                      <a
+                        class="inc-dl primary"
+                        href="#"
+                        data-cite-download="https://pan.baidu.com/s/uk-dft-london-collisions"
+                        data-cite-label="UK DfT London Road Collisions"
+                        data-cite-pwd="ozon"
+                        ><svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                          <polyline points="7 10 12 15 17 10" />
+                          <line x1="12" y1="15" x2="12" y2="3" /></svg
+                        >Download UK DfT dataset<svg
+                          class="ext"
+                          width="11"
+                          height="11"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path d="M7 17L17 7" />
+                          <polyline points="7 7 17 7 17 17" /></svg
+                      ></a>
+                    </div>
+                    <div class="inc-sizes">
+                      <span class="sep">&middot;</span> csv <b>~5 MB</b>
                     </div>
                   </div>
                 </article>
@@ -7372,6 +7478,14 @@
           p.classList.remove("active");
         });
 
+        // Close tutorial viewer if open, clear sub-item highlights
+        if (typeof closeTutorial === "function") closeTutorial();
+        document
+          .querySelectorAll("#tutSubMenu .rc-sub-item")
+          .forEach(function (s) {
+            s.classList.remove("active");
+          });
+
         var pageMap = {
           datasets: "rcDatasets",
           trajectories: "rcTrajectories",
@@ -7570,9 +7684,11 @@
           ca: [],
           ads: [],
           adas: [],
+          uk_dft: [],
           ca_total: 0,
           ads_total: 0,
           adas_total: 0,
+          uk_dft_total: 0,
         };
     </script>
     <script>
@@ -7831,6 +7947,19 @@
               1: "#ffffff",
             },
           }),
+          uk_dft: L.heatLayer([], {
+            radius: 13,
+            blur: 10,
+            max: 1.0,
+            minOpacity: 0.4,
+            gradient: {
+              0.2: "#2d1a4e",
+              0.45: "#6a3d9a",
+              0.7: "#9b6dcc",
+              0.9: "#c9aaee",
+              1: "#ffffff",
+            },
+          }),
         };
 
         function build(src) {
@@ -7846,6 +7975,7 @@
         layers.ca.setLatLngs(build("ca"));
         layers.ads.setLatLngs(build("ads"));
         layers.adas.setLatLngs(build("adas"));
+        layers.uk_dft.setLatLngs(build("uk_dft"));
 
         function cityMarkers(src, color) {
           var pts = (INC_DATA[src] || []).slice().sort(function (a, b) {
@@ -7872,7 +8002,9 @@
                 ? "CA DMV"
                 : src === "ads"
                   ? "NHTSA \u00b7 ADS"
-                  : "NHTSA \u00b7 ADAS";
+                  : src === "adas"
+                    ? "NHTSA \u00b7 ADAS"
+                    : "UK DfT";
             m.bindPopup(
               "<b>" +
                 city +
@@ -7894,14 +8026,16 @@
           ca: cityMarkers("ca", "#3ec3d6"),
           ads: cityMarkers("ads", "#5b92dc"),
           adas: cityMarkers("adas", "#dc944a"),
+          uk_dft: cityMarkers("uk_dft", "#9b6dcc"),
         };
 
         function show(which) {
-          ["ca", "ads", "adas"].forEach(function (k) {
+          ["ca", "ads", "adas", "uk_dft"].forEach(function (k) {
             if (map.hasLayer(layers[k])) map.removeLayer(layers[k]);
             if (map.hasLayer(markers[k])) map.removeLayer(markers[k]);
           });
-          var keys = which === "all" ? ["adas", "ads", "ca"] : [which];
+          var keys =
+            which === "all" ? ["adas", "ads", "ca", "uk_dft"] : [which];
           keys.forEach(function (k) {
             layers[k].addTo(map);
             markers[k].addTo(map);
@@ -7917,9 +8051,17 @@
           var pts = [],
             declared = 0;
           if (which === "all") {
-            pts = [].concat(INC_DATA.ca, INC_DATA.ads, INC_DATA.adas);
+            pts = [].concat(
+              INC_DATA.ca,
+              INC_DATA.ads,
+              INC_DATA.adas,
+              INC_DATA.uk_dft,
+            );
             declared =
-              INC_DATA.ca_total + INC_DATA.ads_total + INC_DATA.adas_total;
+              INC_DATA.ca_total +
+              INC_DATA.ads_total +
+              INC_DATA.adas_total +
+              INC_DATA.uk_dft_total;
           } else if (which === "ca") {
             pts = INC_DATA.ca;
             declared = INC_DATA.ca_total;
@@ -7929,6 +8071,9 @@
           } else if (which === "adas") {
             pts = INC_DATA.adas;
             declared = INC_DATA.adas_total;
+          } else if (which === "uk_dft") {
+            pts = INC_DATA.uk_dft;
+            declared = INC_DATA.uk_dft_total;
           }
           var total = pts.reduce(function (s, p) {
             return s + p[3];
@@ -7937,9 +8082,22 @@
           pts.forEach(function (p) {
             seen[p[1].toFixed(3) + "," + p[2].toFixed(3)] = true;
           });
-          var topP = pts.slice().sort(function (a, b) {
-            return b[3] - a[3];
-          })[0];
+
+          // Aggregate by city name to get true top city across sources
+          var cityAgg = {};
+          pts.forEach(function (p) {
+            var key = p[0];
+            cityAgg[key] = (cityAgg[key] || 0) + p[3];
+          });
+          var topCity = null,
+            topCount = 0;
+          for (var c in cityAgg) {
+            if (cityAgg[c] > topCount) {
+              topCity = c;
+              topCount = cityAgg[c];
+            }
+          }
+
           var cov = declared ? ((total / declared) * 100).toFixed(1) : "100";
           if (kpiTotal)
             kpiTotal.innerHTML =
@@ -7950,11 +8108,11 @@
           if (kpiCities)
             kpiCities.textContent = Object.keys(seen).length.toLocaleString();
           if (kpiTop)
-            kpiTop.innerHTML = topP
+            kpiTop.innerHTML = topCity
               ? '<span style="font-size:15px">' +
-                topP[0] +
+                topCity +
                 '</span> <span class="small">' +
-                topP[3].toLocaleString() +
+                topCount.toLocaleString() +
                 "</span>"
               : "\u2014";
           if (kpiCov) kpiCov.innerHTML = cov + '<span class="small">%</span>';
