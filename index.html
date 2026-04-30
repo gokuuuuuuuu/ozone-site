@@ -19,6 +19,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ozone: A Unified Platform for Transportation Research</title>
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/css/tom-select.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/js/tom-select.complete.min.js"></script>
     <style>
       .text-primary {
         color: #3b82f6;
@@ -8215,7 +8217,7 @@
               class="team-card card-reveal group cursor-pointer"
               onclick="openTeamModal(this, event)"
               data-name="Shengxuan Ding"
-              data-institution="University of Central Florida"
+              data-institution="Zhiling Research"
               data-bio="Shengxuan Ding is a researcher specializing in the safety and operation of autonomous vehicles. Holding a Ph.D. in Civil Engineering from the University of Central Florida, his expertise lies in collision avoidance modeling, scenario-based risk assessment, and the advancement of safety case frameworks. His research portfolio includes over 20 published papers with more than 950 citations, notably a high-impact Nature Communications study recognized in the top 1% on Altmetric and featured in the journal&#39;s Editor&#39;s Highlights. He applies advanced statistical and machine learning methods to complex traffic dynamics and maintains deep familiarity with critical industry standards like ISO 26262, ISO 21448, and STPA."
               data-photo="data:image/jpeg;base64,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"
               style="animation-delay: 0.08s"
@@ -8236,7 +8238,7 @@
                 <span class="text-[12px] font-normal text-white/40">Ph.D.</span>
               </h4>
               <p class="text-[11px] text-white/30 leading-snug text-center">
-                University of Central Florida
+                Zhiling Research
               </p>
             </div>
             <div
@@ -8553,197 +8555,6 @@
             </div>
           </div>
 
-          <!-- Join CTA -->
-          <style>
-            @keyframes shimmer {
-              0% {
-                left: -100%;
-              }
-              100% {
-                left: 200%;
-              }
-            }
-            .shimmer-effect {
-              position: relative;
-              overflow: hidden;
-            }
-            .shimmer-effect::after {
-              content: "";
-              position: absolute;
-              top: 0;
-              left: -100%;
-              width: 50%;
-              height: 100%;
-              background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.15),
-                transparent
-              );
-              transform: skewX(-20deg);
-              animation: shimmer 3s infinite;
-            }
-            @keyframes pulse-glow {
-              0%,
-              100% {
-                opacity: 0.4;
-                transform: scale(1);
-              }
-              50% {
-                opacity: 0.7;
-                transform: scale(1.05);
-              }
-            }
-            .animate-pulse-glow {
-              animation: pulse-glow 6s ease-in-out infinite;
-            }
-            @keyframes collab-float {
-              0%,
-              100% {
-                transform: translateY(0px) rotate(0deg);
-              }
-              50% {
-                transform: translateY(-15px) rotate(5deg);
-              }
-            }
-            .animate-collab-float {
-              animation: collab-float 7s ease-in-out infinite;
-            }
-            .animate-collab-float-delayed {
-              animation: collab-float 8s ease-in-out infinite;
-              animation-delay: 2s;
-            }
-            .animate-collab-float-fast {
-              animation: collab-float 5s ease-in-out infinite;
-              animation-delay: 1s;
-            }
-            .glass-panel {
-              background: linear-gradient(
-                145deg,
-                rgba(255, 255, 255, 0.03) 0%,
-                rgba(255, 255, 255, 0.01) 100%
-              );
-              backdrop-filter: blur(24px);
-              -webkit-backdrop-filter: blur(24px);
-              border: 1px solid rgba(255, 255, 255, 0.06);
-              box-shadow:
-                0 40px 80px -20px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                inset 0 0 40px rgba(59, 130, 246, 0.05);
-            }
-            .liquid-button {
-              background: rgba(37, 99, 235, 0.1);
-              backdrop-filter: blur(12px);
-              -webkit-backdrop-filter: blur(12px);
-              border: 1px solid rgba(59, 130, 246, 0.3);
-              box-shadow:
-                0 0 20px rgba(59, 130, 246, 0.1),
-                inset 0 0 20px rgba(255, 255, 255, 0.05);
-              transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            }
-            .liquid-button:hover {
-              background: rgba(59, 130, 246, 0.25);
-              border-color: rgba(59, 130, 246, 0.8);
-              box-shadow:
-                0 0 40px rgba(59, 130, 246, 0.5),
-                inset 0 0 20px rgba(255, 255, 255, 0.1);
-              transform: translateY(-4px) scale(1.02);
-            }
-          </style>
-
-          <section
-            class="relative flex items-center justify-center pt-14 pb-6 px-4 sm:px-6 lg:px-8 w-full max-w-[1200px] mx-auto"
-          >
-            <!-- Background effects -->
-            <div
-              class="absolute inset-0 overflow-hidden pointer-events-none flex items-center justify-center"
-            >
-              <div
-                class="absolute w-[500px] h-[400px] bg-[#3B82F6]/12 filter blur-[100px] rounded-[100%] animate-pulse-glow"
-              ></div>
-              <div
-                class="absolute w-[300px] h-[300px] bg-[#3B82F6]/8 filter blur-[80px] rounded-full translate-x-1/4 -translate-y-1/4"
-              ></div>
-            </div>
-
-            <!-- Floating particles -->
-            <div class="absolute inset-0 pointer-events-none">
-              <div
-                class="absolute top-[20%] left-[15%] w-1.5 h-1.5 bg-blue-400 rounded-full shadow-[0_0_12px_#60a5fa] animate-collab-float opacity-70"
-              ></div>
-              <div
-                class="absolute bottom-[25%] left-[20%] w-2 h-2 bg-[#60A5FA] rounded-full shadow-[0_0_15px_#3B82F6] animate-collab-float-delayed opacity-50"
-              ></div>
-              <div
-                class="absolute top-[30%] right-[18%] w-1 h-1 bg-white rounded-full shadow-[0_0_8px_#ffffff] animate-collab-float-fast opacity-60"
-              ></div>
-              <div
-                class="absolute bottom-[35%] right-[25%] w-2.5 h-2.5 bg-[#93C5FD] rounded-full shadow-[0_0_20px_#3B82F6] animate-collab-float opacity-40"
-              ></div>
-            </div>
-
-            <!-- Glass card -->
-            <div
-              class="glass-panel relative w-full max-w-3xl rounded-[2rem] p-8 md:p-12 z-20 flex flex-col items-center text-center group"
-            >
-              <div
-                class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-[#3B82F6]/50 to-transparent"
-              ></div>
-              <div
-                class="absolute -top-32 -left-32 w-64 h-64 bg-blue-500/20 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
-              ></div>
-              <div
-                class="absolute -bottom-32 -right-32 w-64 h-64 bg-[#3B82F6]/20 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
-              ></div>
-
-              <div class="relative z-10 w-full flex flex-col items-center">
-                <h2
-                  class="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-4"
-                >
-                  Interested in <br class="sm:hidden" />
-                  <span
-                    class="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] via-[#60A5FA] to-[#93C5FD] drop-shadow-[0_0_15px_rgba(59,130,246,0.4)]"
-                    >Collaborating?</span
-                  >
-                </h2>
-                <p
-                  class="text-sm md:text-base text-gray-400 max-w-xl mx-auto leading-relaxed mb-10 font-light"
-                >
-                  We welcome researchers, engineers, and institutions to
-                  co-build the future of transportation research — whether
-                  through data contributions, joint publications, or platform
-                  development.
-                </p>
-                <button
-                  type="button"
-                  onclick="
-                    document.getElementById('joinModal').classList.add('open');
-                    document.body.style.overflow = 'hidden';
-                  "
-                  class="liquid-button shimmer-effect group relative inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full text-white font-semibold text-sm overflow-hidden"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 text-[#3B82F6] group-hover:text-white group-hover:scale-110 transition-all duration-300 relative z-10"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
-                    />
-                  </svg>
-                  <span class="relative z-10 tracking-wide">Join Us</span>
-                </button>
-                <p class="mt-6 text-sm text-gray-600 font-medium">
-                  Join our growing ecosystem today
-                </p>
-              </div>
-            </div>
-          </section>
         </div>
       </section>
 
@@ -9171,6 +8982,24 @@
         #apfFooterHint .hidden {
           display: none !important;
         }
+        #apfEmailWrap.apf-email-err input {
+          border-color: rgba(248, 113, 113, 0.45) !important;
+          background: rgba(248, 113, 113, 0.06) !important;
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.06),
+            inset 0 0 14px rgba(248, 113, 113, 0.08),
+            0 0 0 3px rgba(248, 113, 113, 0.1) !important;
+        }
+        #apfEmailWrap .apf-field-err {
+          display: none;
+          font-size: 11px;
+          color: rgba(248, 113, 113, 0.85);
+          margin-top: 6px;
+          letter-spacing: 0.01em;
+        }
+        #apfEmailWrap.apf-email-err .apf-field-err {
+          display: block;
+        }
       </style>
 
       <section
@@ -9380,7 +9209,7 @@
                       "
                     />
                   </div>
-                  <div>
+                  <div id="apfEmailWrap">
                     <label
                       style="
                         display: block;
@@ -9416,19 +9245,25 @@
                         transition: all 0.25s ease;
                       "
                       onfocus="
+                        document.getElementById('apfEmailWrap').classList.remove('apf-email-err');
                         this.style.borderColor = 'rgba(100,160,255,0.65)';
                         this.style.background = 'rgba(59,130,246,0.09)';
                         this.style.boxShadow =
                           'inset 0 1px 0 rgba(255,255,255,0.12),inset 0 0 18px rgba(59,130,246,0.14),0 0 0 3px rgba(59,130,246,0.15)';
                       "
                       onblur="
-                        this.style.borderColor = 'rgba(255,255,255,0.09)';
-                        this.style.borderTopColor = 'rgba(160,200,255,0.18)';
-                        this.style.background = 'rgba(255,255,255,0.05)';
-                        this.style.boxShadow =
-                          'inset 0 1px 0 rgba(255,255,255,0.09),inset 0 0 14px rgba(59,130,246,0.07)';
+                        this.style.borderColor = '';
+                        this.style.borderTopColor = '';
+                        this.style.background = '';
+                        this.style.boxShadow = '';
+                        if (this.value.trim() !== '' && !this.validity.valid) {
+                          document.getElementById('apfEmailWrap').classList.add('apf-email-err');
+                        } else {
+                          document.getElementById('apfEmailWrap').classList.remove('apf-email-err');
+                        }
                       "
                     />
+                    <div class="apf-field-err">Please enter a valid email</div>
                   </div>
                 </div>
                 <div
@@ -9498,123 +9333,205 @@
                       "
                       >Country <span style="color: #f87171">*</span></label
                     >
-                    <!-- Hidden real select for form submission -->
-                    <select
-                      name="country"
-                      required
-                      style="display: none"
-                      id="countrySelect"
-                    >
-                      <option value="" disabled selected>Select country</option>
-                      <option value="China">China</option>
-                      <option value="United States">United States</option>
-                      <option value="United Kingdom">United Kingdom</option>
-                      <option value="Germany">Germany</option>
-                      <option value="Japan">Japan</option>
-                      <option value="South Korea">South Korea</option>
-                      <option value="Canada">Canada</option>
-                      <option value="Australia">Australia</option>
-                      <option value="Singapore">Singapore</option>
-                      <option value="Other">Other</option>
+                    <!-- Country – Tom Select searchable dropdown -->
+                    <select id="countrySelect" name="country" required>
+                      <option value="">Select country</option>
+                      <option>Afghanistan</option>
+                      <option>Albania</option>
+                      <option>Algeria</option>
+                      <option>Andorra</option>
+                      <option>Angola</option>
+                      <option>Antigua and Barbuda</option>
+                      <option>Argentina</option>
+                      <option>Armenia</option>
+                      <option>Australia</option>
+                      <option>Austria</option>
+                      <option>Azerbaijan</option>
+                      <option>Bahamas</option>
+                      <option>Bahrain</option>
+                      <option>Bangladesh</option>
+                      <option>Barbados</option>
+                      <option>Belarus</option>
+                      <option>Belgium</option>
+                      <option>Belize</option>
+                      <option>Benin</option>
+                      <option>Bhutan</option>
+                      <option>Bolivia</option>
+                      <option>Bosnia and Herzegovina</option>
+                      <option>Botswana</option>
+                      <option>Brazil</option>
+                      <option>Brunei</option>
+                      <option>Bulgaria</option>
+                      <option>Burkina Faso</option>
+                      <option>Burundi</option>
+                      <option>Cabo Verde</option>
+                      <option>Cambodia</option>
+                      <option>Cameroon</option>
+                      <option>Canada</option>
+                      <option>Central African Republic</option>
+                      <option>Chad</option>
+                      <option>Chile</option>
+                      <option>China</option>
+                      <option>Colombia</option>
+                      <option>Comoros</option>
+                      <option>Congo</option>
+                      <option>Costa Rica</option>
+                      <option>Croatia</option>
+                      <option>Cuba</option>
+                      <option>Cyprus</option>
+                      <option>Czech Republic</option>
+                      <option>Denmark</option>
+                      <option>Djibouti</option>
+                      <option>Dominica</option>
+                      <option>Dominican Republic</option>
+                      <option>DR Congo</option>
+                      <option>Ecuador</option>
+                      <option>Egypt</option>
+                      <option>El Salvador</option>
+                      <option>Equatorial Guinea</option>
+                      <option>Eritrea</option>
+                      <option>Estonia</option>
+                      <option>Eswatini</option>
+                      <option>Ethiopia</option>
+                      <option>Fiji</option>
+                      <option>Finland</option>
+                      <option>France</option>
+                      <option>Gabon</option>
+                      <option>Gambia</option>
+                      <option>Georgia</option>
+                      <option>Germany</option>
+                      <option>Ghana</option>
+                      <option>Greece</option>
+                      <option>Grenada</option>
+                      <option>Guatemala</option>
+                      <option>Guinea</option>
+                      <option>Guinea-Bissau</option>
+                      <option>Guyana</option>
+                      <option>Haiti</option>
+                      <option>Honduras</option>
+                      <option>Hungary</option>
+                      <option>Iceland</option>
+                      <option>India</option>
+                      <option>Indonesia</option>
+                      <option>Iran</option>
+                      <option>Iraq</option>
+                      <option>Ireland</option>
+                      <option>Israel</option>
+                      <option>Italy</option>
+                      <option>Jamaica</option>
+                      <option>Japan</option>
+                      <option>Jordan</option>
+                      <option>Kazakhstan</option>
+                      <option>Kenya</option>
+                      <option>Kiribati</option>
+                      <option>Kuwait</option>
+                      <option>Kyrgyzstan</option>
+                      <option>Laos</option>
+                      <option>Latvia</option>
+                      <option>Lebanon</option>
+                      <option>Lesotho</option>
+                      <option>Liberia</option>
+                      <option>Libya</option>
+                      <option>Liechtenstein</option>
+                      <option>Lithuania</option>
+                      <option>Luxembourg</option>
+                      <option>Madagascar</option>
+                      <option>Malawi</option>
+                      <option>Malaysia</option>
+                      <option>Maldives</option>
+                      <option>Mali</option>
+                      <option>Malta</option>
+                      <option>Marshall Islands</option>
+                      <option>Mauritania</option>
+                      <option>Mauritius</option>
+                      <option>Mexico</option>
+                      <option>Micronesia</option>
+                      <option>Moldova</option>
+                      <option>Monaco</option>
+                      <option>Mongolia</option>
+                      <option>Montenegro</option>
+                      <option>Morocco</option>
+                      <option>Mozambique</option>
+                      <option>Myanmar</option>
+                      <option>Namibia</option>
+                      <option>Nauru</option>
+                      <option>Nepal</option>
+                      <option>Netherlands</option>
+                      <option>New Zealand</option>
+                      <option>Nicaragua</option>
+                      <option>Niger</option>
+                      <option>Nigeria</option>
+                      <option>North Korea</option>
+                      <option>North Macedonia</option>
+                      <option>Norway</option>
+                      <option>Oman</option>
+                      <option>Pakistan</option>
+                      <option>Palau</option>
+                      <option>Palestine</option>
+                      <option>Panama</option>
+                      <option>Papua New Guinea</option>
+                      <option>Paraguay</option>
+                      <option>Peru</option>
+                      <option>Philippines</option>
+                      <option>Poland</option>
+                      <option>Portugal</option>
+                      <option>Qatar</option>
+                      <option>Romania</option>
+                      <option>Russia</option>
+                      <option>Rwanda</option>
+                      <option>Saint Kitts and Nevis</option>
+                      <option>Saint Lucia</option>
+                      <option>Saint Vincent and the Grenadines</option>
+                      <option>Samoa</option>
+                      <option>San Marino</option>
+                      <option>Sao Tome and Principe</option>
+                      <option>Saudi Arabia</option>
+                      <option>Senegal</option>
+                      <option>Serbia</option>
+                      <option>Seychelles</option>
+                      <option>Sierra Leone</option>
+                      <option>Singapore</option>
+                      <option>Slovakia</option>
+                      <option>Slovenia</option>
+                      <option>Solomon Islands</option>
+                      <option>Somalia</option>
+                      <option>South Africa</option>
+                      <option>South Korea</option>
+                      <option>South Sudan</option>
+                      <option>Spain</option>
+                      <option>Sri Lanka</option>
+                      <option>Sudan</option>
+                      <option>Suriname</option>
+                      <option>Sweden</option>
+                      <option>Switzerland</option>
+                      <option>Syria</option>
+                      <option>Taiwan</option>
+                      <option>Tajikistan</option>
+                      <option>Tanzania</option>
+                      <option>Thailand</option>
+                      <option>Timor-Leste</option>
+                      <option>Togo</option>
+                      <option>Tonga</option>
+                      <option>Trinidad and Tobago</option>
+                      <option>Tunisia</option>
+                      <option>Turkey</option>
+                      <option>Turkmenistan</option>
+                      <option>Tuvalu</option>
+                      <option>Uganda</option>
+                      <option>Ukraine</option>
+                      <option>United Arab Emirates</option>
+                      <option>United Kingdom</option>
+                      <option>United States</option>
+                      <option>Uruguay</option>
+                      <option>Uzbekistan</option>
+                      <option>Vanuatu</option>
+                      <option>Venezuela</option>
+                      <option>Vietnam</option>
+                      <option>Yemen</option>
+                      <option>Zambia</option>
+                      <option>Zimbabwe</option>
+                      <option>Other</option>
                     </select>
-                    <!-- Custom dropdown -->
-                    <div
-                      class="custom-select"
-                      id="countryDropdown"
-                      style="position: relative; width: 100%"
-                    >
-                      <div
-                        class="custom-select-trigger"
-                        id="countryTrigger"
-                        style="
-                          width: 100%;
-                          background: rgba(255, 255, 255, 0.05);
-                          border: 1px solid rgba(255, 255, 255, 0.09);
-                          border-top-color: rgba(160, 200, 255, 0.18);
-                          border-radius: 12px;
-                          padding: 13px 16px;
-                          color: rgba(255, 255, 255, 0.35);
-                          font-size: 15px;
-                          outline: none;
-                          font-family: inherit;
-                          backdrop-filter: blur(10px);
-                          -webkit-backdrop-filter: blur(10px);
-                          box-shadow:
-                            inset 0 1px 0 rgba(255, 255, 255, 0.09),
-                            inset 0 0 14px rgba(59, 130, 246, 0.07);
-                          transition: all 0.25s ease;
-                          cursor: pointer;
-                          display: flex;
-                          align-items: center;
-                          justify-content: space-between;
-                          user-select: none;
-                          box-sizing: border-box;
-                        "
-                      >
-                        <span id="countryLabel">Select country</span>
-                        <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="rgba(102,119,153,0.8)"
-                          stroke-width="2"
-                          style="
-                            flex-shrink: 0;
-                            transition: transform 0.25s ease;
-                          "
-                        >
-                          <path d="M6 9l6 6 6-6" />
-                        </svg>
-                      </div>
-                      <div
-                        class="custom-select-options"
-                        id="countryOptions"
-                        style="
-                          display: none;
-                          position: absolute;
-                          top: calc(100% + 6px);
-                          left: 0;
-                          right: 0;
-                          background: rgba(12, 13, 24, 0.95);
-                          border: 1px solid rgba(255, 255, 255, 0.1);
-                          border-radius: 12px;
-                          padding: 6px 0;
-                          z-index: 999;
-                          backdrop-filter: blur(24px);
-                          -webkit-backdrop-filter: blur(24px);
-                          box-shadow:
-                            0 12px 40px rgba(0, 0, 0, 0.5),
-                            inset 0 1px 0 rgba(255, 255, 255, 0.06);
-                          max-height: 220px;
-                          overflow-y: auto;
-                          animation: csDropIn 0.18s ease-out;
-                        "
-                      >
-                        <div class="cs-option" data-value="China">China</div>
-                        <div class="cs-option" data-value="United States">
-                          United States
-                        </div>
-                        <div class="cs-option" data-value="United Kingdom">
-                          United Kingdom
-                        </div>
-                        <div class="cs-option" data-value="Germany">
-                          Germany
-                        </div>
-                        <div class="cs-option" data-value="Japan">Japan</div>
-                        <div class="cs-option" data-value="South Korea">
-                          South Korea
-                        </div>
-                        <div class="cs-option" data-value="Canada">Canada</div>
-                        <div class="cs-option" data-value="Australia">
-                          Australia
-                        </div>
-                        <div class="cs-option" data-value="Singapore">
-                          Singapore
-                        </div>
-                        <div class="cs-option" data-value="Other">Other</div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -12825,61 +12742,106 @@
           color: #a1a1aa;
         }
 
-        /* ── Custom country select dropdown ── */
-        @keyframes csDropIn {
-          from {
-            opacity: 0;
-            transform: translateY(-6px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        /* ── Tom Select country picker (dark theme) ── */
+        #applyPageForm .ts-wrapper {
+          padding: 0;
+          width: 100%;
         }
-        .custom-select-trigger:hover {
-          border-color: rgba(100, 160, 255, 0.35) !important;
-          background: rgba(255, 255, 255, 0.07) !important;
+        #applyPageForm .ts-control {
+          background: rgba(255, 255, 255, 0.035) !important;
+          border: 1px solid rgba(255, 255, 255, 0.08) !important;
+          border-radius: 12px !important;
+          padding: 13px 16px !important;
+          color: rgba(255, 255, 255, 0.35);
+          font-size: 15px !important;
+          font-family: inherit !important;
+          cursor: pointer;
+          box-shadow: none !important;
+          min-height: unset !important;
+          display: flex;
+          align-items: center;
         }
-        .custom-select.open .custom-select-trigger {
-          border-color: rgba(100, 160, 255, 0.65) !important;
-          background: rgba(59, 130, 246, 0.09) !important;
+        #applyPageForm .ts-wrapper.focus .ts-control,
+        #applyPageForm .ts-wrapper.input-active .ts-control {
+          border-color: rgba(59, 130, 246, 0.5) !important;
+          background: rgba(59, 130, 246, 0.06) !important;
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12) !important;
+          outline: none !important;
+        }
+        #applyPageForm .ts-control input {
+          color: rgba(255, 255, 255, 0.55) !important;
+          font-size: 15px !important;
+          font-family: inherit !important;
+          background: transparent !important;
+          border: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          box-shadow: none !important;
+          outline: none !important;
+        }
+        #applyPageForm .ts-control input::placeholder {
+          color: rgba(255, 255, 255, 0.2) !important;
+        }
+        #applyPageForm .ts-control .item {
+          color: #eef0ff;
+          font-size: 15px;
+          padding: 0;
+        }
+        #applyPageForm .ts-wrapper.single .ts-control::after {
+          border-color: rgba(102, 119, 153, 0.8) transparent transparent !important;
+        }
+        #applyPageForm .ts-wrapper.single.open .ts-control::after,
+        #applyPageForm .ts-wrapper.single.focus .ts-control::after {
+          border-color: transparent transparent rgba(102, 119, 153, 0.8) !important;
+        }
+        #applyPageForm .ts-dropdown {
+          background: rgba(12, 13, 24, 0.98) !important;
+          border: 1px solid rgba(255, 255, 255, 0.1) !important;
+          border-radius: 12px !important;
           box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.12),
-            inset 0 0 18px rgba(59, 130, 246, 0.14),
-            0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+            0 12px 40px rgba(0, 0, 0, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          margin-top: 6px;
+          padding: 6px 0;
         }
-        .custom-select.open .custom-select-trigger svg {
-          transform: rotate(180deg);
+        #applyPageForm .ts-dropdown-content {
+          max-height: 220px;
+          padding: 0;
         }
-        .cs-option {
+        #applyPageForm .ts-dropdown-content::-webkit-scrollbar {
+          width: 5px;
+        }
+        #applyPageForm .ts-dropdown-content::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        #applyPageForm .ts-dropdown-content::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.12);
+          border-radius: 3px;
+        }
+        #applyPageForm .ts-dropdown .option {
           padding: 10px 16px;
           color: rgba(255, 255, 255, 0.7);
           font-size: 14px;
-          cursor: pointer;
-          transition:
-            background 0.15s ease,
-            color 0.15s ease;
           border-radius: 6px;
           margin: 0 6px;
+          cursor: pointer;
         }
-        .cs-option:hover {
-          background: rgba(59, 130, 246, 0.15);
-          color: #eef0ff;
+        #applyPageForm .ts-dropdown .option.active {
+          background: rgba(59, 130, 246, 0.15) !important;
+          color: #eef0ff !important;
         }
-        .cs-option.selected {
-          background: rgba(59, 130, 246, 0.2);
-          color: #a0c4ff;
+        #applyPageForm .ts-dropdown .option.selected {
+          background: rgba(59, 130, 246, 0.2) !important;
+          color: #a0c4ff !important;
           font-weight: 500;
         }
-        .custom-select-options::-webkit-scrollbar {
-          width: 5px;
-        }
-        .custom-select-options::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-select-options::-webkit-scrollbar-thumb {
-          background: rgba(255, 255, 255, 0.12);
-          border-radius: 3px;
+        #applyPageForm .ts-dropdown .no-results {
+          color: rgba(255, 255, 255, 0.35);
+          font-size: 13px;
+          padding: 12px 16px;
+          text-align: center;
         }
 
         /* ── Terms of Use modal ── */
@@ -12986,11 +12948,48 @@
         }
       </style>
 
+      <style>
+        @keyframes shimmer {
+          0%   { left: -100%; }
+          100% { left: 200%; }
+        }
+        .shimmer-effect { position: relative; overflow: hidden; }
+        .shimmer-effect::after {
+          content: "";
+          position: absolute;
+          top: 0; left: -100%;
+          width: 50%; height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+          transform: skewX(-20deg);
+          animation: shimmer 3s infinite;
+        }
+        .glass-panel {
+          background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border: 1px solid rgba(255,255,255,0.06);
+          box-shadow: 0 40px 80px -20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 0 40px rgba(59,130,246,0.05);
+        }
+        .liquid-button {
+          background: rgba(37, 99, 235, 0.1);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(59, 130, 246, 0.3);
+          box-shadow: 0 0 20px rgba(59,130,246,0.1), inset 0 0 20px rgba(255,255,255,0.05);
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .liquid-button:hover {
+          background: rgba(59, 130, 246, 0.25);
+          border-color: rgba(59, 130, 246, 0.8);
+          box-shadow: 0 0 40px rgba(59,130,246,0.5), inset 0 0 20px rgba(255,255,255,0.1);
+          transform: translateY(-4px) scale(1.02);
+        }
+      </style>
       <footer style="background: #050810" class="py-16">
         <div
-          class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12"
+          class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-x-10 gap-y-12 items-stretch"
         >
-          <div class="md:col-span-2">
+          <div class="md:col-span-4">
             <div class="flex items-center gap-2 mb-6">
               <div class="w-8 h-8 flex items-center justify-center">
                 <svg
@@ -13079,6 +13078,64 @@
                 >
               </li>
             </ul>
+          </div>
+          <!-- Collaborate CTA -->
+          <div class="md:col-span-2">
+            <div
+              class="glass-panel relative h-full rounded-[1.5rem] p-5 group overflow-hidden flex flex-col justify-center"
+            >
+              <!-- Top edge glow line -->
+              <div
+                class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-[#3B82F6]/50 to-transparent pointer-events-none"
+              ></div>
+              <!-- Hover glow blobs -->
+              <div
+                class="absolute -top-20 -left-20 w-40 h-40 bg-blue-500/20 blur-[50px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
+              ></div>
+              <div
+                class="absolute -bottom-20 -right-20 w-40 h-40 bg-[#3B82F6]/20 blur-[50px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
+              ></div>
+
+              <div class="relative z-10 flex flex-col items-center text-center">
+                <h2
+                  class="text-lg font-bold tracking-tight text-white mb-2"
+                >
+                  Interested in
+                  <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] via-[#60A5FA] to-[#93C5FD]"
+                    >Collaborating?</span
+                  >
+                </h2>
+                <p
+                  class="text-sm text-gray-400 leading-relaxed mb-4 font-light"
+                >
+                  Join us to co-build the future of transportation research
+                  through data contributions, joint publications, or platform
+                  development.
+                </p>
+                <button
+                  type="button"
+                  onclick="document.getElementById('joinModal').classList.add('open'); document.body.style.overflow='hidden';"
+                  class="liquid-button shimmer-effect group/btn relative inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full text-white font-semibold text-sm overflow-hidden w-fit"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-[#3B82F6] group-hover/btn:text-white group-hover/btn:scale-110 transition-all duration-300 relative z-10"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                    />
+                  </svg>
+                  <span class="relative z-10 tracking-wide">Join Us</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <div
@@ -42275,50 +42332,17 @@
             );
           }
 
-          // ── Custom country select dropdown ──
-          (function initCountryDropdown() {
-            var dropdown = document.getElementById("countryDropdown");
-            var trigger = document.getElementById("countryTrigger");
-            var optionsBox = document.getElementById("countryOptions");
-            var label = document.getElementById("countryLabel");
-            var hiddenSelect = document.getElementById("countrySelect");
-            if (!dropdown || !trigger || !optionsBox) return;
-
-            var options = optionsBox.querySelectorAll(".cs-option");
-
-            trigger.addEventListener("click", function (e) {
-              e.stopPropagation();
-              var isOpen = dropdown.classList.contains("open");
-              if (isOpen) {
-                closeDropdown();
-              } else {
-                dropdown.classList.add("open");
-                optionsBox.style.display = "block";
-              }
-            });
-
-            options.forEach(function (opt) {
-              opt.addEventListener("click", function (e) {
-                e.stopPropagation();
-                var val = opt.getAttribute("data-value");
-                label.textContent = val;
-                trigger.style.color = "#eef0ff";
-                hiddenSelect.value = val;
-                options.forEach(function (o) {
-                  o.classList.remove("selected");
-                });
-                opt.classList.add("selected");
-                closeDropdown();
-              });
-            });
-
-            function closeDropdown() {
-              dropdown.classList.remove("open");
-              optionsBox.style.display = "none";
-            }
-
-            document.addEventListener("click", function () {
-              closeDropdown();
+          // ── Country select – Tom Select ──
+          (function initCountryTomSelect() {
+            var el = document.getElementById("countrySelect");
+            if (!el || typeof TomSelect === "undefined") return;
+            new TomSelect(el, {
+              create: false,
+              allowEmptyOption: false,
+              placeholder: "Search or select a country",
+              onChange: function () {
+                if (typeof apfCheckComplete === "function") apfCheckComplete();
+              },
             });
           })();
         }

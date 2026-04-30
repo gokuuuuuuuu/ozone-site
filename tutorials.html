@@ -730,7 +730,55 @@
       <div class="tv-eyebrow">
         <span>Learn</span><span class="d"></span><span>Tutorial</span>
       </div>
-      <h1 class="tv-title" id="tvTitle">Loading...</h1>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+        <h1 class="tv-title" id="tvTitle">Loading...</h1>
+        <!-- Language toggle -->
+        <div
+          id="tvLangToggle"
+          style="
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 999px;
+            overflow: hidden;
+            flex-shrink: 0;
+            margin-top: 6px;
+          "
+        >
+          <button
+            id="tvBtnEn"
+            onclick="tvSwitchLang('en')"
+            style="
+              padding: 7px 18px;
+              font-size: 12px;
+              font-weight: 600;
+              letter-spacing: 0.06em;
+              background: rgba(255,255,255,0.9);
+              color: #000;
+              border: none;
+              cursor: pointer;
+              transition: all 0.2s;
+              font-family: inherit;
+            "
+          >EN</button>
+          <button
+            id="tvBtnZh"
+            onclick="tvSwitchLang('zh')"
+            style="
+              padding: 7px 18px;
+              font-size: 12px;
+              font-weight: 600;
+              letter-spacing: 0.06em;
+              background: transparent;
+              color: rgba(255,255,255,0.4);
+              border: none;
+              cursor: pointer;
+              transition: all 0.2s;
+              font-family: inherit;
+            "
+          >中文</button>
+        </div>
+      </div>
       <div class="tv-loading" id="tvLoading">
         <div class="tv-spinner"></div>
         <span
@@ -785,7 +833,6 @@
         var tvError = document.getElementById("tvError");
         var tvErrorMsg = document.getElementById("tvErrorMsg");
         var tutDocContent = document.getElementById("tutDocContent");
-        var _lastDoc = "";
 
         var listEls = [tutTopRow, tutHeader, tutList, tutFooter];
         var sidebarSub = document.querySelectorAll(
@@ -802,28 +849,24 @@
           });
         }
 
-        function openTutorial(docFile, title) {
-          listEls.forEach(function (el) {
-            if (el) el.style.display = "none";
-          });
-          tutViewer.classList.add("active");
-          tvTitle.textContent = title;
+        var _currentEnFile = "";
+        var _currentLang = "en";
+
+        function loadDocFile(file) {
           tvLoading.style.display = "flex";
           tvError.style.display = "none";
           tutDocContent.style.display = "none";
           tutDocContent.innerHTML = "";
-          highlightSidebar(docFile);
-          window.scrollTo({ top: 0, behavior: "smooth" });
 
-          if (docFile === _lastDoc && tutDocContent.dataset.cached) {
+          var cacheKey = file;
+          if (tutDocContent.dataset.cacheKey === cacheKey && tutDocContent.dataset.cached) {
             tutDocContent.innerHTML = tutDocContent.dataset.cached;
             tvLoading.style.display = "none";
             tutDocContent.style.display = "block";
             return;
           }
 
-          var docUrl = "/" + docFile;
-          fetch(docUrl)
+          fetch("/" + file)
             .then(function (res) {
               if (!res.ok) throw new Error("HTTP " + res.status);
               return res.arrayBuffer();
@@ -834,16 +877,14 @@
                 {
                   convertImage: mammoth.images.imgElement(function (img) {
                     return img.read("base64").then(function (b64) {
-                      return {
-                        src: "data:" + img.contentType + ";base64," + b64,
-                      };
+                      return { src: "data:" + img.contentType + ";base64," + b64 };
                     });
                   }),
                 },
               );
             })
             .then(function (result) {
-              _lastDoc = docFile;
+              tutDocContent.dataset.cacheKey = cacheKey;
               tutDocContent.dataset.cached = result.value;
               tutDocContent.innerHTML = result.value;
               tvLoading.style.display = "none";
@@ -854,6 +895,44 @@
               tvError.style.display = "block";
               tvErrorMsg.textContent = err.message;
             });
+        }
+
+        window.tvSwitchLang = function (lang) {
+          _currentLang = lang;
+          var btnEn = document.getElementById("tvBtnEn");
+          var btnZh = document.getElementById("tvBtnZh");
+          var activeStyle = "rgba(255,255,255,0.9)";
+          var inactiveStyle = "transparent";
+          btnEn.style.background = lang === "en" ? activeStyle : inactiveStyle;
+          btnEn.style.color = lang === "en" ? "#000" : "rgba(255,255,255,0.4)";
+          btnZh.style.background = lang === "zh" ? activeStyle : inactiveStyle;
+          btnZh.style.color = lang === "zh" ? "#000" : "rgba(255,255,255,0.4)";
+          var file = lang === "zh"
+            ? _currentEnFile.replace(/\.docx$/i, "_zh.docx")
+            : _currentEnFile;
+          loadDocFile(file);
+        };
+
+        function openTutorial(docFile, title) {
+          listEls.forEach(function (el) {
+            if (el) el.style.display = "none";
+          });
+          tutViewer.classList.add("active");
+          tvTitle.textContent = title;
+          highlightSidebar(docFile);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+
+          _currentEnFile = docFile;
+          _currentLang = "en";
+          // Reset toggle to EN
+          var btnEn = document.getElementById("tvBtnEn");
+          var btnZh = document.getElementById("tvBtnZh");
+          btnEn.style.background = "rgba(255,255,255,0.9)";
+          btnEn.style.color = "#000";
+          btnZh.style.background = "transparent";
+          btnZh.style.color = "rgba(255,255,255,0.4)";
+
+          loadDocFile(docFile);
         }
 
         window.closeTutorial = function () {

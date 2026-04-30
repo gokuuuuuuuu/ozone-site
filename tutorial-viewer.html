@@ -290,7 +290,7 @@
       </div>
 
       <!-- Title -->
-      <header class="mb-12">
+      <header class="mb-10">
         <div
           class="flex items-center gap-3 text-xs font-mono tracking-[0.2em] text-gray-500 uppercase mb-6"
         >
@@ -298,12 +298,60 @@
           <span class="w-1 h-1 rounded-full bg-gray-700"></span>
           <span>Tutorial</span>
         </div>
-        <h1
-          id="page-title"
-          class="text-3xl sm:text-4xl lg:text-[48px] font-semibold tracking-tight leading-tight text-white"
-        >
-          Loading...
-        </h1>
+        <div class="flex items-start justify-between gap-6 flex-wrap">
+          <h1
+            id="page-title"
+            class="text-3xl sm:text-4xl lg:text-[48px] font-semibold tracking-tight leading-tight text-white"
+          >
+            Loading...
+          </h1>
+          <!-- Language toggle -->
+          <div
+            id="lang-toggle"
+            style="
+              display: inline-flex;
+              align-items: center;
+              border: 1px solid rgba(255,255,255,0.1);
+              border-radius: 999px;
+              overflow: hidden;
+              flex-shrink: 0;
+              margin-top: 8px;
+            "
+          >
+            <button
+              id="btn-en"
+              onclick="switchLang('en')"
+              style="
+                padding: 7px 18px;
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: 0.06em;
+                background: rgba(255,255,255,0.9);
+                color: #000;
+                border: none;
+                cursor: pointer;
+                transition: all 0.2s;
+                font-family: inherit;
+              "
+            >EN</button>
+            <button
+              id="btn-zh"
+              onclick="switchLang('zh')"
+              style="
+                padding: 7px 18px;
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: 0.06em;
+                background: transparent;
+                color: rgba(255,255,255,0.4);
+                border: none;
+                cursor: pointer;
+                transition: all 0.2s;
+                font-family: inherit;
+              "
+            >中文</button>
+          </div>
+        </div>
       </header>
 
       <!-- Loading state -->
@@ -332,6 +380,7 @@
         var params = new URLSearchParams(window.location.search);
         var docFile = params.get("doc");
         var title = params.get("title") || "Tutorial";
+        var currentLang = "en";
 
         document.getElementById("page-title").textContent = title;
         document.getElementById("breadcrumb-title").textContent = title;
@@ -345,39 +394,70 @@
           return;
         }
 
-        var docUrl = "/" + docFile;
+        var enFile = docFile;
+        var zhFile = docFile.replace(/\.docx$/i, "_zh.docx");
 
-        fetch(docUrl)
-          .then(function (res) {
-            if (!res.ok) throw new Error("HTTP " + res.status);
-            return res.arrayBuffer();
-          })
-          .then(function (arrayBuffer) {
-            return mammoth.convertToHtml(
-              { arrayBuffer: arrayBuffer },
-              {
-                convertImage: mammoth.images.imgElement(function (image) {
-                  return image.read("base64").then(function (imageBuffer) {
-                    return {
-                      src:
-                        "data:" + image.contentType + ";base64," + imageBuffer,
-                    };
-                  });
-                }),
-              },
-            );
-          })
-          .then(function (result) {
-            document.getElementById("loading").classList.add("hidden");
-            var content = document.getElementById("doc-content");
-            content.innerHTML = result.value;
-            content.classList.remove("hidden");
-          })
-          .catch(function (err) {
-            document.getElementById("loading").classList.add("hidden");
-            document.getElementById("error").classList.remove("hidden");
-            document.getElementById("error-msg").textContent = err.message;
-          });
+        function loadDoc(file) {
+          var loadEl = document.getElementById("loading");
+          var errEl = document.getElementById("error");
+          var content = document.getElementById("doc-content");
+          loadEl.classList.remove("hidden");
+          errEl.classList.add("hidden");
+          content.classList.add("hidden");
+
+          fetch("/" + file)
+            .then(function (res) {
+              if (!res.ok) throw new Error("HTTP " + res.status);
+              return res.arrayBuffer();
+            })
+            .then(function (arrayBuffer) {
+              return mammoth.convertToHtml(
+                { arrayBuffer: arrayBuffer },
+                {
+                  convertImage: mammoth.images.imgElement(function (image) {
+                    return image.read("base64").then(function (imageBuffer) {
+                      return {
+                        src:
+                          "data:" +
+                          image.contentType +
+                          ";base64," +
+                          imageBuffer,
+                      };
+                    });
+                  }),
+                },
+              );
+            })
+            .then(function (result) {
+              loadEl.classList.add("hidden");
+              content.innerHTML = result.value;
+              content.classList.remove("hidden");
+            })
+            .catch(function (err) {
+              loadEl.classList.add("hidden");
+              errEl.classList.remove("hidden");
+              document.getElementById("error-msg").textContent = err.message;
+            });
+        }
+
+        window.switchLang = function (lang) {
+          currentLang = lang;
+          var btnEn = document.getElementById("btn-en");
+          var btnZh = document.getElementById("btn-zh");
+          var active =
+            "background:rgba(255,255,255,0.9);color:#000;";
+          var inactive =
+            "background:transparent;color:rgba(255,255,255,0.4);";
+          btnEn.style.cssText =
+            btnEn.style.cssText.replace(/background:[^;]+;color:[^;]+;/, "") +
+            (lang === "en" ? active : inactive);
+          btnZh.style.cssText =
+            btnZh.style.cssText.replace(/background:[^;]+;color:[^;]+;/, "") +
+            (lang === "zh" ? active : inactive);
+          loadDoc(lang === "zh" ? zhFile : enFile);
+        };
+
+        loadDoc(enFile);
       })();
     </script>
   </body>

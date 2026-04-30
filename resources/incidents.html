@@ -2432,16 +2432,16 @@
             },
           }),
           uk_dft: L.heatLayer([], {
-            radius: 14,
-            blur: 11,
-            max: 1.0,
-            minOpacity: 0.4,
+            radius: 5,
+            blur: 4,
+            max: 1.4,
+            minOpacity: 0.22,
             gradient: {
-              0.2: "#2d1a4e",
-              0.45: "#6a3d9a",
-              0.7: "#9b6dcc",
-              0.9: "#c9aaee",
-              1: "#ffffff",
+              0.3: "#1a0f2e",
+              0.55: "#3d2260",
+              0.75: "#6a3d9a",
+              0.92: "#9b6dcc",
+              1: "#c9aaee",
             },
           }),
         };
@@ -2465,14 +2465,17 @@
           const layer = L.layerGroup();
           top.forEach((p) => {
             const [city, lat, lon, n] = p;
-            const r = Math.min(14, 2 + Math.sqrt(n) * 0.55);
+            const isUk = src === "uk_dft";
+            const r = isUk
+              ? Math.min(7, 1.5 + Math.sqrt(n) * 0.28)
+              : Math.min(14, 2 + Math.sqrt(n) * 0.55);
             const m = L.circleMarker([lat, lon], {
               radius: r,
               color: color,
               weight: 1,
-              opacity: 0.9,
+              opacity: isUk ? 0.5 : 0.9,
               fillColor: color,
-              fillOpacity: 0.12,
+              fillOpacity: isUk ? 0.07 : 0.12,
             });
             const srcLabel =
               src === "ca"
@@ -2611,8 +2614,14 @@
           const z = map.getZoom();
           const r = Math.max(8, Math.min(26, 5 + z * 2));
           const b = Math.round(r * 0.78);
+          // uk_dft uses a much smaller, independent scale to avoid saturation
+          const rUk = Math.max(3, Math.min(10, 1 + z * 0.8));
+          const bUk = Math.round(rUk * 0.7);
           Object.keys(layers).forEach((k) => {
-            if (map.hasLayer(layers[k])) {
+            if (!map.hasLayer(layers[k])) return;
+            if (k === "uk_dft") {
+              layers[k].setOptions({ radius: rUk, blur: bUk });
+            } else {
               layers[k].setOptions({ radius: r, blur: b });
             }
           });
