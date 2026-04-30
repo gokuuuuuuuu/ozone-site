@@ -178,7 +178,13 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
       "Back" +
       "</button>" +
       '<div class="tv-eyebrow"><span>Learn</span><span class="d"></span><span>Tutorial</span></div>' +
+      '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;">' +
       '<h1 class="tv-title" id="tvTitle">Loading...</h1>' +
+      '<div id="tvLangToggle" style="display:inline-flex;align-items:center;border:1px solid rgba(255,255,255,0.1);border-radius:999px;overflow:hidden;flex-shrink:0;margin-top:6px;">' +
+      '<button id="tvBtnEn" onclick="tvSwitchLang(\'en\')" style="padding:7px 18px;font-size:12px;font-weight:600;letter-spacing:.06em;background:rgba(255,255,255,0.9);color:#000;border:none;cursor:pointer;transition:all .2s;font-family:inherit;">EN</button>' +
+      '<button id="tvBtnZh" onclick="tvSwitchLang(\'zh\')" style="padding:7px 18px;font-size:12px;font-weight:600;letter-spacing:.06em;background:transparent;color:rgba(255,255,255,0.4);border:none;cursor:pointer;transition:all .2s;font-family:inherit;">中文</button>' +
+      "</div>" +
+      "</div>" +
       '<div class="tv-loading" id="tvLoading"><div class="tv-spinner"></div>' +
       "<span style=\"font-size:13px;color:#6b7280;font-family:'JetBrains Mono',monospace\">Loading document...</span>" +
       "</div>" +
@@ -198,7 +204,7 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
         // Inline CSS for tutorial viewer
         "<style>" +
         "#tutViewer{display:none}" +
-        "#tutViewer.active{display:block}" +
+        "#tutViewer.active{display:block;background:#000}" +
         "#tutViewer .tv-back{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:transparent;color:#d4d4d8;font-size:13px;font-family:inherit;cursor:pointer;transition:background .18s,color .18s;margin-bottom:32px}" +
         "#tutViewer .tv-back:hover{background:rgba(255,255,255,.03);color:#fff}" +
         '#tutViewer .tv-eyebrow{display:flex;align-items:center;gap:10px;font-size:11px;font-family:"JetBrains Mono",monospace;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:16px}' +
@@ -243,43 +249,25 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
         'var tvErrorMsg=document.getElementById("tvErrorMsg");' +
         'var tutDoc=document.getElementById("tutDocContent");' +
         'var resContent=document.querySelector(".res-content");' +
-        'var _lastDoc="";' +
+        'var _currentEnFile="";' +
         "var _origChildren=[];" +
         "var _prevActiveLink=null;" +
-        // Save original page content refs
         "Array.prototype.forEach.call(resContent.children,function(c){" +
         "if(c!==tv)_origChildren.push(c);" +
         "});" +
-        "function openTut(docFile,title){" +
-        '_origChildren.forEach(function(c){c.style.display="none"});' +
-        'tv.classList.add("active");' +
-        "tvTitle.textContent=title;" +
+        "function loadDocFile(file){" +
         'tvLoading.style.display="flex";' +
         'tvError.style.display="none";' +
         'tutDoc.style.display="none";' +
         'tutDoc.innerHTML="";' +
-        // Remove active from main sidebar link, save ref
-        'var curActive=document.querySelector(".res-sidebar-links>li>a.active");' +
-        "if(curActive){_prevActiveLink=curActive;curActive.classList.remove('active');}" +
-        // Highlight sidebar sub-item
-        'document.querySelectorAll(".res-sidebar-sub a").forEach(function(a){' +
-        'var h=a.getAttribute("href")||"";' +
-        'var q=h.indexOf("?")!==-1?h.split("?")[1]:"";' +
-        'var d=new URLSearchParams(q).get("doc")||"";' +
-        'if(d===docFile)a.classList.add("active");' +
-        'else a.classList.remove("active");' +
-        "});" +
-        'window.scrollTo({top:0,behavior:"smooth"});' +
-        "if(docFile===_lastDoc&&tutDoc.dataset.cached){" +
+        "var ck=file;" +
+        "if(tutDoc.dataset.cacheKey===ck&&tutDoc.dataset.cached){" +
         "tutDoc.innerHTML=tutDoc.dataset.cached;" +
         'tvLoading.style.display="none";' +
         'tutDoc.style.display="block";' +
         "return;" +
         "}" +
-        'var docUrl="' +
-        R +
-        '"+docFile;' +
-        "fetch(docUrl).then(function(r){" +
+        'fetch("' + R + '"+file).then(function(r){' +
         'if(!r.ok)throw new Error("HTTP "+r.status);' +
         "return r.arrayBuffer();" +
         "}).then(function(buf){" +
@@ -291,7 +279,7 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
         "})" +
         "});" +
         "}).then(function(result){" +
-        "_lastDoc=docFile;" +
+        "tutDoc.dataset.cacheKey=ck;" +
         "tutDoc.dataset.cached=result.value;" +
         "tutDoc.innerHTML=result.value;" +
         'tvLoading.style.display="none";' +
@@ -302,6 +290,35 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
         "tvErrorMsg.textContent=err.message;" +
         "});" +
         "}" +
+        "window.tvSwitchLang=function(lang){" +
+        'var be=document.getElementById("tvBtnEn");' +
+        'var bz=document.getElementById("tvBtnZh");' +
+        'if(be){be.style.background=lang==="en"?"rgba(255,255,255,0.9)":"transparent";be.style.color=lang==="en"?"#000":"rgba(255,255,255,0.4)";}' +
+        'if(bz){bz.style.background=lang==="zh"?"rgba(255,255,255,0.9)":"transparent";bz.style.color=lang==="zh"?"#000":"rgba(255,255,255,0.4)";}' +
+        'var file=lang==="zh"?_currentEnFile.replace(/\\.docx$/i,"_zh.docx"):_currentEnFile;' +
+        "loadDocFile(file);" +
+        "};" +
+        "function openTut(docFile,title){" +
+        '_origChildren.forEach(function(c){c.style.display="none"});' +
+        'tv.classList.add("active");' +
+        "tvTitle.textContent=title;" +
+        'var curActive=document.querySelector(".res-sidebar-links>li>a.active");' +
+        "if(curActive){_prevActiveLink=curActive;curActive.classList.remove('active');}" +
+        'document.querySelectorAll(".res-sidebar-sub a").forEach(function(a){' +
+        'var h=a.getAttribute("href")||"";' +
+        'var q=h.indexOf("?")!==-1?h.split("?")[1]:"";' +
+        'var d=new URLSearchParams(q).get("doc")||"";' +
+        'if(d===docFile)a.classList.add("active");' +
+        'else a.classList.remove("active");' +
+        "});" +
+        'window.scrollTo({top:0,behavior:"smooth"});' +
+        "_currentEnFile=docFile;" +
+        'var be=document.getElementById("tvBtnEn");' +
+        'var bz=document.getElementById("tvBtnZh");' +
+        'if(be){be.style.background="rgba(255,255,255,0.9)";be.style.color="#000";}' +
+        'if(bz){bz.style.background="transparent";bz.style.color="rgba(255,255,255,0.4)";}' +
+        "loadDocFile(docFile);" +
+        "}" +
         "function closeTut(){" +
         'tv.classList.remove("active");' +
         '_origChildren.forEach(function(c){c.style.display=""});' +
@@ -309,7 +326,6 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
         "if(_prevActiveLink)_prevActiveLink.classList.add('active');" +
         "}" +
         'document.getElementById("tvBackBtn").addEventListener("click",closeTut);' +
-        // Intercept all data-tut-link clicks
         'document.querySelectorAll("[data-tut-link]").forEach(function(a){' +
         'a.addEventListener("click",function(e){' +
         "e.preventDefault();" +
