@@ -36638,13 +36638,35 @@
         1,
         4000,
       );
-      const renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
-        antialias: true,
-        alpha: false,
-      });
+      function createWebGLRenderer(targetCanvas) {
+        const baseOpts = {
+          canvas: targetCanvas,
+          alpha: false,
+          powerPreference: "high-performance",
+          failIfMajorPerformanceCaveat: false,
+          preserveDrawingBuffer: false,
+        };
+        try {
+          return new THREE.WebGLRenderer(Object.assign({ antialias: true }, baseOpts));
+        } catch (e1) {
+          console.warn("WebGL context with antialias failed, retrying without:", e1);
+          try {
+            return new THREE.WebGLRenderer(Object.assign({ antialias: false }, baseOpts, { powerPreference: "default" }));
+          } catch (e2) {
+            console.error("WebGL not available on this device:", e2);
+            return null;
+          }
+        }
+      }
+      const renderer = createWebGLRenderer(canvas);
+      if (!renderer) {
+        canvas.style.display = "none";
+        const loaderEl = document.getElementById("loader");
+        if (loaderEl) loaderEl.style.display = "none";
+        throw new Error("WebGL unavailable — aborting 3D scene init");
+      }
       renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
       const EARTH_RADIUS = 500;
       let scrollProgress = 0;
@@ -39642,7 +39664,7 @@
               </span>
               <div>
                 <div class="rh-tile-type">Code</div>
-                <h3>code source</h3>
+                <h3>Code Source</h3>
               </div>
             </div>
             <p class="rh-tile-desc">
@@ -42020,11 +42042,12 @@
         lmEarthInit = true;
         var miniCanvas = document.getElementById("lmEarthCanvas");
         if (!miniCanvas) return;
-        lmRenderer2 = new THREE.WebGLRenderer({
-          canvas: miniCanvas,
-          antialias: true,
-          alpha: false,
-        });
+        lmRenderer2 = createWebGLRenderer(miniCanvas);
+        if (!lmRenderer2) {
+          miniCanvas.style.display = "none";
+          lmEarthInit = false;
+          return;
+        }
         lmRenderer2.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
         lmCamera2 = new THREE.PerspectiveCamera(38, 1, 1, 4000);
         LM_CAM_POS = new THREE.Vector3(0, 64, 310);
