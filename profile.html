@@ -4676,7 +4676,7 @@
             </button>
             <a
               class="rc-nav-item"
-              href="https://github.com/ZhilingResearch/Ozone"
+              href="https://github.com/ZhilingResearch/Ozone/tree/main/standardized_data_toolkit"
               target="_blank"
               rel="noopener noreferrer"
               style="text-decoration: none"
@@ -6223,7 +6223,15 @@
                 <div class="tv-eyebrow">
                   <span>Learn</span><span class="d"></span><span>Tutorial</span>
                 </div>
-                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+                <div
+                  style="
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                    gap: 16px;
+                    flex-wrap: wrap;
+                  "
+                >
                   <h1 class="tv-title" id="tvTitle">Loading...</h1>
                   <!-- Language toggle -->
                   <div
@@ -6231,7 +6239,7 @@
                     style="
                       display: inline-flex;
                       align-items: center;
-                      border: 1px solid rgba(255,255,255,0.1);
+                      border: 1px solid rgba(255, 255, 255, 0.1);
                       border-radius: 999px;
                       overflow: hidden;
                       flex-shrink: 0;
@@ -6246,14 +6254,16 @@
                         font-size: 12px;
                         font-weight: 600;
                         letter-spacing: 0.06em;
-                        background: rgba(255,255,255,0.9);
+                        background: rgba(255, 255, 255, 0.9);
                         color: #000;
                         border: none;
                         cursor: pointer;
                         transition: all 0.2s;
                         font-family: inherit;
                       "
-                    >EN</button>
+                    >
+                      EN
+                    </button>
                     <button
                       id="tvBtnZh"
                       onclick="tvSwitchLang('zh')"
@@ -6263,13 +6273,15 @@
                         font-weight: 600;
                         letter-spacing: 0.06em;
                         background: transparent;
-                        color: rgba(255,255,255,0.4);
+                        color: rgba(255, 255, 255, 0.4);
                         border: none;
                         cursor: pointer;
                         transition: all 0.2s;
                         font-family: inherit;
                       "
-                    >中文</button>
+                    >
+                      中文
+                    </button>
                   </div>
                 </div>
                 <div class="tv-loading" id="tvLoading">
@@ -7667,7 +7679,10 @@
           tutDocContent.innerHTML = "";
 
           var cacheKey = file;
-          if (tutDocContent.dataset.cacheKey === cacheKey && tutDocContent.dataset.cached) {
+          if (
+            tutDocContent.dataset.cacheKey === cacheKey &&
+            tutDocContent.dataset.cached
+          ) {
             tutDocContent.innerHTML = tutDocContent.dataset.cached;
             tvLoading.style.display = "none";
             tutDocContent.style.display = "block";
@@ -7685,7 +7700,9 @@
                 {
                   convertImage: mammoth.images.imgElement(function (img) {
                     return img.read("base64").then(function (b64) {
-                      return { src: "data:" + img.contentType + ";base64," + b64 };
+                      return {
+                        src: "data:" + img.contentType + ";base64," + b64,
+                      };
                     });
                   }),
                 },
@@ -7709,13 +7726,16 @@
           _currentLang = lang;
           var btnEn = document.getElementById("tvBtnEn");
           var btnZh = document.getElementById("tvBtnZh");
-          btnEn.style.background = lang === "en" ? "rgba(255,255,255,0.9)" : "transparent";
+          btnEn.style.background =
+            lang === "en" ? "rgba(255,255,255,0.9)" : "transparent";
           btnEn.style.color = lang === "en" ? "#000" : "rgba(255,255,255,0.4)";
-          btnZh.style.background = lang === "zh" ? "rgba(255,255,255,0.9)" : "transparent";
+          btnZh.style.background =
+            lang === "zh" ? "rgba(255,255,255,0.9)" : "transparent";
           btnZh.style.color = lang === "zh" ? "#000" : "rgba(255,255,255,0.4)";
-          var file = lang === "zh"
-            ? _currentEnFile.replace(/\.docx$/i, "_zh.docx")
-            : _currentEnFile;
+          var file =
+            lang === "zh"
+              ? _currentEnFile.replace(/\.docx$/i, "_zh.docx")
+              : _currentEnFile;
           loadDocFile(file);
         };
 

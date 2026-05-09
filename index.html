@@ -19,7 +19,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ozone: A Unified Platform for Transportation Research</title>
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/css/tom-select.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/css/tom-select.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/js/tom-select.complete.min.js"></script>
     <style>
       .text-primary {
@@ -4324,7 +4327,7 @@
                     </svg>
                   </a>
                   <a
-                    href="https://github.com/ZhilingResearch/Ozone"
+                    href="https://github.com/ZhilingResearch/Ozone/tree/main/standardized_data_toolkit"
                     target="_blank"
                     class="nav-mega-item"
                     data-auth-required
@@ -6127,7 +6130,7 @@
               fill="rgba(59,130,246,0.45)"
             />
             <text class="ds-date-label" x="250" y="1028" text-anchor="end">
-              2026 Q3
+              2026 Q2
             </text>
             <text class="ds-milestone" x="250" y="1052" text-anchor="end">
               6 basemaps
@@ -6514,12 +6517,12 @@
                 name: "NGSIM",
                 date: "2026 Q2",
                 desc: "",
-                status: "coming",
+                status: "released",
                 hasImg: true,
               },
               {
                 name: "HighD",
-                date: "2026 Q3",
+                date: "2026 Q2",
                 desc: "",
                 status: "coming",
                 hasImg: true,
@@ -6589,7 +6592,8 @@
                 badgeStyle =
                   "background:rgba(52,211,153,.1);color:#6ee7b7;border:1px solid rgba(52,211,153,.2)";
                 dotColor = "#34d399";
-                btnHtml = '<span class="ds-btn">Released \u00b7 2025 Q4</span>';
+                btnHtml =
+                  '<span class="ds-btn">Released \u00b7 ' + d.date + "</span>";
               } else if (d.status === "coming") {
                 badgeStyle =
                   "background:rgba(56,189,248,.08);color:#7dd3fc;border:1px solid rgba(56,189,248,.15)";
@@ -8609,7 +8613,6 @@
               </p>
             </div>
           </div>
-
         </div>
       </section>
 
@@ -9300,7 +9303,9 @@
                         transition: all 0.25s ease;
                       "
                       onfocus="
-                        document.getElementById('apfEmailWrap').classList.remove('apf-email-err');
+                        document
+                          .getElementById('apfEmailWrap')
+                          .classList.remove('apf-email-err');
                         this.style.borderColor = 'rgba(100,160,255,0.65)';
                         this.style.background = 'rgba(59,130,246,0.09)';
                         this.style.boxShadow =
@@ -9312,9 +9317,13 @@
                         this.style.background = '';
                         this.style.boxShadow = '';
                         if (this.value.trim() !== '' && !this.validity.valid) {
-                          document.getElementById('apfEmailWrap').classList.add('apf-email-err');
+                          document
+                            .getElementById('apfEmailWrap')
+                            .classList.add('apf-email-err');
                         } else {
-                          document.getElementById('apfEmailWrap').classList.remove('apf-email-err');
+                          document
+                            .getElementById('apfEmailWrap')
+                            .classList.remove('apf-email-err');
                         }
                       "
                     />
@@ -13009,38 +13018,63 @@
 
       <style>
         @keyframes shimmer {
-          0%   { left: -100%; }
-          100% { left: 200%; }
+          0% {
+            left: -100%;
+          }
+          100% {
+            left: 200%;
+          }
         }
-        .shimmer-effect { position: relative; overflow: hidden; }
+        .shimmer-effect {
+          position: relative;
+          overflow: hidden;
+        }
         .shimmer-effect::after {
           content: "";
           position: absolute;
-          top: 0; left: -100%;
-          width: 50%; height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+          top: 0;
+          left: -100%;
+          width: 50%;
+          height: 100%;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.15),
+            transparent
+          );
           transform: skewX(-20deg);
           animation: shimmer 3s infinite;
         }
         .glass-panel {
-          background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+          background: linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.03) 0%,
+            rgba(255, 255, 255, 0.01) 100%
+          );
           backdrop-filter: blur(24px);
           -webkit-backdrop-filter: blur(24px);
-          border: 1px solid rgba(255,255,255,0.06);
-          box-shadow: 0 40px 80px -20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 0 40px rgba(59,130,246,0.05);
+          border: 1px solid rgba(255, 255, 255, 0.06);
+          box-shadow:
+            0 40px 80px -20px rgba(0, 0, 0, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            inset 0 0 40px rgba(59, 130, 246, 0.05);
         }
         .liquid-button {
           background: rgba(37, 99, 235, 0.1);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           border: 1px solid rgba(59, 130, 246, 0.3);
-          box-shadow: 0 0 20px rgba(59,130,246,0.1), inset 0 0 20px rgba(255,255,255,0.05);
+          box-shadow:
+            0 0 20px rgba(59, 130, 246, 0.1),
+            inset 0 0 20px rgba(255, 255, 255, 0.05);
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .liquid-button:hover {
           background: rgba(59, 130, 246, 0.25);
           border-color: rgba(59, 130, 246, 0.8);
-          box-shadow: 0 0 40px rgba(59,130,246,0.5), inset 0 0 20px rgba(255,255,255,0.1);
+          box-shadow:
+            0 0 40px rgba(59, 130, 246, 0.5),
+            inset 0 0 20px rgba(255, 255, 255, 0.1);
           transform: translateY(-4px) scale(1.02);
         }
       </style>
@@ -13156,9 +13190,7 @@
               ></div>
 
               <div class="relative z-10 flex flex-col items-center text-center">
-                <h2
-                  class="text-lg font-bold tracking-tight text-white mb-2"
-                >
+                <h2 class="text-lg font-bold tracking-tight text-white mb-2">
                   Interested in
                   <span
                     class="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] via-[#60A5FA] to-[#93C5FD]"
@@ -13174,12 +13206,12 @@
                 </p>
                 <button
                   type="button"
-                  onclick="document.getElementById('joinModal').classList.add('open'); document.body.style.overflow='hidden';"
-                  class="liquid-button shimmer-effect group/btn relative inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full text-white font-semibold text-sm overflow-hidden w-fit"
+                  disabled
+                  class="liquid-button group/btn relative inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full text-white/50 font-semibold text-sm overflow-hidden w-fit cursor-not-allowed opacity-60"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-4 w-4 text-[#3B82F6] group-hover/btn:text-white group-hover/btn:scale-110 transition-all duration-300 relative z-10"
+                    class="h-4 w-4 text-[#3B82F6]/50 relative z-10"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -13191,7 +13223,7 @@
                       d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
                     />
                   </svg>
-                  <span class="relative z-10 tracking-wide">Join Us</span>
+                  <span class="relative z-10 tracking-wide">Coming Soon</span>
                 </button>
               </div>
             </div>
@@ -13203,29 +13235,6 @@
           <p>
             © 2024 Zhiling Research. Built for the future of autonomous driving.
           </p>
-          <div class="flex gap-4 mt-4 md:mt-0">
-            <a
-              href="https://github.com/ZhilingResearch/Ozone/blob/main/PRIVACY.md"
-              target="_blank"
-              rel="noopener"
-              class="hover:text-white transition-colors"
-              >Privacy Policy</a
-            >
-            <a
-              href="https://github.com/ZhilingResearch/Ozone/blob/main/TERMS.md"
-              target="_blank"
-              rel="noopener"
-              class="hover:text-white transition-colors"
-              >Terms of Service</a
-            >
-            <a
-              href="https://github.com/ZhilingResearch/Ozone/blob/main/LICENSE"
-              target="_blank"
-              rel="noopener"
-              class="hover:text-white transition-colors"
-              >License</a
-            >
-          </div>
         </div>
       </footer>
 
@@ -36763,11 +36772,20 @@
           preserveDrawingBuffer: false,
         };
         try {
-          return new THREE.WebGLRenderer(Object.assign({ antialias: true }, baseOpts));
+          return new THREE.WebGLRenderer(
+            Object.assign({ antialias: true }, baseOpts),
+          );
         } catch (e1) {
-          console.warn("WebGL context with antialias failed, retrying without:", e1);
+          console.warn(
+            "WebGL context with antialias failed, retrying without:",
+            e1,
+          );
           try {
-            return new THREE.WebGLRenderer(Object.assign({ antialias: false }, baseOpts, { powerPreference: "default" }));
+            return new THREE.WebGLRenderer(
+              Object.assign({ antialias: false }, baseOpts, {
+                powerPreference: "default",
+              }),
+            );
           } catch (e2) {
             console.error("WebGL not available on this device:", e2);
             return null;
