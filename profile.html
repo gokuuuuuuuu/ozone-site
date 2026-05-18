@@ -5181,10 +5181,9 @@
                 <p class="lead">
                   Three curated incident corpora covering California's
                   state-mandated AV collision reports, NHTSA's federal Standing
-                  General Order for ADS and ADAS, and UK DfT London road
-                  collisions. Every record is cleaned, geo-located and tagged --
-                  ready for comparative safety analysis and SOTIF scenario
-                  construction.
+                  General Order for ADS and ADAS, and UK DfT road collisions.
+                  Every record is cleaned, geo-located and tagged -- ready for
+                  comparative safety analysis and SOTIF scenario construction.
                 </p>
               </div>
               <section class="heatmap-section" id="heatmapSection">
@@ -5695,13 +5694,13 @@
                   class="inc-dataset"
                   data-tone="uk"
                   id="uk-dft"
-                  data-name="uk dft department for transport london collisions stats19 road traffic accidents england united kingdom tfl 2020 2025"
+                  data-name="uk dft department for transport road collisions stats19 road traffic accidents england scotland wales united kingdom 2020 2025"
                 >
                   <div class="inc-caption">
-                    <h2>UK DfT &middot; London Road Collisions</h2>
+                    <h2>UK DfT &middot; Road Collisions</h2>
                     <div class="sub">
-                      United Kingdom &middot; London &middot; 2020 -- 2025
-                      &middot; STATS19 &middot; 121,707 records
+                      United Kingdom &middot; 2020 -- 2025 &middot; STATS19
+                      &middot; 551,881 records
                     </div>
                     <div class="tags">
                       National regulator<span class="sep">&middot;</span>Road
@@ -5711,27 +5710,27 @@
                   <div class="inc-body">
                     <p class="inc-desc">
                       The <b>UK Department for Transport STATS19</b> dataset
-                      covering all reported road traffic collisions in the
-                      Greater London area from 2020 to 2025. Each record is
-                      individually geocoded to collision-level coordinates,
-                      aggregated here into ~1 km grid cells for heatmap
+                      covering all reported road traffic collisions across
+                      England, Scotland and Wales from 2020 to 2025. Each record
+                      is individually geocoded to collision-level coordinates,
+                      aggregated here into ~10 km grid cells for heatmap
                       visualisation. The corpus provides a comprehensive
-                      baseline of <b>121,707 collision events</b> across the
-                      London metropolitan region.
+                      baseline of <b>551,881 collision events</b> across the
+                      United Kingdom.
                     </p>
                     <div class="inc-divider"></div>
                     <div class="inc-stats">
                       <div class="inc-stat">
                         <span class="k">Records</span
-                        ><span class="v">121,707</span>
+                        ><span class="v">551,881</span>
                       </div>
                       <div class="inc-stat">
                         <span class="k">Grid cells</span
-                        ><span class="v">2,030</span>
+                        ><span class="v">3,061</span>
                       </div>
                       <div class="inc-stat">
                         <span class="k">Region</span
-                        ><span class="v">Greater London</span>
+                        ><span class="v">United Kingdom</span>
                       </div>
                       <div class="inc-stat">
                         <span class="k">Span</span
@@ -5757,7 +5756,7 @@
                         class="inc-dl primary"
                         href="#"
                         data-cite-download="https://pan.baidu.com/s/1NNpLUKDi6h_DTczwM-BJ0A?pwd=NBDT"
-                        data-cite-label="UK DfT London Road Collisions"
+                        data-cite-label="UK DfT Road Collisions"
                         data-cite-pwd="NBDT"
                         ><svg
                           width="14"
@@ -8173,9 +8172,12 @@
             layers[k].addTo(map);
             markers[k].addTo(map);
           });
-          // Pan to relevant region only when needed
-          if (which === "uk_dft") map.setView([51.5, -0.1], 10);
-          else if (which === "all") map.setView([38.5, -97.5], 3.5);
+          // Pan to relevant region
+          if (which === "uk_dft") map.setView([54.5, -2.5], 6);
+          else if (which === "ca") map.setView([37.5, -122.0], 7);
+          else if (which === "ads") map.setView([38.5, -97.5], 4);
+          else if (which === "adas") map.setView([38.5, -97.5], 4);
+          else if (which === "all") map.setView([40, -45], 3);
         }
 
         var kpiTotal = document.getElementById("kpiTotal");
