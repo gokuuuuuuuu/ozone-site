@@ -1475,6 +1475,114 @@
         }
       }
 
+      /* == Waymo showcase == */
+      #rcTrajectories .waymo-showcase {
+        position: relative;
+        margin-top: 28px;
+        border-radius: 20px;
+        overflow: hidden;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.025),
+          rgba(255, 255, 255, 0.008)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        box-shadow: 0 30px 60px -44px rgba(0, 0, 0, 0.7);
+        padding: 40px 36px 36px;
+        transition:
+          border-color 0.3s,
+          box-shadow 0.3s;
+      }
+      #rcTrajectories .waymo-showcase:hover {
+        border-color: rgba(255, 255, 255, 0.14);
+        box-shadow: 0 40px 72px -44px rgba(0, 0, 0, 0.9);
+      }
+      #rcTrajectories .waymo-showcase .ws-eyebrow {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.38);
+        margin-bottom: 10px;
+      }
+      #rcTrajectories .waymo-showcase h2 {
+        margin: 0 0 14px;
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: -0.015em;
+        color: #fff;
+      }
+      #rcTrajectories .waymo-showcase .ws-desc {
+        margin: 0 0 32px;
+        font-size: 13.5px;
+        line-height: 1.78;
+        color: rgba(255, 255, 255, 0.55);
+      }
+      #rcTrajectories .waymo-showcase .ws-gifs {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-bottom: 32px;
+      }
+      #rcTrajectories .waymo-showcase .ws-gif-card {
+        position: relative;
+        border-radius: 14px;
+        overflow: hidden;
+        background: #070910;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        aspect-ratio: 16 / 10;
+        transition:
+          border-color 0.3s,
+          transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      #rcTrajectories .waymo-showcase .ws-gif-card:hover {
+        border-color: rgba(255, 255, 255, 0.18);
+        transform: translateY(-3px);
+      }
+      #rcTrajectories .waymo-showcase .ws-gif-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        filter: brightness(0.92);
+        transition: filter 0.3s;
+      }
+      #rcTrajectories .waymo-showcase .ws-gif-card:hover img {
+        filter: brightness(1);
+      }
+      #rcTrajectories .waymo-showcase .ws-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: 10px;
+        background: #f4f5f8;
+        color: #0a0b12;
+        font-size: 13.5px;
+        font-weight: 600;
+        font-family: inherit;
+        letter-spacing: 0.003em;
+        text-decoration: none;
+        border: 1px solid #f4f5f8;
+        cursor: pointer;
+        transition:
+          transform 0.18s ease,
+          background 0.18s;
+      }
+      #rcTrajectories .waymo-showcase .ws-cta:hover {
+        transform: translateY(-1px);
+        background: #fff;
+      }
+      @media (max-width: 860px) {
+        #rcTrajectories .waymo-showcase {
+          padding: 28px 22px 28px;
+        }
+        #rcTrajectories .waymo-showcase .ws-gifs {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+      }
+
       /* == rcIncidents (was #sec-incidents) == */
       #rcIncidents .inc-wrap {
         position: relative;
@@ -5459,6 +5567,70 @@
                     />
                   </div>
                 </article>
+
+                <!-- Waymo Open Dataset -->
+                <div class="waymo-showcase">
+                  <div class="ws-eyebrow">Autonomous Driving Data</div>
+                  <h2>Waymo Open Dataset</h2>
+                  <p class="ws-desc">
+                    The Waymo Open Dataset is a collection of large-scale,
+                    high-quality, and diverse datasets shared by Waymo to
+                    support the autonomous driving research community. It
+                    provides high-resolution sensor data (including LiDAR and
+                    camera imagery) alongside complex driving scenarios and
+                    object trajectories. The dataset is designed to help
+                    researchers tackle key machine learning challenges, such as
+                    perception, interaction prediction, and end-to-end motion
+                    planning.
+                  </p>
+                  <div class="ws-gifs">
+                    <div class="ws-gif-card">
+                      <img
+                        src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/Dataset_gif1.gif"
+                        alt="Waymo Open Dataset preview 1"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="ws-gif-card">
+                      <img
+                        src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/Dataset_gif2.gif"
+                        alt="Waymo Open Dataset preview 2"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="ws-gif-card">
+                      <img
+                        src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/Dataset_gif3.gif"
+                        alt="Waymo Open Dataset preview 3"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <a
+                    class="ws-cta"
+                    href="https://waymo.com/open/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Explore Waymo Open Dataset
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                      />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
 
