@@ -5093,26 +5093,18 @@
         class="relative"
         style="background: #000; padding: 80px 0 100px"
       >
-        <!-- =============== S-CURVE TIMELINE STYLES =============== -->
+        <!-- =============== DATASETS SHOWCASE =============== -->
         <style>
-          /* --- Section --- */
-          #datasets {
-            overflow: visible;
-          }
-
-          .ds-wrap {
-            position: relative;
-            max-width: 1600px;
+          .ds-showcase-wrap {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
           }
-
-          .ds-title {
+          .ds-showcase-header {
             text-align: center;
             margin-bottom: 56px;
           }
-
-          .ds-title .badge {
+          .ds-showcase-header .badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -5123,1945 +5115,280 @@
             margin-bottom: 18px;
             border: 1px solid rgba(255, 255, 255, 0.08);
           }
-
-          .ds-title .badge .dot {
+          .ds-showcase-header .badge .dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
             background: #38bdf8;
             box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
           }
-
-          .ds-title .badge span {
+          .ds-showcase-header .badge span {
             font-size: 13px;
             color: rgba(255, 255, 255, 0.7);
             font-weight: 500;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
           }
-
-          .ds-title h2 {
-            font-size: clamp(28px, 4vw, 48px);
-            font-weight: 800;
+          .ds-showcase-header h2 {
+            font-size: clamp(2.5rem, 5vw, 3.75rem);
+            font-weight: 700;
+            letter-spacing: -0.025em;
             color: #fff;
-            margin: 0 0 12px;
+            margin: 0 0 14px;
+            line-height: 1.15;
           }
-
-          .ds-title p {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.45);
+          .ds-showcase-header p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.5);
             max-width: 520px;
             margin: 0 auto;
+            line-height: 1.7;
           }
 
-          /* --- SVG canvas --- */
-          .ds-svg {
-            display: block;
-            width: 100%;
-            height: auto;
-          }
-
-          /* --- Timeline date labels on the curve --- */
-          .ds-date-label {
-            font-family: inherit;
-            font-size: 15px;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            fill: rgba(255, 255, 255, 0.2);
-            transition:
-              fill 0.6s,
-              filter 0.6s;
-            pointer-events: none;
-          }
-
-          .ds-date-label.lit {
-            fill: rgba(59, 130, 246, 0.7);
-            filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.4));
-          }
-
-          .ds-date-label.active {
-            fill: #fff;
-            font-size: 16px;
-            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.8));
-          }
-
-          /* milestone count badge near node */
-          .ds-milestone {
-            font-family: inherit;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            fill: rgba(255, 255, 255, 0.12);
-            pointer-events: none;
-            transition: fill 0.6s;
-          }
-
-          .ds-milestone.lit {
-            fill: rgba(59, 130, 246, 0.45);
-          }
-
-          .ds-milestone.active {
-            fill: rgba(255, 255, 255, 0.55);
-          }
-
-          /* status ring overlays on node dots */
-          /* path particles — glowing dust along the curve */
-          .ds-particle {
-            fill: rgba(59, 130, 246, 0.15);
-            transition: fill 0.5s;
-          }
-
-          .ds-particle.lit {
-            fill: rgba(59, 130, 246, 0.45);
-          }
-
-          /* --- Placeholder card — 3-layer micro-interaction (matching border-glow-card) --- */
-          .ds-placeholder {
-            width: 360px;
-            height: 240px;
-            border-radius: 1.2rem;
-            background: #060010;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+          /* Card */
+          .ds-showcase-card {
             position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-radius: 22px;
             overflow: hidden;
-            transition:
-              transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 0.4s ease,
-              border-color 0.3s;
-          }
-
-          /* Layer 1: flowing border glow (animated gradient along edges) */
-          .ds-placeholder::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px;
-            background: linear-gradient(
-              135deg,
-              rgba(59, 130, 246, 0),
-              rgba(59, 130, 246, 0),
-              rgba(59, 130, 246, 0)
-            );
-            -webkit-mask:
-              linear-gradient(#fff 0 0) content-box,
-              linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-            z-index: 1;
-          }
-
-          .ds-card.on .ds-placeholder::before {
-            opacity: 1;
-            background: linear-gradient(
-              135deg,
-              rgba(59, 130, 246, 0.8),
-              rgba(96, 165, 250, 0.6) 25%,
-              rgba(14, 165, 233, 0.4) 50%,
-              rgba(59, 130, 246, 0.6) 75%,
-              rgba(37, 99, 235, 0.8)
-            );
-            animation: borderGlow 3s ease-in-out infinite;
-          }
-
-          /* Layer 2: mouse-follow radial glow */
-          .ds-placeholder .ph-glow {
-            position: absolute;
-            inset: -2px;
-            border-radius: inherit;
-            opacity: 0;
-            transition: opacity 0.4s;
-            pointer-events: none;
-            z-index: 0;
-            background: radial-gradient(
-              circle at var(--mx, 50%) var(--my, 50%),
-              rgba(59, 130, 246, 0.3) 0%,
-              rgba(96, 165, 250, 0.12) 30%,
-              transparent 60%
-            );
-          }
-
-          .ds-card.on .ds-placeholder .ph-glow {
-            opacity: 1;
-          }
-
-          /* Layer 3: lift + shadow on active */
-          .ds-card.on .ds-placeholder {
-            transform: translateY(-6px) scale(1.005);
-            border-color: rgba(59, 130, 246, 0.18);
-            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.1);
-          }
-
-          .ds-placeholder .ph-grid {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            opacity: 0.5;
-            z-index: 1;
-          }
-
-          .ds-placeholder .ph-content {
-            position: absolute;
-            inset: 0;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-          }
-
-          .ds-placeholder .ph-icon {
-            width: 3rem;
-            height: 3rem;
-            border-radius: 9999px;
-            background: rgba(59, 130, 246, 0.08);
-            border: 1px solid rgba(59, 130, 246, 0.18);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #60a5fa;
-            transition: all 0.4s;
-          }
-
-          .ds-card.on .ds-placeholder .ph-icon {
-            background: rgba(59, 130, 246, 0.15);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.25);
-            transform: scale(1.1);
-          }
-
-          .ds-placeholder .ph-icon svg {
-            width: 20px;
-            height: 20px;
-            stroke: currentColor;
-            fill: none;
-          }
-
-          .ds-placeholder .ph-text {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.2);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            font-weight: 600;
-            transition: color 0.3s;
-          }
-
-          .ds-card.on .ds-placeholder .ph-text {
-            color: rgba(255, 255, 255, 0.45);
-          }
-
-          .ds-placeholder .ph-sub {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.1);
-            font-weight: 400;
-            transition: color 0.3s;
-          }
-
-          .ds-card.on .ds-placeholder .ph-sub {
-            color: rgba(255, 255, 255, 0.25);
-          }
-
-          /* --- Cards --- */
-          .ds-card {
-            position: absolute;
-            width: 360px;
-            opacity: 0;
-            transform: scale(0.88) translateY(12px);
-            filter: blur(2px);
-            transition:
-              opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-              filter 0.6s;
-            z-index: 5;
-            pointer-events: none;
-          }
-
-          .ds-card.on {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            filter: none;
-            z-index: 15;
-            pointer-events: auto;
-          }
-
-          .ds-card.side-R {
-            --tilt: 2.5deg;
-          }
-
-          .ds-card.side-L {
-            --tilt: -2.5deg;
-          }
-
-          .ds-card.on.side-R {
-            transform: rotate(var(--tilt)) translateY(0);
-          }
-
-          .ds-card.on.side-L {
-            transform: rotate(var(--tilt)) translateY(0);
-          }
-
-          /* image stack — drag-away stack (reference: stack-container) */
-          .ds-imgs {
-            position: relative;
-            width: 360px;
-            height: 240px;
-            perspective: 600px;
-            margin-bottom: 0;
-          }
-
-          .ds-imgs .ds-b,
-          .ds-imgs .ds-f {
-            position: absolute;
-            inset: 0;
-            border-radius: 1rem;
-            overflow: hidden;
-            background: #111;
-            box-shadow: 0 8px 36px rgba(0, 0, 0, 0.55);
-            border: 1.5px solid rgba(255, 255, 255, 0.1);
-          }
-
-          .ds-imgs .ds-b {
-            z-index: 1;
-          }
-
-          .ds-imgs .ds-b:nth-child(1) {
-            transform: rotate(6deg) translateX(14px) translateY(-5px) scale(0.9);
-            transform-origin: 70% 90%;
-          }
-
-          .ds-imgs .ds-b:nth-child(2) {
-            transform: rotate(3deg) translateX(7px) translateY(-2px) scale(0.95);
-            transform-origin: 70% 90%;
-          }
-
-          .ds-imgs .ds-f {
-            z-index: 3;
-            cursor: grab;
-            will-change: transform;
-            transition: none;
-          }
-
-          .ds-imgs .ds-f.snap {
-            transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-          }
-
-          .ds-imgs .ds-f.away {
-            transition:
-              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.4s;
-          }
-
-          .ds-imgs .ds-f:active {
-            cursor: grabbing;
-          }
-
-          .ds-imgs .ds-f img,
-          .ds-imgs .ds-b img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            pointer-events: none;
-            user-select: none;
-            -webkit-user-drag: none;
-          }
-
-          .ds-pips {
-            position: absolute;
-            bottom: 10px;
-            right: 14px;
-            display: flex;
-            gap: 5px;
-            z-index: 4;
-          }
-
-          .ds-pips i {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transition:
-              background 0.3s,
-              width 0.3s;
-          }
-
-          .ds-pips i.act {
-            background: #fff;
-            width: 16px;
-            border-radius: 3px;
-          }
-
-          /* info panel — white glass card (matches screenshot) */
-          .ds-info {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-top: none;
-            border-radius: 0 0 16px 16px;
-            padding: 18px 20px 16px;
-            color: #1a1a2e;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-          }
-
-          .ds-card.on .ds-info {
-            background: rgba(255, 255, 255, 0.96);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-          }
-
-          .ds-info .ds-date {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            color: rgba(0, 120, 200, 0.7);
-            margin-bottom: 8px;
-            padding: 3px 10px;
-            background: rgba(56, 189, 248, 0.08);
-            border-radius: 999px;
-            border: 1px solid rgba(56, 189, 248, 0.15);
-          }
-
-          .ds-info .ds-date i {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: #3b82f6;
-          }
-
-          .ds-info .ds-name {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            line-height: 1.3;
-            color: #111;
-          }
-
-          .ds-info .ds-desc {
-            font-size: 13px;
-            color: rgba(0, 0, 0, 0.5);
-            line-height: 1.5;
-            margin-bottom: 12px;
-          }
-
-          .ds-info .ds-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            border-radius: 999px;
-            background: rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            font-size: 11px;
-            font-weight: 600;
-            color: rgba(0, 0, 0, 0.4);
-            cursor: default;
-            transition: all 0.2s;
-            letter-spacing: 0.02em;
-          }
-
-          .ds-info .ds-btn.active {
-            cursor: pointer;
-            color: rgba(0, 0, 0, 0.6);
-          }
-
-          .ds-info .ds-btn.active:hover {
-            background: rgba(59, 130, 246, 0.08);
-            border-color: rgba(59, 130, 246, 0.2);
-            color: #3b82f6;
-          }
-
-          /* 2D Map toggle button */
-          .map-toggle {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 45;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border-radius: 999px;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            opacity: 0;
-            pointer-events: none;
-          }
-
-          .map-toggle.show {
-            opacity: 1;
-            pointer-events: auto;
-          }
-
-          .map-toggle:hover {
-            background: rgba(0, 0, 0, 0.7);
-            border-color: rgba(255, 255, 255, 0.2);
-            color: #fff;
-          }
-
-          .map-toggle svg {
-            width: 16px;
-            height: 16px;
-          }
-
-          /* View All button — liquid glass pill (matching index.html) */
-          .ds-viewall-wrap {
-            text-align: center;
-            margin-top: 48px;
-            padding-bottom: 0;
-            position: relative;
-            z-index: 20;
-          }
-
-          .ds-viewall {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 22px;
-            padding-left: 10px;
-            border-radius: 9999px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(16px) saturate(150%);
-            -webkit-backdrop-filter: blur(16px) saturate(150%);
-            box-shadow:
-              inset 0 1px 0 rgba(255, 255, 255, 0.12),
-              0 2px 12px rgba(0, 0, 0, 0.15);
-            color: #fff;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.35s ease;
-          }
-
-          .ds-viewall:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(59, 130, 246, 0.4);
-            box-shadow:
-              inset 0 1px 0 rgba(255, 255, 255, 0.2),
-              0 4px 20px rgba(59, 130, 246, 0.2),
-              0 0 0 1px rgba(59, 130, 246, 0.15);
-          }
-
-          .ds-viewall .vbtn-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s;
-          }
-
-          .ds-viewall:hover .vbtn-icon {
-            background: rgba(255, 255, 255, 0.2);
-          }
-
-          .ds-viewall .vbtn-icon svg {
-            width: 16px;
-            height: 16px;
-            stroke: #fff;
-            fill: none;
-          }
-
-          /* modal — reference: index.html modal-glass */
-          .ds-modal-bg {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: rgba(2, 4, 8, 0.9);
-            backdrop-filter: blur(32px);
-            -webkit-backdrop-filter: blur(32px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-          }
-
-          .ds-modal-bg.show {
-            display: flex;
-          }
-
-          .ds-modal {
-            position: relative;
-            background: rgba(12, 14, 22, 0.96);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-top-color: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(40px) saturate(120%);
-            -webkit-backdrop-filter: blur(40px) saturate(120%);
-            box-shadow:
-              0 24px 80px rgba(0, 0, 0, 0.6),
-              0 0 1px rgba(255, 255, 255, 0.1),
-              inset 0 1px 0 rgba(255, 255, 255, 0.06);
-            border-radius: 24px;
-            max-width: 780px;
-            width: 92%;
-            max-height: 80vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-          }
-
-          .ds-modal::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 12%;
-            right: 12%;
-            height: 32%;
             background: linear-gradient(
               180deg,
               rgba(255, 255, 255, 0.03),
-              transparent
+              rgba(255, 255, 255, 0.008)
             );
-            border-radius: 0 0 50% 50%;
-            pointer-events: none;
-            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.7);
+            transition:
+              border-color 0.3s,
+              box-shadow 0.3s;
+          }
+          .ds-showcase-card:hover {
+            border-color: rgba(255, 255, 255, 0.14);
+            box-shadow: 0 50px 90px -40px rgba(0, 0, 0, 0.9);
           }
 
-          .ds-modal::-webkit-scrollbar {
-            width: 4px;
-          }
-
-          .ds-modal::-webkit-scrollbar-track {
-            background: transparent;
-          }
-
-          .ds-modal::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-          }
-
-          .ds-modal-hd {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 24px 32px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-          }
-
-          .ds-modal-hd h3 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #fff;
-            margin: 0;
-          }
-
-          .ds-modal-close {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-          }
-
-          .ds-modal-close:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.08);
-            transform: scale(1.05);
-          }
-
-          .ds-modal-close:hover svg {
-            transform: rotate(90deg);
-          }
-
-          .ds-modal-close svg {
-            width: 16px;
-            height: 16px;
-            stroke: rgba(255, 255, 255, 0.6);
-            fill: none;
-            transition: transform 0.3s;
-          }
-
-          .ds-modal-body {
-            overflow-y: auto;
-            flex: 1;
-            padding: 20px 32px 28px;
-          }
-
-          .ds-modal-body .ds-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 16px;
-            border-radius: 16px;
-            background: linear-gradient(
-              135deg,
-              rgba(255, 255, 255, 0.05),
-              rgba(255, 255, 255, 0.01)
-            );
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            overflow: hidden;
-            transition: all 0.5s ease-out;
-            margin-bottom: 8px;
+          /* Left: aerial gif */
+          .ds-sc-left {
             position: relative;
+            min-height: 380px;
+            overflow: hidden;
           }
-
-          .ds-modal-body .ds-row::before {
+          .ds-sc-left img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.85) saturate(0.95);
+            transform: scale(1.02);
+            transition:
+              filter 0.5s,
+              transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+          }
+          .ds-showcase-card:hover .ds-sc-left img {
+            filter: brightness(0.95) saturate(1);
+            transform: scale(1.06);
+          }
+          .ds-sc-left::after {
             content: "";
             position: absolute;
             inset: 0;
-            border-radius: inherit;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            background:
+              linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 50%),
+              linear-gradient(
+                to right,
+                transparent 60%,
+                rgba(0, 0, 0, 0.65) 100%
+              );
             pointer-events: none;
           }
+          .ds-sc-left-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 28px 28px;
+            z-index: 2;
+          }
+          .ds-sc-left-text h4 {
+            margin: 0 0 6px;
+            font-size: 26px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.015em;
+          }
+          .ds-sc-left-text p {
+            margin: 0;
+            font-size: 12.5px;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, 0.6);
+          }
 
-          .ds-modal-body .ds-row:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-            background: linear-gradient(
-              135deg,
-              rgba(255, 255, 255, 0.06),
-              rgba(255, 255, 255, 0.02)
-            );
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+          /* Right: info + gifs + CTA */
+          .ds-sc-right {
+            padding: 40px 36px 36px;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid rgba(255, 255, 255, 0.06);
+          }
+          .ds-sc-right .ds-sc-eyebrow {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 10.5px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.38);
+            margin-bottom: 10px;
+          }
+          .ds-sc-right h3 {
+            margin: 0 0 14px;
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            color: #fff;
+          }
+          .ds-sc-right .ds-sc-desc {
+            margin: 0 0 28px;
+            font-size: 13px;
+            line-height: 1.78;
+            color: rgba(255, 255, 255, 0.5);
+          }
+          .ds-sc-right .ds-sc-gifs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 28px;
+          }
+          .ds-sc-right .ds-sc-gif-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #070910;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            aspect-ratio: 16 / 10;
+            transition:
+              border-color 0.3s,
+              transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+          }
+          .ds-sc-right .ds-sc-gif-card:hover {
+            border-color: rgba(255, 255, 255, 0.18);
             transform: translateY(-2px);
           }
-
-          .ds-row .row-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
+          .ds-sc-right .ds-sc-gif-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.9);
+            transition: filter 0.3s;
+          }
+          .ds-sc-right .ds-sc-gif-card:hover img {
+            filter: brightness(1);
+          }
+          .ds-sc-right .ds-sc-cta {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-          }
-
-          .ds-row .row-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #fff;
-          }
-
-          .ds-row .row-sub {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.3);
-            margin-top: 2px;
-          }
-
-          .ds-row .row-link {
-            color: rgba(255, 255, 255, 0.3);
-            transition: color 0.2s;
-          }
-
-          .ds-row:hover .row-link {
-            color: #fff;
-          }
-
-          .ds-modal-ft {
-            padding: 16px 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.07);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-          }
-
-          .ds-modal-ft span {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.25);
-          }
-
-          .ds-modal-ft a {
-            color: rgba(255, 255, 255, 0.6);
-            padding: 6px 16px;
-            border-radius: 9999px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 10px;
+            padding: 11px 20px;
+            border-radius: 9px;
+            background: #f4f5f8;
+            color: #0a0b12;
             font-size: 13px;
             font-weight: 600;
+            font-family: inherit;
+            letter-spacing: 0.003em;
             text-decoration: none;
-            transition: all 0.3s;
+            border: 1px solid #f4f5f8;
+            cursor: pointer;
+            align-self: flex-start;
+            margin-top: auto;
+            transition:
+              transform 0.18s ease,
+              background 0.18s;
           }
-
-          .ds-modal-ft a:hover {
-            color: rgba(255, 255, 255, 0.85);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.18);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+          .ds-sc-right .ds-sc-cta:hover {
+            transform: translateY(-1px);
+            background: #fff;
           }
-
-          @keyframes dsModalIn {
-            from {
-              opacity: 0;
-              transform: scale(0.94) translateY(12px);
+          @media (max-width: 860px) {
+            .ds-showcase-card {
+              grid-template-columns: 1fr;
             }
-
-            to {
-              opacity: 1;
-              transform: scale(1) translateY(0);
+            .ds-sc-left {
+              min-height: 240px;
             }
-          }
-
-          .ds-modal-bg.show .ds-modal {
-            animation: dsModalIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1)
-              forwards;
-          }
-
-          /* responsive */
-          @media (max-width: 768px) {
-            .ds-card {
-              width: 260px;
-            }
-
-            .ds-imgs {
-              width: 260px;
-              height: 174px;
+            .ds-sc-right {
+              border-left: none;
+              border-top: 1px solid rgba(255, 255, 255, 0.06);
+              padding: 28px 22px;
             }
           }
         </style>
 
-        <!-- =============== SECTION HEADER =============== -->
-        <div class="ds-wrap">
-          <div class="ds-title">
+        <div class="ds-showcase-wrap">
+          <!-- Section header -->
+          <div class="ds-showcase-header">
             <div class="badge">
               <div class="dot"></div>
               <span>Datasets</span>
             </div>
             <h2>
-              Next-generation Benchmark<br class="hidden md:block" />
-              by Digital Twin
+              High-Fidelity Vehicle<br class="hidden md:block" />
+              Trajectory Datasets
             </h2>
             <p>
-              A growing library of trajectory and naturalistic driving data,
-              unified on one platform.
+              High-fidelity sensor recordings and vehicle trajectories from
+              real-world driving scenarios, powering the next wave of AD
+              research.
             </p>
           </div>
-        </div>
 
-        <!-- =============== SVG + CARDS CONTAINER =============== -->
-        <div class="ds-wrap" id="ds-stage" style="position: relative">
-          <!-- SVG — 6-node winding road (viewBox 1600×2800) -->
-          <svg
-            class="ds-svg"
-            viewBox="0 0 1600 1800"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <filter id="ds-blur-glow">
-                <feGaussianBlur stdDeviation="8" />
-              </filter>
-              <filter id="ds-blur-head">
-                <feGaussianBlur stdDeviation="14" />
-              </filter>
-              <filter id="ds-blur-head-i">
-                <feGaussianBlur stdDeviation="3.5" />
-              </filter>
-              <filter id="ds-blur-node">
-                <feGaussianBlur stdDeviation="9" />
-              </filter>
-              <filter id="ds-blur-track">
-                <feGaussianBlur stdDeviation="3" />
-              </filter>
-              <linearGradient id="ds-grad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#3B82F6" />
-                <stop offset="50%" stop-color="#3B82F6" />
-                <stop offset="100%" stop-color="#60a5fa" />
-              </linearGradient>
-            </defs>
-
-            <!-- 4 nodes: (350,200) (1150,620) (300,1040) (1100,1460)
-               Path ends at ~(800,1620) -->
-
-            <!-- 1. dim track -->
-            <path
-              d="M 350,200 C 350,380 1150,420 1150,620 C 1150,820 300,840 300,1040 C 300,1240 1100,1260 1100,1460 C 1100,1560 800,1600 800,1620"
-              stroke="rgba(255,255,255,0.1)"
-              stroke-width="6"
-              fill="none"
-              stroke-linecap="round"
-              filter="url(#ds-blur-track)"
-            />
-            <path
-              id="ds-track"
-              d="M 350,200 C 350,380 1150,420 1150,620 C 1150,820 300,840 300,1040 C 300,1240 1100,1260 1100,1460 C 1100,1560 800,1600 800,1620"
-              stroke="rgba(255,255,255,0.16)"
-              stroke-width="1.5"
-              fill="none"
-              stroke-linecap="round"
-            />
-
-            <!-- 2. blue glow -->
-            <path
-              id="ds-glow"
-              d="M 350,200 C 350,380 1150,420 1150,620 C 1150,820 300,840 300,1040 C 300,1240 1100,1260 1100,1460 C 1100,1560 800,1600 800,1620"
-              stroke="rgba(59,130,246,0.4)"
-              stroke-width="20"
-              fill="none"
-              stroke-linecap="round"
-              filter="url(#ds-blur-glow)"
-            />
-
-            <!-- 3. lit line -->
-            <path
-              id="ds-lit"
-              d="M 350,200 C 350,380 1150,420 1150,620 C 1150,820 300,840 300,1040 C 300,1240 1100,1260 1100,1460 C 1100,1560 800,1600 800,1620"
-              stroke="url(#ds-grad)"
-              stroke-width="2.5"
-              fill="none"
-              stroke-linecap="round"
-            />
-
-            <!-- 4. Comet / meteor head (replaces plain white circles) -->
-            <defs>
-              <radialGradient id="ds-comet-core" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#fff" />
-                <stop offset="40%" stop-color="#93c5fd" />
-                <stop offset="100%" stop-color="rgba(59,130,246,0)" />
-              </radialGradient>
-              <filter
-                id="ds-comet-glow"
-                x="-200%"
-                y="-200%"
-                width="500%"
-                height="500%"
-              >
-                <feGaussianBlur stdDeviation="6" result="b1" />
-                <feGaussianBlur stdDeviation="18" result="b2" />
-                <feMerge>
-                  <feMergeNode in="b2" />
-                  <feMergeNode in="b1" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
-            <!-- comet outer halo -->
-            <circle
-              id="ds-head-o"
-              r="20"
-              fill="url(#ds-comet-core)"
-              filter="url(#ds-comet-glow)"
-              opacity="0"
-            />
-            <!-- comet bright core -->
-            <circle id="ds-head-i" r="4" fill="#fff" opacity="0" />
-            <!-- comet tail (line segment trailing behind) -->
-            <line
-              id="ds-comet-tail"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="0"
-              stroke="url(#ds-grad)"
-              stroke-width="2"
-              stroke-linecap="round"
-              opacity="0"
-            />
-
-            <!-- 5. Nodes + labels + milestones -->
-            <!-- N0: CitySim -->
-            <circle
-              class="ds-ndot"
-              cx="350"
-              cy="200"
-              r="16"
-              fill="rgba(59,130,246,0.1)"
-              filter="url(#ds-blur-node)"
-            />
-            <circle
-              class="ds-ndot"
-              cx="350"
-              cy="200"
-              r="7"
-              fill="rgba(59,130,246,0.45)"
-            />
-            <text class="ds-date-label" x="300" y="188" text-anchor="end">
-              2025 Q4
-            </text>
-            <text class="ds-milestone" x="300" y="212" text-anchor="end">
-              13 basemaps
-            </text>
-
-            <!-- N1: NGSIM -->
-            <circle
-              class="ds-ndot"
-              cx="1150"
-              cy="620"
-              r="16"
-              fill="rgba(59,130,246,0.1)"
-              filter="url(#ds-blur-node)"
-            />
-            <circle
-              class="ds-ndot"
-              cx="1150"
-              cy="620"
-              r="7"
-              fill="rgba(59,130,246,0.45)"
-            />
-            <text class="ds-date-label" x="1200" y="608" text-anchor="start">
-              2026 Q2
-            </text>
-            <text class="ds-milestone" x="1200" y="632" text-anchor="start">
-              4 basemaps
-            </text>
-
-            <!-- N2: highD -->
-            <circle
-              class="ds-ndot"
-              cx="300"
-              cy="1040"
-              r="16"
-              fill="rgba(59,130,246,0.1)"
-              filter="url(#ds-blur-node)"
-            />
-            <circle
-              class="ds-ndot"
-              cx="300"
-              cy="1040"
-              r="7"
-              fill="rgba(59,130,246,0.45)"
-            />
-            <text class="ds-date-label" x="250" y="1028" text-anchor="end">
-              2026 Q2
-            </text>
-            <text class="ds-milestone" x="250" y="1052" text-anchor="end">
-              6 basemaps
-            </text>
-
-            <!-- N3: I-24·SIND·More -->
-            <circle
-              class="ds-ndot"
-              cx="1100"
-              cy="1460"
-              r="16"
-              fill="rgba(59,130,246,0.1)"
-              filter="url(#ds-blur-node)"
-            />
-            <circle
-              class="ds-ndot"
-              cx="1100"
-              cy="1460"
-              r="7"
-              fill="rgba(59,130,246,0.45)"
-            />
-            <text class="ds-date-label" x="1150" y="1448" text-anchor="start">
-              2026 Q3
-            </text>
-            <text class="ds-milestone" x="1150" y="1472" text-anchor="start">
-              5+ basemaps
-            </text>
-
-            <!-- Path particles — scattered along the curve (injected by JS) -->
-            <g id="ds-particles"></g>
-          </svg>
-
-          <!-- CARDS (injected by JS) -->
-        </div>
-
-        <!-- Browse All button (exact match from index.html) -->
-        <div
-          style="
-            text-align: center;
-            margin-top: 48px;
-            position: relative;
-            z-index: 20;
-          "
-        >
-          <button
-            onclick="
-              document
-                .getElementById('datasets-modal')
-                .classList.remove('hidden');
-              document.body.style.overflow = 'hidden';
-            "
-            class="liquid-glass-pill flex items-center gap-3 group w-fit cursor-pointer px-5 py-2.5 rounded-full"
-            style="margin: 0 auto"
-          >
-            <div
-              class="w-8 h-8 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center transition-colors"
-            >
-              <svg
-                class="w-4 h-4 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 10h16M4 14h16M4 18h16"
-                ></path>
-              </svg>
-            </div>
-            <span
-              class="text-sm font-semibold text-white group-hover:text-primary transition-colors"
-              >Browse All Datasets</span
-            >
-          </button>
-        </div>
-
-        <!-- Datasets Modal is placed outside .ozone-sections (near </body>) to avoid transform/backdrop-filter breaking fixed positioning -->
-
-        <!-- Basemap Gallery Modal (CitySim comparison: real vs digital twin) -->
-        <style>
-          .bm-gallery-bg {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: rgba(2, 4, 8, 0.88);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            overflow-y: auto;
-            padding: 24px;
-          }
-
-          .bm-gallery-bg.show {
-            display: flex;
-          }
-
-          .bm-gallery {
-            position: relative;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-top-color: rgba(160, 200, 255, 0.25);
-            backdrop-filter: blur(24px) saturate(180%) brightness(1.15);
-            -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.15);
-            box-shadow:
-              0 8px 32px rgba(0, 0, 0, 0.37),
-              0 0 40px -10px rgba(59, 130, 246, 0.4),
-              inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            max-width: 960px;
-            width: 100%;
-            max-height: 88vh;
-            overflow-y: auto;
-            padding: 0;
-          }
-
-          .bm-gallery::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 12%;
-            right: 12%;
-            height: 32%;
-            background: linear-gradient(
-              180deg,
-              rgba(180, 210, 255, 0.08),
-              transparent
-            );
-            border-radius: 0 0 50% 50%;
-            pointer-events: none;
-            z-index: 1;
-          }
-
-          .bm-gallery::-webkit-scrollbar {
-            width: 4px;
-          }
-
-          .bm-gallery::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-          }
-
-          .bm-gal-hd {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 24px 32px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-            position: sticky;
-            top: 0;
-            background: rgba(6, 8, 14, 0.9);
-            backdrop-filter: blur(12px);
-            z-index: 5;
-            border-radius: 24px 24px 0 0;
-          }
-
-          .bm-gal-hd h3 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #fff;
-            margin: 0;
-          }
-
-          .bm-gal-close {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-          }
-
-          .bm-gal-close:hover {
-            background: rgba(59, 130, 246, 0.2);
-            border-color: rgba(59, 130, 246, 0.5);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
-            transform: scale(1.05);
-          }
-
-          .bm-gal-close:hover svg {
-            transform: rotate(90deg);
-          }
-
-          .bm-gal-close svg {
-            width: 16px;
-            height: 16px;
-            stroke: rgba(255, 255, 255, 0.6);
-            fill: none;
-            transition: transform 0.3s;
-          }
-
-          .bm-gal-body {
-            padding: 24px 32px 32px;
-          }
-
-          .bm-pair {
-            margin-bottom: 28px;
-          }
-
-          .bm-pair-label {
-            font-size: 12px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.4);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 12px;
-          }
-
-          .bm-compare {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            border-radius: 16px;
-            overflow: hidden;
-          }
-
-          .bm-compare-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            background: #0a0a14;
-          }
-
-          .bm-compare-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-          }
-
-          .bm-compare-item .bm-tag {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            backdrop-filter: blur(8px);
-          }
-
-          .bm-tag-real {
-            background: rgba(0, 0, 0, 0.5);
-            color: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-          }
-
-          .bm-tag-twin {
-            background: rgba(59, 130, 246, 0.15);
-            color: #93c5fd;
-            border: 1px solid rgba(59, 130, 246, 0.25);
-          }
-
-          @media (max-width: 640px) {
-            .bm-compare {
-              grid-template-columns: 1fr;
-            }
-          }
-        </style>
-        <div
-          class="bm-gallery-bg"
-          id="bm-gallery"
-          onclick="
-            if (event.target === this) {
-              this.classList.remove('show');
-              document.body.style.overflow = '';
-            }
-          "
-        >
-          <div class="bm-gallery">
-            <div class="bm-gal-hd">
-              <div>
-                <div
-                  style="
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 6px;
-                    padding: 3px 10px;
-                    border-radius: 999px;
-                    font-size: 9px;
-                    font-weight: 700;
-                    letter-spacing: 0.16em;
-                    text-transform: uppercase;
-                    color: rgba(255, 255, 255, 0.85);
-                    background: rgba(52, 211, 153, 0.1);
-                    border: 1px solid rgba(52, 211, 153, 0.2);
-                    margin-bottom: 6px;
-                  "
-                >
-                  <span
-                    style="
-                      width: 5px;
-                      height: 5px;
-                      border-radius: 50%;
-                      background: #34d399;
-                      display: inline-block;
-                    "
-                  ></span>
-                  Released
-                </div>
-                <h3>CitySim Basemaps</h3>
+          <!-- Showcase card -->
+          <div class="ds-showcase-card">
+            <!-- Left: aerial overview with overlay text -->
+            <div class="ds-sc-left">
+              <img
+                src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/aerial_picture.gif"
+                alt="Aerial view of autonomous driving scene"
+                loading="lazy"
+              />
+              <div class="ds-sc-left-text">
+                <h4>Aerial Trajectory Extraction</h4>
+                <p>
+                  Bird's-eye view captures of real traffic flow, enabling
+                  precise trajectory extraction and scene understanding at
+                  scale.
+                </p>
               </div>
-              <button
-                class="bm-gal-close"
-                onclick="
-                  document
-                    .getElementById('bm-gallery')
-                    .classList.remove('show');
-                  document.body.style.overflow = '';
-                "
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
             </div>
-            <div class="bm-gal-body">
-              <div class="bm-pair">
-                <div class="bm-pair-label">Highway — Digital Twin</div>
-                <div class="bm-compare">
-                  <div class="bm-compare-item">
-                    <img
-                      src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/Ozone/Next-generation%20Benchmark%20by%20Digital%20Twin%E9%87%8C%E7%9A%842025%20Q4/2026-04-28_161536.png"
-                      loading="lazy"
-                    />
-                    <div class="bm-tag bm-tag-twin">Digital Twin</div>
-                  </div>
-                  <div class="bm-compare-item">
-                    <img
-                      src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/Ozone/Next-generation%20Benchmark%20by%20Digital%20Twin%E9%87%8C%E7%9A%842025%20Q4/2026-04-28_162408.png"
-                      loading="lazy"
-                    />
-                    <div class="bm-tag bm-tag-twin">Digital Twin</div>
-                  </div>
+
+            <!-- Right: info + previews -->
+            <div class="ds-sc-right">
+              <h3>Autonomous Driving Data</h3>
+              <p class="ds-sc-desc">
+                Large-scale, multi-modal datasets that capture the full
+                complexity of real-world driving — from high-resolution LiDAR
+                point clouds and camera imagery to lane-level vehicle
+                trajectories and object interactions. Designed to accelerate
+                research in perception, prediction, and motion planning for
+                autonomous vehicles.
+              </p>
+              <div class="ds-sc-gifs">
+                <div class="ds-sc-gif-card">
+                  <img
+                    src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/Dataset_gif1.gif"
+                    alt="LiDAR perception preview"
+                    loading="lazy"
+                  />
                 </div>
-              </div>
-              <div class="bm-pair">
-                <div class="bm-pair-label">Interchange — Digital Twin</div>
-                <div class="bm-compare">
-                  <div class="bm-compare-item">
-                    <img
-                      src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/Ozone/Next-generation%20Benchmark%20by%20Digital%20Twin%E9%87%8C%E7%9A%842025%20Q4/2026-04-29_091036.png"
-                      loading="lazy"
-                    />
-                    <div class="bm-tag bm-tag-twin">Digital Twin</div>
-                  </div>
+                <div class="ds-sc-gif-card">
+                  <img
+                    src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/Dataset_gif2.gif"
+                    alt="Trajectory prediction preview"
+                    loading="lazy"
+                  />
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- =============== S-CURVE TIMELINE SCRIPT =============== -->
-        <script>
-          (function () {
-            /* 4 milestone nodes:
-         0: released with basemap images (stack cards with real photos)
-         1-2: launching soon with images (stack cards)
-         3: planned, no images yet (placeholder cards) */
-            var DATA = [
-              {
-                name: "CitySim",
-                date: "2025 Q4",
-                desc: "",
-                status: "released",
-                hasImg: true,
-              },
-              {
-                name: "NGSIM",
-                date: "2026 Q2",
-                desc: "",
-                status: "released",
-                hasImg: true,
-              },
-              {
-                name: "highD",
-                date: "2026 Q2",
-                desc: "",
-                status: "released",
-                hasImg: true,
-              },
-              {
-                name: "I-24 \u00b7 SIND \u00b7 More",
-                date: "2026 Q3",
-                desc: "",
-                status: "planned",
-                hasImg: false,
-              },
-            ];
-            var IMGS_PER_DS = [
-              [
-                "https://ozone-zl.oss-cn-chengdu.aliyuncs.com/Ozone/Next-generation%20Benchmark%20by%20Digital%20Twin%E9%87%8C%E7%9A%842025%20Q4/2026-04-28_161536.png",
-                "https://ozone-zl.oss-cn-chengdu.aliyuncs.com/Ozone/Next-generation%20Benchmark%20by%20Digital%20Twin%E9%87%8C%E7%9A%842025%20Q4/2026-04-28_162408.png",
-                "https://ozone-zl.oss-cn-chengdu.aliyuncs.com/Ozone/Next-generation%20Benchmark%20by%20Digital%20Twin%E9%87%8C%E7%9A%842025%20Q4/2026-04-29_091036.png",
-              ],
-              [
-                "https://ozone-zl.oss-cn-chengdu.aliyuncs.com/2026-04-08_164957.png",
-                "https://ozone-zl.oss-cn-chengdu.aliyuncs.com/2026-04-08_165122.png",
-                "https://ozone-zl.oss-cn-chengdu.aliyuncs.com/cbd201d9-7e32-41cb-9c58-4e66a39a0e55.jpeg",
-              ],
-              [
-                "https://ozone-zl.oss-cn-chengdu.aliyuncs.com/2026-04-08_165533.png",
-                "https://ozone-zl.oss-cn-chengdu.aliyuncs.com/2026-04-08_165638.png",
-                "https://ozone-zl.oss-cn-chengdu.aliyuncs.com/2026-04-08_165750.png",
-                "https://ozone-zl.oss-cn-chengdu.aliyuncs.com/2026-04-08_165940.png",
-              ],
-            ];
-            var CW = 360,
-              VBW = 1600,
-              VBH = 1800;
-            /* 4 nodes on the winding road */
-            var NODES = [
-              [350, 200, "R", 440],
-              [1150, 620, "L", 1060],
-              [300, 1040, "R", 390],
-              [1100, 1460, "L", 1010],
-            ];
-            var stage = document.getElementById("ds-stage");
-            var svg = stage.querySelector(".ds-svg");
-
-            /* ======== BUILD CARDS ======== */
-            var cards = [];
-            NODES.forEach(function (n, i) {
-              var d = DATA[i],
-                side = n[2],
-                ax = n[3];
-              var cardTopVB = Math.max(0, n[1] - 150);
-              var topPct = ((cardTopVB / VBH) * 100).toFixed(3);
-              var leftPct =
-                side === "R"
-                  ? ((ax / VBW) * 100).toFixed(3)
-                  : (((ax - CW) / VBW) * 100).toFixed(3);
-
-              var el = document.createElement("div");
-              el.className = "ds-card side-" + side;
-              el.dataset.idx = i;
-              el.style.cssText = "top:" + topPct + "%;left:" + leftPct + "%;";
-
-              /* Badge + button per status */
-              var badgeStyle = "",
-                dotColor = "",
-                btnHtml = "";
-              if (d.status === "released") {
-                badgeStyle =
-                  "background:rgba(52,211,153,.1);color:#6ee7b7;border:1px solid rgba(52,211,153,.2)";
-                dotColor = "#34d399";
-                btnHtml =
-                  '<span class="ds-btn">Released \u00b7 ' + d.date + "</span>";
-              } else if (d.status === "coming") {
-                badgeStyle =
-                  "background:rgba(56,189,248,.08);color:#7dd3fc;border:1px solid rgba(56,189,248,.15)";
-                dotColor = "#38bdf8";
-                btnHtml = '<span class="ds-btn">Launching soon</span>';
-              } else {
-                badgeStyle =
-                  "background:rgba(255,255,255,.03);color:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.06)";
-                dotColor = "rgba(255,255,255,.25)";
-                btnHtml = '<span class="ds-btn">In planning</span>';
-              }
-
-              if (d.hasImg) {
-                var imgSet = IMGS_PER_DS[i] || IMGS_PER_DS[0];
-                var pipsHtml = "";
-                for (var p = 0; p < imgSet.length; p++)
-                  pipsHtml += "<i" + (p === 0 ? ' class="act"' : "") + " ></i>";
-
-                el.innerHTML =
-                  '<div class="ds-imgs">' +
-                  '<div class="ds-b"><img src="' +
-                  imgSet[2] +
-                  '" loading="lazy"></div>' +
-                  '<div class="ds-b"><img src="' +
-                  imgSet[1] +
-                  '" loading="lazy"></div>' +
-                  '<div class="ds-f"><img src="' +
-                  imgSet[0] +
-                  '" loading="lazy"></div>' +
-                  '<div class="ds-pips">' +
-                  pipsHtml +
-                  "</div>" +
-                  "</div>" +
-                  '<div class="ds-info">' +
-                  '<div class="ds-date" style="' +
-                  badgeStyle +
-                  '"><i style="background:' +
-                  dotColor +
-                  '"></i> ' +
-                  d.date +
-                  "</div>" +
-                  '<div class="ds-name">' +
-                  d.name +
-                  "</div>" +
-                  '<div class="ds-desc">' +
-                  d.desc +
-                  "</div>" +
-                  btnHtml +
-                  "</div>";
-                cards.push({
-                  el: el,
-                  imgs: imgSet,
-                  cur: 0,
-                  total: imgSet.length,
-                  hasImg: true,
-                });
-              } else {
-                /* Placeholder card — 3-layer glow interaction (border flow + mouse glow + lift) */
-                var phId = "ph-card-" + i;
-                el.innerHTML =
-                  '<div class="ds-placeholder" id="' +
-                  phId +
-                  "\" onmousemove=\"var r=this.getBoundingClientRect();this.style.setProperty('--mx',((event.clientX-r.left)/r.width*100)+'%');this.style.setProperty('--my',((event.clientY-r.top)/r.height*100)+'%')\">" +
-                  '<div class="ph-glow"></div>' +
-                  '<svg class="ph-grid" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="phg' +
-                  i +
-                  '" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 L 0 0 0 24" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#phg' +
-                  i +
-                  ')"/></svg>' +
-                  '<div class="ph-content">' +
-                  '<div class="ph-icon"><svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>' +
-                  '<div class="ph-text">Digital Twin Map</div>' +
-                  '<div class="ph-sub">Expected ' +
-                  d.date +
-                  "</div>" +
-                  "</div>" +
-                  "</div>" +
-                  '<div class="ds-info">' +
-                  '<div class="ds-date" style="' +
-                  badgeStyle +
-                  '"><i style="background:' +
-                  dotColor +
-                  '"></i> ' +
-                  d.date +
-                  "</div>" +
-                  '<div class="ds-name">' +
-                  d.name +
-                  "</div>" +
-                  '<div class="ds-desc">' +
-                  d.desc +
-                  "</div>" +
-                  btnHtml +
-                  "</div>";
-                cards.push({
-                  el: el,
-                  imgs: null,
-                  cur: 0,
-                  total: 0,
-                  hasImg: false,
-                });
-              }
-              stage.appendChild(el);
-            });
-
-            /* ======== SVG PATHS ======== */
-            var litPath = document.getElementById("ds-lit");
-            var glowPath = document.getElementById("ds-glow");
-            var trackPath = document.getElementById("ds-track");
-            var totalLen = litPath.getTotalLength();
-            litPath.style.strokeDasharray = totalLen;
-            litPath.style.strokeDashoffset = totalLen;
-            glowPath.style.strokeDasharray = totalLen;
-            glowPath.style.strokeDashoffset = totalLen;
-            var headO = document.getElementById("ds-head-o");
-            var headI = document.getElementById("ds-head-i");
-            var ndots = svg.querySelectorAll(".ds-ndot");
-            var dateLabels = svg.querySelectorAll(".ds-date-label");
-            var milestones = svg.querySelectorAll(".ds-milestone");
-            var cometTail = document.getElementById("ds-comet-tail");
-
-            /* Generate scattered particles along path */
-            (function () {
-              var pg = document.getElementById("ds-particles");
-              if (!pg || !trackPath) return;
-              var tl = trackPath.getTotalLength();
-              var seed = 7;
-              function rng() {
-                seed = (seed * 16807) % 2147483647;
-                return seed / 2147483647;
-              }
-              for (var i = 0; i < 350; i++) {
-                var len = rng() * tl;
-                var pt = trackPath.getPointAtLength(len);
-                /* offset perpendicular to path */
-                var pt2 = trackPath.getPointAtLength(Math.min(len + 2, tl));
-                var dx = pt2.x - pt.x,
-                  dy = pt2.y - pt.y;
-                var nl = Math.sqrt(dx * dx + dy * dy) || 1;
-                var nx = -dy / nl,
-                  ny = dx / nl;
-                var off =
-                  (rng() - 0.5) * 140; /* random offset up to ±70 from path */
-                var cx = pt.x + nx * off,
-                  cy = pt.y + ny * off;
-                var r = 0.4 + rng() * 2.0;
-                var circle = document.createElementNS(
-                  "http://www.w3.org/2000/svg",
-                  "circle",
-                );
-                circle.setAttribute("cx", cx.toFixed(1));
-                circle.setAttribute("cy", cy.toFixed(1));
-                circle.setAttribute("r", r.toFixed(1));
-                circle.classList.add("ds-particle");
-                circle.dataset.pathLen = len.toFixed(0);
-                pg.appendChild(circle);
-              }
-            })();
-            var particles = svg.querySelectorAll(".ds-particle");
-
-            /* Pre-compute each node's exact length position on the path.
-         This is the KEY fix — cards only appear when line actually reaches them. */
-            var nodeLens = [];
-            (function () {
-              /* binary-search: find the pathLength where getPointAtLength(l).y ≈ node.y */
-              NODES.forEach(function (n) {
-                var targetY = n[1],
-                  lo = 0,
-                  hi = totalLen,
-                  mid,
-                  pt;
-                for (var iter = 0; iter < 40; iter++) {
-                  mid = (lo + hi) / 2;
-                  pt = trackPath.getPointAtLength(mid);
-                  if (pt.y < targetY) lo = mid;
-                  else hi = mid;
-                }
-                nodeLens.push(mid);
-              });
-            })();
-
-            /* ======== SILKY SCROLL — continuous rAF lerp ======== */
-            var curOff = totalLen,
-              tarOff = totalLen;
-            var prevStates = new Array(
-              NODES.length,
-            ); /* track per-node state for smooth transitions */
-            for (var si = 0; si < prevStates.length; si++)
-              prevStates[si] = "off";
-            var EASE = 0.22; /* higher → line tracks scroll tightly, no lag on last nodes */
-
-            function frame() {
-              /* lerp toward target — adaptive: faster when gap is large */
-              var diff = tarOff - curOff;
-              var adaptEase = Math.abs(diff) > totalLen * 0.1 ? 0.35 : EASE;
-              if (Math.abs(diff) > 0.15) curOff += diff * adaptEase;
-              else curOff = tarOff;
-
-              /* apply to SVG paths */
-              litPath.style.strokeDashoffset = curOff;
-              glowPath.style.strokeDashoffset = curOff;
-
-              /* lit length = how much of the path is lit */
-              var litLen = totalLen - curOff;
-
-              /* running comet head at lit tip */
-              if (litLen > 10) {
-                var pt = litPath.getPointAtLength(litLen);
-                headO.setAttribute("cx", pt.x);
-                headO.setAttribute("cy", pt.y);
-                headI.setAttribute("cx", pt.x);
-                headI.setAttribute("cy", pt.y);
-                headO.style.opacity = "1";
-                headI.style.opacity = "1";
-                /* comet tail — trailing 80 units behind on the path */
-                var tailLen = Math.max(0, litLen - 80);
-                var ptTail = litPath.getPointAtLength(tailLen);
-                if (cometTail) {
-                  cometTail.setAttribute("x1", ptTail.x);
-                  cometTail.setAttribute("y1", ptTail.y);
-                  cometTail.setAttribute("x2", pt.x);
-                  cometTail.setAttribute("y2", pt.y);
-                  cometTail.style.opacity = "0.6";
-                }
-              } else {
-                headO.style.opacity = "0";
-                headI.style.opacity = "0";
-                if (cometTail) cometTail.style.opacity = "0";
-              }
-              if (headO.querySelector("animateMotion")) {
-                headO.innerHTML = "";
-                headI.innerHTML = "";
-              }
-
-              /* Per-node state: only activate when the smoothed litLen reaches node's path position.
-           This guarantees "line first, then card" — no jumping ahead. */
-              var activeIdx = -1;
-              for (var ni = 0; ni < NODES.length; ni++) {
-                var reached = litLen >= nodeLens[ni] - 5; /* 5px grace */
-                var isLit = reached;
-                var dotI =
-                  ni *
-                  2; /* ndots index: each node has 2 circles (glow + core), but with labels interleaved we need to recalculate */
-
-                /* update date label */
-                if (dateLabels[ni]) {
-                  if (reached && activeIdx < ni) activeIdx = ni;
-                  dateLabels[ni].classList.toggle("lit", isLit);
-                }
-              }
-
-              /* activate only the furthest-reached node */
-              cards.forEach(function (c, ci) {
-                c.el.classList.toggle("on", ci === activeIdx);
-              });
-
-              /* update all node-related elements */
-              for (var di = 0; di < ndots.length; di++) {
-                var nodeI = Math.floor(di / 2);
-                var reached = litLen >= nodeLens[nodeI] - 5;
-                if (reached) {
-                  ndots[di].setAttribute(
-                    "fill",
-                    di % 2 === 0 ? "rgba(59,130,246,0.4)" : "#3B82F6",
-                  );
-                } else {
-                  ndots[di].setAttribute(
-                    "fill",
-                    di % 2 === 0
-                      ? "rgba(59,130,246,0.1)"
-                      : "rgba(59,130,246,0.45)",
-                  );
-                }
-              }
-              for (var li = 0; li < dateLabels.length; li++) {
-                var nodeReached = litLen >= nodeLens[li] - 5;
-                dateLabels[li].classList.toggle(
-                  "lit",
-                  nodeReached && li !== activeIdx,
-                );
-                dateLabels[li].classList.toggle("active", li === activeIdx);
-              }
-              for (var mi = 0; mi < milestones.length; mi++) {
-                var mReached = litLen >= nodeLens[mi] - 5;
-                milestones[mi].classList.toggle(
-                  "lit",
-                  mReached && mi !== activeIdx,
-                );
-                milestones[mi].classList.toggle("active", mi === activeIdx);
-              }
-              /* particles light up as line passes them */
-              for (var pi = 0; pi < particles.length; pi++) {
-                var pLen = parseFloat(particles[pi].dataset.pathLen) || 0;
-                particles[pi].classList.toggle("lit", litLen >= pLen);
-              }
-
-              requestAnimationFrame(frame);
-            }
-            requestAnimationFrame(frame);
-
-            /* scroll → set target. The lit-head should stay near viewport center.
-         p=0 when SVG top hits viewport center, p=1 when SVG bottom hits viewport center.
-         This maps 1:1 so every px scrolled = proportional line lit. */
-            function readScroll() {
-              var rect = svg.getBoundingClientRect();
-              var wh = window.innerHeight;
-              var mid = wh * 0.5;
-              /* mapping: viewport center position through SVG, with extra range below
-           so the last nodes have enough scroll distance to fully light up */
-              var raw = (mid - rect.top) / (rect.height - wh * 0.3);
-              var p = Math.max(0, Math.min(1, raw));
-              tarOff = totalLen * (1 - p);
-            }
-            window.addEventListener("scroll", readScroll, { passive: true });
-            window.addEventListener("resize", readScroll, { passive: true });
-            readScroll();
-
-            /* ======== STACK DRAG — natural grab + fling (reference: stack-container) ======== */
-            cards.forEach(function (c) {
-              if (!c.hasImg)
-                return; /* skip placeholder cards — no images to drag */
-              var front = c.el.querySelector(".ds-f");
-              var pips = c.el.querySelectorAll(".ds-pips i");
-              var backs = c.el.querySelectorAll(".ds-b");
-              var sx = 0,
-                sy = 0,
-                dx = 0,
-                dy = 0,
-                dragging = false,
-                locked = false;
-              /* velocity tracking for natural fling */
-              var vx = 0,
-                vy = 0,
-                lastX = 0,
-                lastY = 0,
-                lastT = 0;
-
-              function updPips() {
-                for (var pi = 0; pi < pips.length; pi++)
-                  pips[pi].className = pi === c.cur ? "act" : "";
-              }
-
-              function down(e) {
-                if (!c.el.classList.contains("on") || locked) return;
-                e.preventDefault();
-                var ev = e.touches ? e.touches[0] : e;
-                sx = ev.clientX;
-                sy = ev.clientY;
-                lastX = sx;
-                lastY = sy;
-                lastT = Date.now();
-                dx = 0;
-                dy = 0;
-                vx = 0;
-                vy = 0;
-                dragging = true;
-                front.classList.remove("snap", "away");
-                front.style.transition = "none";
-              }
-
-              function move(e) {
-                if (!dragging) return;
-                var ev = e.touches ? e.touches[0] : e;
-                dx = ev.clientX - sx;
-                dy = ev.clientY - sy;
-                /* track velocity */
-                var now = Date.now(),
-                  dt = now - lastT;
-                if (dt > 0) {
-                  vx = ((ev.clientX - lastX) / dt) * 16;
-                  vy = ((ev.clientY - lastY) / dt) * 16;
-                }
-                lastX = ev.clientX;
-                lastY = ev.clientY;
-                lastT = now;
-                /* card follows cursor with slight rotation from horizontal offset */
-                var rot = dx * 0.06;
-                front.style.transform =
-                  "translate(" + dx + "px," + dy + "px) rotate(" + rot + "deg)";
-              }
-
-              function up() {
-                if (!dragging) return;
-                dragging = false;
-                var dist = Math.sqrt(dx * dx + dy * dy);
-                var speed = Math.sqrt(vx * vx + vy * vy);
-
-                if (dist > 60 || speed > 8) {
-                  /* ---- fling away ---- */
-                  locked = true;
-                  /* use velocity direction for natural throw, fall back to drag direction */
-                  var fx, fy;
-                  if (speed > 4) {
-                    fx = vx * 30;
-                    fy = vy * 30;
-                  } else {
-                    var a = Math.atan2(dy, dx);
-                    fx = Math.cos(a) * 800;
-                    fy = Math.sin(a) * 800;
-                  }
-                  /* clamp so card doesn't stay nearby */
-                  var fDist = Math.sqrt(fx * fx + fy * fy);
-                  if (fDist < 500) {
-                    var s = 500 / fDist;
-                    fx *= s;
-                    fy *= s;
-                  }
-                  var fRot = fx * 0.04;
-
-                  front.classList.add("away");
-                  front.style.transform =
-                    "translate(" +
-                    fx +
-                    "px," +
-                    fy +
-                    "px) rotate(" +
-                    fRot +
-                    "deg)";
-                  front.style.opacity = "0";
-
-                  setTimeout(function () {
-                    /* advance image */
-                    c.cur = (c.cur + 1) % c.total;
-                    front.querySelector("img").src = c.imgs[c.cur];
-                    backs[1].querySelector("img").src =
-                      c.imgs[(c.cur + 1) % c.total];
-                    backs[0].querySelector("img").src =
-                      c.imgs[(c.cur + 2) % c.total];
-                    updPips();
-                    /* reset: place front behind, then spring to center */
-                    front.classList.remove("away");
-                    front.style.transition = "none";
-                    front.style.transform = "translate(0,0) scale(.9)";
-                    front.style.opacity = "0";
-                    requestAnimationFrame(function () {
-                      requestAnimationFrame(function () {
-                        front.classList.add("snap");
-                        front.style.transform =
-                          "translate(0,0) scale(1) rotate(0deg)";
-                        front.style.opacity = "1";
-                        setTimeout(function () {
-                          front.classList.remove("snap");
-                          locked = false;
-                        }, 480);
-                      });
-                    });
-                  }, 450);
-                } else {
-                  /* ---- snap back ---- */
-                  front.classList.add("snap");
-                  front.style.transform = "translate(0,0) rotate(0deg)";
-                  front.style.opacity = "1";
-                  setTimeout(function () {
-                    front.classList.remove("snap");
-                  }, 450);
-                }
-              }
-
-              front.addEventListener("mousedown", down);
-              front.addEventListener("touchstart", down, { passive: false });
-              window.addEventListener("mousemove", move);
-              window.addEventListener("touchmove", move, { passive: true });
-              window.addEventListener("mouseup", up);
-              window.addEventListener("touchend", up);
-            });
-
-            /* ======== MODAL — uses static #datasets-modal from HTML ======== */
-          })();
-        </script>
       </section>
 
       <section
