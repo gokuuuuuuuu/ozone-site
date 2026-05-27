@@ -283,6 +283,115 @@
         background: rgba(0, 0, 0, 0);
       }
 
+      /* ── Waymo showcase section ── */
+      .waymo-showcase {
+        position: relative;
+        margin-top: 48px;
+        border-radius: 20px;
+        overflow: hidden;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.025),
+          rgba(255, 255, 255, 0.008)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        box-shadow: 0 30px 60px -44px rgba(0, 0, 0, 0.7);
+        padding: 40px 36px 36px;
+        transition:
+          border-color 0.3s,
+          box-shadow 0.3s;
+      }
+      .waymo-showcase:hover {
+        border-color: rgba(255, 255, 255, 0.14);
+        box-shadow: 0 40px 72px -44px rgba(0, 0, 0, 0.9);
+      }
+      .waymo-showcase .ws-eyebrow {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.38);
+        margin-bottom: 10px;
+      }
+      .waymo-showcase h2 {
+        margin: 0 0 14px;
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: -0.015em;
+        color: #fff;
+      }
+      .waymo-showcase .ws-desc {
+        margin: 0 0 32px;
+        font-size: 13.5px;
+        line-height: 1.78;
+        color: rgba(255, 255, 255, 0.55);
+        max-width: none;
+      }
+      .waymo-showcase .ws-gifs {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-bottom: 32px;
+      }
+      .waymo-showcase .ws-gifs .ws-gif-card {
+        position: relative;
+        border-radius: 14px;
+        overflow: hidden;
+        background: #070910;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        aspect-ratio: 16 / 10;
+        transition:
+          border-color 0.3s,
+          transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .waymo-showcase .ws-gifs .ws-gif-card:hover {
+        border-color: rgba(255, 255, 255, 0.18);
+        transform: translateY(-3px);
+      }
+      .waymo-showcase .ws-gifs .ws-gif-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        filter: brightness(0.92);
+        transition: filter 0.3s;
+      }
+      .waymo-showcase .ws-gifs .ws-gif-card:hover img {
+        filter: brightness(1);
+      }
+      .waymo-showcase .ws-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: 10px;
+        background: #f4f5f8;
+        color: #0a0b12;
+        font-size: 13.5px;
+        font-weight: 600;
+        font-family: inherit;
+        letter-spacing: 0.003em;
+        text-decoration: none;
+        border: 1px solid #f4f5f8;
+        cursor: pointer;
+        transition:
+          transform 0.18s ease,
+          background 0.18s;
+      }
+      .waymo-showcase .ws-cta:hover {
+        transform: translateY(-1px);
+        background: #fff;
+      }
+      @media (max-width: 860px) {
+        .waymo-showcase {
+          padding: 28px 22px 28px;
+        }
+        .waymo-showcase .ws-gifs {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+      }
+
       /* Footer override */
       .rp-footer {
         padding: 22px 32px !important;
@@ -1004,6 +1113,88 @@
 
     <!-- Dataset stream -->
     <div class="tr-stream" id="trStream">
+      <!-- highD -->
+      <article
+        class="tr-ds"
+        data-name="highd high d drone germany motorway cologne"
+      >
+        <!-- Left: identity + stats + actions -->
+        <div class="tr-info">
+          <div class="tr-title">
+            <h3>highD</h3>
+            <div class="region">Germany · 6 sites</div>
+          </div>
+
+          <p class="tr-desc">
+            High-resolution drone-based 25 Hz vehicle trajectories from six
+            German motorway segments near Cologne. Captures naturalistic highway
+            driving with sub-pixel accuracy, widely used for highway behavior
+            analysis.
+          </p>
+
+          <div class="tr-actions">
+            <button
+              class="tr-btn primary"
+              type="button"
+              onclick="
+                document
+                  .getElementById('highdFhwaModal')
+                  .classList.add('active');
+                document.body.style.overflow = 'hidden';
+              "
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Download trajectories
+            </button>
+            <a
+              class="tr-btn ghost"
+              href="#"
+              data-cite-download="https://pan.baidu.com/s/13KGnboOCgTJOnqvJrJhHiw"
+              data-cite-pwd="NBDT"
+              data-cite-label="highD map archive"
+            >
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+                <line x1="8" y1="2" x2="8" y2="18" />
+                <line x1="16" y1="6" x2="16" y2="22" />
+              </svg>
+              Map
+            </a>
+            <span class="tr-updated">Updated <b>May 2026</b></span>
+          </div>
+        </div>
+
+        <!-- Right: dataset preview image -->
+        <div class="tr-preview">
+          <img
+            src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/highD_bg.webp"
+            alt="highD trajectory detection sample"
+          />
+        </div>
+      </article>
+
       <!-- NGSIM -->
       <article
         class="tr-ds"
@@ -1083,7 +1274,68 @@
           />
         </div>
       </article>
-      <!-- Future datasets would render here as more <article class="tr-ds">…</article> -->
+
+      <!-- Waymo Open Dataset -->
+      <div class="waymo-showcase">
+        <div class="ws-eyebrow">Autonomous Driving Data</div>
+        <h2>Waymo Open Dataset</h2>
+        <p class="ws-desc">
+          The Waymo Open Dataset is a collection of large-scale, high-quality,
+          and diverse datasets shared by Waymo to support the autonomous driving
+          research community. It provides high-resolution sensor data (including
+          LiDAR and camera imagery) alongside complex driving scenarios and
+          object trajectories. The dataset is designed to help researchers
+          tackle key machine learning challenges, such as perception,
+          interaction prediction, and end-to-end motion planning.
+        </p>
+        <div class="ws-gifs">
+          <div class="ws-gif-card">
+            <img
+              src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/Dataset_gif1.gif"
+              alt="Waymo Open Dataset preview 1"
+              loading="lazy"
+            />
+          </div>
+          <div class="ws-gif-card">
+            <img
+              src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/Dataset_gif2.gif"
+              alt="Waymo Open Dataset preview 2"
+              loading="lazy"
+            />
+          </div>
+          <div class="ws-gif-card">
+            <img
+              src="https://ozone-zl.oss-cn-chengdu.aliyuncs.com/Dataset_gif3.gif"
+              alt="Waymo Open Dataset preview 3"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        <a
+          class="ws-cta"
+          href="https://waymo.com/open/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Explore Waymo Open Dataset
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+            />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
+          </svg>
+        </a>
+      </div>
     </div>
 
     <!-- Cite & Download Modal -->
@@ -1393,6 +1645,154 @@
                     <line x1="10" y1="14" x2="21" y2="3" />
                   </svg>
                   NGSIM Data Portal
+                </a>
+              </div>
+            </div>
+            <div class="fhwa-step">
+              <div class="fhwa-step-num">2</div>
+              <div class="fhwa-step-body">
+                <div class="fhwa-step-title">Data Processing</div>
+                <p class="fhwa-step-text">
+                  Use our processing scripts to clean and convert the raw
+                  trajectory data into a usable format.
+                </p>
+                <a
+                  class="fhwa-step-link"
+                  href="https://github.com/ZhilingResearch/Ozone"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                    />
+                  </svg>
+                  GitHub Repository
+                </a>
+              </div>
+            </div>
+            <div class="fhwa-step">
+              <div class="fhwa-step-num">3</div>
+              <div class="fhwa-step-body">
+                <div class="fhwa-step-title">Data Usage</div>
+                <p class="fhwa-step-text">
+                  Refer to the documentation and examples for integrating
+                  trajectory data into your research workflow.
+                </p>
+                <a
+                  class="fhwa-step-link"
+                  href="https://github.com/ZhilingResearch/Ozone"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                  </svg>
+                  Documentation &amp; Examples
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- highD Trajectory Flow Modal -->
+    <div
+      class="fhwa-modal-overlay"
+      id="highdFhwaModal"
+      onclick="
+        if (event.target === this) {
+          this.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      "
+    >
+      <div class="fhwa-modal">
+        <div class="fhwa-modal-head">
+          <h3>Download Trajectories</h3>
+          <button
+            class="fhwa-modal-close"
+            type="button"
+            onclick="
+              document
+                .getElementById('highdFhwaModal')
+                .classList.remove('active');
+              document.body.style.overflow = '';
+            "
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6 6 18" />
+              <path d="M6 6 18 18" />
+            </svg>
+          </button>
+        </div>
+        <div class="fhwa-modal-body">
+          <p class="fhwa-modal-desc">
+            highD trajectory data is hosted by the highD team. Follow the steps
+            below to download, process, and use the data. For commercial
+            licensing, please contact us.
+          </p>
+          <div class="fhwa-flow">
+            <div class="fhwa-step">
+              <div class="fhwa-step-num">1</div>
+              <div class="fhwa-step-body">
+                <div class="fhwa-step-title">Data Download</div>
+                <p class="fhwa-step-text">
+                  Download the raw highD vehicle trajectory data from the
+                  official highD website.
+                </p>
+                <a
+                  class="fhwa-step-link"
+                  href="https://levelxdata.com/highd-dataset/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                    />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                  highD Dataset
                 </a>
               </div>
             </div>
