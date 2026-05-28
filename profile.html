@@ -278,7 +278,7 @@
         padding: 32px 16px 32px;
         background: rgba(255, 255, 255, 0.03);
         border-right: 1px solid rgba(255, 255, 255, 0.06);
-        align-self: stretch;
+        align-self: flex-start;
       }
       .rc-sidebar::-webkit-scrollbar {
         width: 0;
@@ -1286,7 +1286,7 @@
         margin: 12px 0 0;
         font-size: 13.5px;
         color: rgba(255, 255, 255, 0.55);
-        max-width: 560px;
+        max-width: none;
         line-height: 1.7;
       }
       #rcTrajectories .tr-stream {
@@ -1475,10 +1475,44 @@
         }
       }
 
+      /* == Trajectory tab panels == */
+      #rcTrajectories .tr-tab-panel {
+        display: none;
+      }
+      #rcTrajectories .tr-tab-panel.active {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+      }
+      /* Dataset type tag */
+      #rcTrajectories .tr-tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 10px;
+        border-radius: 6px;
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        margin-left: 10px;
+        vertical-align: middle;
+        position: relative;
+        top: -1px;
+      }
+      #rcTrajectories .tr-tag.drone {
+        background: rgba(52, 211, 153, 0.1);
+        color: #6ee7b7;
+        border: 1px solid rgba(52, 211, 153, 0.2);
+      }
+      #rcTrajectories .tr-tag.ad {
+        background: rgba(96, 165, 250, 0.1);
+        color: #93c5fd;
+        border: 1px solid rgba(96, 165, 250, 0.2);
+      }
+
       /* == Waymo showcase == */
       #rcTrajectories .waymo-showcase {
         position: relative;
-        margin-top: 28px;
+        margin-top: 0;
         border-radius: 20px;
         overflow: hidden;
         background: linear-gradient(
@@ -1507,9 +1541,9 @@
       }
       #rcTrajectories .waymo-showcase h2 {
         margin: 0 0 14px;
-        font-size: 26px;
-        font-weight: 700;
-        letter-spacing: -0.015em;
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.012em;
         color: #fff;
       }
       #rcTrajectories .waymo-showcase .ws-desc {
@@ -1553,13 +1587,13 @@
       #rcTrajectories .waymo-showcase .ws-cta {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        padding: 12px 22px;
-        border-radius: 10px;
+        gap: 9px;
+        padding: 10px 16px;
+        border-radius: 9px;
         background: #f4f5f8;
         color: #0a0b12;
-        font-size: 13.5px;
-        font-weight: 600;
+        font-size: 13px;
+        font-weight: 500;
         font-family: inherit;
         letter-spacing: 0.003em;
         text-decoration: none;
@@ -4767,6 +4801,36 @@
               </svg>
               Download Trajectory
             </button>
+            <div class="rc-sub-menu open" id="trajSubMenu">
+              <button
+                class="rc-sub-item"
+                onclick="
+                  if (
+                    !document
+                      .getElementById('rcTrajectories')
+                      .classList.contains('active')
+                  )
+                    switchRcPage('trajectories');
+                  switchTrajTab('drone');
+                "
+              >
+                Drone Aerial Data
+              </button>
+              <button
+                class="rc-sub-item"
+                onclick="
+                  if (
+                    !document
+                      .getElementById('rcTrajectories')
+                      .classList.contains('active')
+                  )
+                    switchRcPage('trajectories');
+                  switchTrajTab('ad');
+                "
+              >
+                Autonomous Driving Data
+              </button>
+            </div>
             <button class="rc-nav-item" onclick="switchRcPage('incidents')">
               <svg
                 fill="none"
@@ -5412,14 +5476,17 @@
                   its trajectories; the map is one click away.
                 </p>
               </div>
-              <div class="tr-stream" id="trStream">
+              <!-- Drone Aerial Data panel -->
+              <div class="tr-tab-panel" id="tab-drone">
                 <article
                   class="tr-ds"
                   data-name="highd high d drone germany motorway cologne"
                 >
                   <div class="tr-info">
                     <div class="tr-title">
-                      <h3>highD</h3>
+                      <h3>
+                        highD <span class="tr-tag drone">Drone Aerial</span>
+                      </h3>
                       <div class="region">Germany &middot; 6 sites</div>
                     </div>
                     <p class="tr-desc">
@@ -5453,7 +5520,7 @@
                           <polyline points="7 10 12 15 17 10" />
                           <line x1="12" y1="15" x2="12" y2="3" />
                         </svg>
-                        Download trajectories
+                        Download Trajectories
                       </button>
                       <a
                         class="tr-btn ghost"
@@ -5496,7 +5563,9 @@
                 >
                   <div class="tr-info">
                     <div class="tr-title">
-                      <h3>NGSIM</h3>
+                      <h3>
+                        NGSIM <span class="tr-tag drone">Drone Aerial</span>
+                      </h3>
                       <div class="region">United States &middot; 4 sites</div>
                     </div>
                     <p class="tr-desc">
@@ -5530,7 +5599,7 @@
                           <polyline points="7 10 12 15 17 10" />
                           <line x1="12" y1="15" x2="12" y2="3" />
                         </svg>
-                        Download trajectories
+                        Download Trajectories
                       </button>
                       <a
                         class="tr-btn ghost"
@@ -5567,11 +5636,15 @@
                     />
                   </div>
                 </article>
+              </div>
 
-                <!-- Waymo Open Dataset -->
+              <!-- Autonomous Driving Data panel -->
+              <div class="tr-tab-panel" id="tab-ad">
                 <div class="waymo-showcase">
-                  <div class="ws-eyebrow">Autonomous Driving Data</div>
-                  <h2>Waymo Open Dataset</h2>
+                  <h2>
+                    Waymo Open Dataset
+                    <span class="tr-tag ad">Autonomous Driving</span>
+                  </h2>
                   <p class="ws-desc">
                     The Waymo Open Dataset is a collection of large-scale,
                     high-quality, and diverse datasets shared by Waymo to
@@ -8353,6 +8426,18 @@
             s.classList.remove("active");
           });
 
+        // When entering trajectories, auto-activate first sub-tab
+        if (page === "trajectories") {
+          switchTrajTab("drone");
+        } else {
+          // Clear trajectory sub-item highlights when on other pages
+          document
+            .querySelectorAll("#trajSubMenu .rc-sub-item")
+            .forEach(function (s) {
+              s.classList.remove("active");
+            });
+        }
+
         var pageMap = {
           datasets: "rcDatasets",
           trajectories: "rcTrajectories",
@@ -8366,13 +8451,46 @@
 
         // Activate the clicked sidebar button
         var clicked = event.target.closest(".rc-nav-item");
-        if (clicked) clicked.classList.add("active");
+        if (clicked) {
+          clicked.classList.add("active");
+        } else if (page === "trajectories") {
+          // Clicked from sub-menu — activate the parent nav item
+          var trajBtn = document.querySelector(
+            '.rc-nav-item[onclick*="trajectories"]',
+          );
+          if (trajBtn) trajBtn.classList.add("active");
+        }
 
         // Lazy init incidents Leaflet map
         if (page === "incidents" && !_incMapInited) {
           _incMapInited = true;
           setTimeout(initIncidentsMap, 150);
         }
+      }
+
+      function switchTrajTab(tab) {
+        // Switch tab panels
+        document
+          .querySelectorAll("#rcTrajectories .tr-tab-panel")
+          .forEach(function (p) {
+            p.classList.remove("active");
+          });
+        document.getElementById("tab-" + tab).classList.add("active");
+        // Highlight sidebar sub-item
+        document
+          .querySelectorAll("#trajSubMenu .rc-sub-item")
+          .forEach(function (s) {
+            s.classList.remove("active");
+          });
+        var subs = document.querySelectorAll("#trajSubMenu .rc-sub-item");
+        subs.forEach(function (s) {
+          if (
+            (tab === "drone" && s.textContent.trim().indexOf("Drone") >= 0) ||
+            (tab === "ad" && s.textContent.trim().indexOf("Autonomous") >= 0)
+          ) {
+            s.classList.add("active");
+          }
+        });
       }
 
       /* ══════════════ Boot ══════════════ */

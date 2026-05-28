@@ -101,7 +101,7 @@
         margin: 12px 0 0;
         font-size: 13.5px;
         color: rgba(255, 255, 255, 0.55);
-        max-width: 560px;
+        max-width: none;
         line-height: 1.7;
       }
 
@@ -286,7 +286,7 @@
       /* ── Waymo showcase section ── */
       .waymo-showcase {
         position: relative;
-        margin-top: 48px;
+        margin-top: 0;
         border-radius: 20px;
         overflow: hidden;
         background: linear-gradient(
@@ -315,9 +315,9 @@
       }
       .waymo-showcase h2 {
         margin: 0 0 14px;
-        font-size: 26px;
-        font-weight: 700;
-        letter-spacing: -0.015em;
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.012em;
         color: #fff;
       }
       .waymo-showcase .ws-desc {
@@ -362,13 +362,13 @@
       .waymo-showcase .ws-cta {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        padding: 12px 22px;
-        border-radius: 10px;
+        gap: 9px;
+        padding: 10px 16px;
+        border-radius: 9px;
         background: #f4f5f8;
         color: #0a0b12;
-        font-size: 13.5px;
-        font-weight: 600;
+        font-size: 13px;
+        font-weight: 500;
         font-family: inherit;
         letter-spacing: 0.003em;
         text-decoration: none;
@@ -390,6 +390,39 @@
           grid-template-columns: 1fr;
           gap: 12px;
         }
+      }
+
+      /* ── Trajectory tab panels ── */
+      .tr-tab-panel {
+        display: none;
+      }
+      .tr-tab-panel.active {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+      }
+      .tr-tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 10px;
+        border-radius: 6px;
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        margin-left: 10px;
+        vertical-align: middle;
+        position: relative;
+        top: -1px;
+      }
+      .tr-tag.drone {
+        background: rgba(52, 211, 153, 0.1);
+        color: #6ee7b7;
+        border: 1px solid rgba(52, 211, 153, 0.2);
+      }
+      .tr-tag.ad {
+        background: rgba(96, 165, 250, 0.1);
+        color: #93c5fd;
+        border: 1px solid rgba(96, 165, 250, 0.2);
       }
 
       /* Footer override */
@@ -1111,8 +1144,8 @@
       </p>
     </div>
 
-    <!-- Dataset stream -->
-    <div class="tr-stream" id="trStream">
+    <!-- Drone Aerial Data panel -->
+    <div class="tr-tab-panel active" id="tab-drone">
       <!-- highD -->
       <article
         class="tr-ds"
@@ -1121,7 +1154,7 @@
         <!-- Left: identity + stats + actions -->
         <div class="tr-info">
           <div class="tr-title">
-            <h3>highD</h3>
+            <h3>highD <span class="tr-tag drone">Drone Aerial</span></h3>
             <div class="region">Germany · 6 sites</div>
           </div>
 
@@ -1157,7 +1190,7 @@
                 <polyline points="7 10 12 15 17 10" />
                 <line x1="12" y1="15" x2="12" y2="3" />
               </svg>
-              Download trajectories
+              Download Trajectories
             </button>
             <a
               class="tr-btn ghost"
@@ -1203,7 +1236,7 @@
         <!-- Left: identity + stats + actions -->
         <div class="tr-info">
           <div class="tr-title">
-            <h3>NGSIM</h3>
+            <h3>NGSIM <span class="tr-tag drone">Drone Aerial</span></h3>
             <div class="region">United States · 4 sites</div>
           </div>
 
@@ -1237,7 +1270,7 @@
                 <polyline points="7 10 12 15 17 10" />
                 <line x1="12" y1="15" x2="12" y2="3" />
               </svg>
-              Download trajectories
+              Download Trajectories
             </button>
             <a
               class="tr-btn ghost"
@@ -1274,11 +1307,14 @@
           />
         </div>
       </article>
+    </div>
 
-      <!-- Waymo Open Dataset -->
+    <!-- Autonomous Driving Data panel -->
+    <div class="tr-tab-panel" id="tab-ad">
       <div class="waymo-showcase">
-        <div class="ws-eyebrow">Autonomous Driving Data</div>
-        <h2>Waymo Open Dataset</h2>
+        <h2>
+          Waymo Open Dataset <span class="tr-tag ad">Autonomous Driving</span>
+        </h2>
         <p class="ws-desc">
           The Waymo Open Dataset is a collection of large-scale, high-quality,
           and diverse datasets shared by Waymo to support the autonomous driving
@@ -1865,6 +1901,44 @@
     </div>
 
     <script>
+      // ── Sidebar sub-menu tab switching ──
+      (function () {
+        function switchTab(tab) {
+          document.querySelectorAll(".tr-tab-panel").forEach(function (p) {
+            p.classList.remove("active");
+          });
+          var panel = document.getElementById("tab-" + tab);
+          if (panel) panel.classList.add("active");
+          document.querySelectorAll("#trajSubMenu a").forEach(function (a) {
+            a.classList.remove("active");
+          });
+          var link = document.querySelector(
+            '#trajSubMenu a[data-traj-tab="' + tab + '"]',
+          );
+          if (link) link.classList.add("active");
+        }
+
+        // Click handler
+        document.addEventListener("click", function (e) {
+          var link = e.target.closest("[data-traj-tab]");
+          if (!link) return;
+          e.preventDefault();
+          var tab = link.getAttribute("data-traj-tab");
+          switchTab(tab);
+          history.replaceState(null, "", "#" + tab);
+        });
+
+        // On load: read hash to determine which tab
+        var hash = location.hash.replace("#", "");
+        if (hash === "ad") {
+          switchTab("ad");
+          // Also remove default active from drone panel
+          document.getElementById("tab-drone").classList.remove("active");
+        } else {
+          switchTab("drone");
+        }
+      })();
+
       (function () {
         // ── Search ──
         const input = document.getElementById("trSearch");

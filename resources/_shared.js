@@ -77,6 +77,14 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
       "Download Trajectory",
       "trajectory",
     ) +
+    '<ul class="res-sidebar-sub" id="trajSubMenu">' +
+    '<li><a href="' +
+    (isSPA ? "#trajectory-drone" : P + "trajectories_v2.html#drone") +
+    '" data-traj-tab="drone">Drone Aerial Data</a></li>' +
+    '<li><a href="' +
+    (isSPA ? "#trajectory-ad" : P + "trajectories_v2.html#ad") +
+    '" data-traj-tab="ad">Autonomous Driving Data</a></li>' +
+    "</ul>" +
     li(
       isSPA ? "#incidents" : P + "incidents.html",
       ICO.incidents,
@@ -267,7 +275,9 @@ if (new URLSearchParams(location.search).get("embed") === "1") {
         'tutDoc.style.display="block";' +
         "return;" +
         "}" +
-        'fetch("' + R + '"+file).then(function(r){' +
+        'fetch("' +
+        R +
+        '"+file).then(function(r){' +
         'if(!r.ok)throw new Error("HTTP "+r.status);' +
         "return r.arrayBuffer();" +
         "}).then(function(buf){" +
