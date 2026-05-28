@@ -1347,13 +1347,14 @@
             />
           </div>
         </div>
-        <a
+        <button
           class="ws-cta"
-          href="https://waymo.com/open/"
-          target="_blank"
-          rel="noopener noreferrer"
+          type="button"
+          onclick="
+            document.getElementById('waymoFhwaModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+          "
         >
-          Explore Waymo Open Dataset
           <svg
             width="14"
             height="14"
@@ -1364,13 +1365,12 @@
             stroke-linecap="round"
             stroke-linejoin="round"
           >
-            <path
-              d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-            />
-            <polyline points="15 3 21 3 21 9" />
-            <line x1="10" y1="14" x2="21" y2="3" />
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
           </svg>
-        </a>
+          Download Trajectories
+        </button>
       </div>
     </div>
 
@@ -1681,6 +1681,154 @@
                     <line x1="10" y1="14" x2="21" y2="3" />
                   </svg>
                   NGSIM Data Portal
+                </a>
+              </div>
+            </div>
+            <div class="fhwa-step">
+              <div class="fhwa-step-num">2</div>
+              <div class="fhwa-step-body">
+                <div class="fhwa-step-title">Data Processing</div>
+                <p class="fhwa-step-text">
+                  Use our processing scripts to clean and convert the raw
+                  trajectory data into a usable format.
+                </p>
+                <a
+                  class="fhwa-step-link"
+                  href="https://github.com/ZhilingResearch/Ozone"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                    />
+                  </svg>
+                  GitHub Repository
+                </a>
+              </div>
+            </div>
+            <div class="fhwa-step">
+              <div class="fhwa-step-num">3</div>
+              <div class="fhwa-step-body">
+                <div class="fhwa-step-title">Data Usage</div>
+                <p class="fhwa-step-text">
+                  Refer to the documentation and examples for integrating
+                  trajectory data into your research workflow.
+                </p>
+                <a
+                  class="fhwa-step-link"
+                  href="https://github.com/ZhilingResearch/Ozone"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                  </svg>
+                  Documentation &amp; Examples
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Waymo Trajectory Flow Modal -->
+    <div
+      class="fhwa-modal-overlay"
+      id="waymoFhwaModal"
+      onclick="
+        if (event.target === this) {
+          this.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      "
+    >
+      <div class="fhwa-modal">
+        <div class="fhwa-modal-head">
+          <h3>Download Trajectories</h3>
+          <button
+            class="fhwa-modal-close"
+            type="button"
+            onclick="
+              document
+                .getElementById('waymoFhwaModal')
+                .classList.remove('active');
+              document.body.style.overflow = '';
+            "
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6 6 18" />
+              <path d="M6 6 18 18" />
+            </svg>
+          </button>
+        </div>
+        <div class="fhwa-modal-body">
+          <p class="fhwa-modal-desc">
+            Waymo Open Dataset trajectory data is hosted by the Waymo team.
+            Follow the steps below to download, process, and use the data. For
+            commercial licensing, please contact us.
+          </p>
+          <div class="fhwa-flow">
+            <div class="fhwa-step">
+              <div class="fhwa-step-num">1</div>
+              <div class="fhwa-step-body">
+                <div class="fhwa-step-title">Data Download</div>
+                <p class="fhwa-step-text">
+                  Download the raw Waymo Open Dataset vehicle trajectory data
+                  from the official Waymo website.
+                </p>
+                <a
+                  class="fhwa-step-link"
+                  href="https://waymo.com/open/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                    />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                  Waymo Open Dataset
                 </a>
               </div>
             </div>
